@@ -1,0 +1,3 @@
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Debug\netcoreapp3.0\Bingo.Model.csprojAssemblyReference.cache
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Debug\netcoreapp3.0\Bingo.Model.AssemblyInfoInputs.cache
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Debug\netcoreapp3.0\Bingo.Model.AssemblyInfo.cs
