@@ -3,7 +3,7 @@ using System;
 
 namespace Bingo.Biz.Impl
 {
-    class App_QQBiz : IAppBiz
+    public class App_QQBiz : IAppBiz
     {
         public string GetOpenId(string loginCode)
         {

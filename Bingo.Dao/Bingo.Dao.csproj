@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BingoDb\Dao\" />
-    <Folder Include="BingoDb\Entity\" />
     <Folder Include="FrameworkDb\Dao\" />
     <Folder Include="FrameworkDb\Entity\" />
   </ItemGroup>

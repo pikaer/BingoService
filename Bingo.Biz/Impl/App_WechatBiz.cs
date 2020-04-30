@@ -2,7 +2,7 @@
 
 namespace Bingo.Biz.Impl
 {
-    class App_WechatBiz : IAppBiz
+    public class App_WechatBiz : IAppBiz
     {
         public string GetOpenId(string loginCode)
         {
