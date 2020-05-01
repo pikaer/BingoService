@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bingo.Dao\Bingo.Dao.csproj" />
     <ProjectReference Include="..\Bingo.Model\Bingo.Model.csproj" />
+    <ProjectReference Include="..\Bingo.Utils\Bingo.Utils.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Bingo.Model.Common
+namespace Bingo.Dao.BingoDb.Entity
 {
     public enum TagTypeEnum
     {

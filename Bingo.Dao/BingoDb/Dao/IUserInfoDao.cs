@@ -8,6 +8,6 @@ namespace Bingo.Dao.BingoDb.Dao
 
         UserInfoEntity GetUserInfoByOpenId(string openId);
 
-        int InsertUserInfo(UserInfoEntity userInfo);
+        long InsertUserInfo(UserInfoEntity userInfo);
     }
 }

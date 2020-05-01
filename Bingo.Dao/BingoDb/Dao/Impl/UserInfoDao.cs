@@ -1,4 +1,5 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
+using Dapper;
 using System;
 
 namespace Bingo.Dao.BingoDb.Dao.Impl
@@ -20,9 +21,25 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             throw new NotImplementedException();
         }
 
-        public int InsertUserInfo(UserInfoEntity userInfo)
+        public long InsertUserInfo(UserInfoEntity userInfo)
         {
-            throw new NotImplementedException();
+            using (var Db = GetDbConnection())
+            {
+                var sql = @"INSERT INTO dbo.bingo_UserInfo
+                                  (OpenId
+                                  ,Platform
+                                  ,LastLoginTime
+                                  ,CreateTime
+                                  ,UpdateTime)
+                            VALUES
+                                  (@OpenId
+                                  ,@Platform
+                                  ,@LastLoginTime
+                                  ,@CreateTime
+                                  ,@UpdateTime)";
+                sql += "SELECT CAST(SCOPE_IDENTITY() as bigint)";
+                return Db.QueryFirst<long>(sql, userInfo);
+            }
         }
 
         

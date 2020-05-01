@@ -8,6 +8,6 @@ namespace Bingo.Biz.Interface
 
         UserInfoEntity GetUserInfoByOpenId(string openId);
 
-        int InsertUserInfo(UserInfoEntity userInfo);
+        long GetUIdByCode(string code, PlatformEnum platform);
     }
 }

@@ -1,4 +1,7 @@
-﻿using Bingo.Model.Base;
+﻿using Bingo.Biz.Impl;
+using Bingo.Biz.Interface;
+using Bingo.Model.Base;
+using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
@@ -10,6 +13,8 @@ namespace Bingo.Api.Controllers
     /// </summary>
     public class BaseController : Controller
     {
+        private readonly ILogBiz log = SingletonProvider<LogBiz>.Instance;
+        
         /// <summary>
         /// 处理请求数据流
         /// </summary>
@@ -38,7 +43,7 @@ namespace Bingo.Api.Controllers
         {
             if (!string.IsNullOrEmpty(title) || ex != null)
             {
-                //LogHelper.ErrorAsync(title, code.ToDescription(), ex);
+                log.ErrorAsync(title, ex);
             }
 
             return new JsonResult(new ResponseContext<object>(code, null));

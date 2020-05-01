@@ -8,9 +8,11 @@ using System;
 
 namespace Bingo.Api.Controllers
 {
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class ProductController : BaseController
     {
-        private IMomentListBiz mentListBiz = SingletonProvider<MomentListBiz>.Instance;
+        private readonly IMomentListBiz mentListBiz = SingletonProvider<MomentListBiz>.Instance;
 
         /// <summary>
         /// 动态列表
@@ -35,7 +37,7 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
-                if (request.Data == null || request.Data.PageIndex < 0)
+                if (request.Data == null || request.Data.PageIndex < 0||request.Head==null||request.Head.UId<=0)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
