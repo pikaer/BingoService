@@ -1,5 +1,4 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
-using Bingo.Model.Base;
 using System.Collections.Generic;
 
 namespace Bingo.Model.Contract

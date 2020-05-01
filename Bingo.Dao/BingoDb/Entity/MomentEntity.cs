@@ -38,5 +38,27 @@ namespace Bingo.Dao.BingoDb.Entity
         public string HidingNickName { get; set; }
 
         public MomentStateEnum State{ get; set; }
+
+        /// <summary>
+        /// 限定人数
+        /// </summary>
+        public int NeedCount { get; set; }
+
+        /// <summary>
+        /// 活动截止时间
+        /// </summary>
+        public DateTime? StopTime { get; set; }
+
+        /// <summary>
+        /// 活动位置（针对线下活动）
+        /// </summary>
+        public string Place { get; set; }
+
+        /// <summary>
+        /// 期待性别
+        /// </summary>
+        public GenderEnum ExpectGender { get; set; }
+
+        public ShareTypeEnum ShareType { get; set; }
     }
 }
