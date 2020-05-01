@@ -2,9 +2,11 @@
 using Bingo.Biz.Interface;
 using Bingo.Model.Base;
 using Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Text;
 
 namespace Bingo.Api.Controllers
 {
@@ -21,7 +23,8 @@ namespace Bingo.Api.Controllers
         /// <returns></returns>
         protected string GetInputString()
         {
-            using (var streamReader = new StreamReader(Request.Body))
+            Request.EnableBuffering();
+            using (var streamReader = new StreamReader(Request.Body, encoding: Encoding.UTF8))
             {
                 string json = streamReader.ReadToEnd();
                 if (!string.IsNullOrEmpty(json))
@@ -31,9 +34,19 @@ namespace Bingo.Api.Controllers
                         json = json.Replace("\\/", "/");
                     }
                 }
-
                 return json;
             }
+        }
+
+        protected bool HeadCheck(RequestHead header)
+        {
+            if (header == null || header.UId <= 0)
+            {
+                return false;
+            }
+            header.TransactionId = Guid.NewGuid();
+            return true;
+
         }
 
         /// <summary>

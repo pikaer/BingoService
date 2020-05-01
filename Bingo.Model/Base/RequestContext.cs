@@ -58,6 +58,6 @@ namespace Bingo.Model.Base
         /// <summary>
         /// 拓展信息
         /// </summary>
-        public List<KeyValuePair> Extensions;
+        public List<KeyValue> Extensions;
     }
 }

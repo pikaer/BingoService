@@ -1,0 +1,8 @@
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\bin\Release\netcoreapp3.0\Infrastructure.deps.json
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\bin\Release\netcoreapp3.0\Infrastructure.dll
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\bin\Release\netcoreapp3.0\Infrastructure.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Release\netcoreapp3.0\Infrastructure.csprojAssemblyReference.cache
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Release\netcoreapp3.0\Infrastructure.AssemblyInfoInputs.cache
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Release\netcoreapp3.0\Infrastructure.AssemblyInfo.cs
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Release\netcoreapp3.0\Infrastructure.dll
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Release\netcoreapp3.0\Infrastructure.pdb

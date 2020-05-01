@@ -28,7 +28,7 @@
         /// </summary>
         public static string UserInfoByOpenIdAndUIdCacheKey(string openId,long uid)
         {
-            return string.Format(UserInfoByOpenIdAndUIdKey, openId,uid);
+            return string.Format(UserInfoByOpenIdAndUIdKey, uid, openId);
         }
     }
 }

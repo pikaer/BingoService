@@ -1,6 +1,6 @@
 ﻿namespace Bingo.Model.Base
 {
-    public class KeyValuePair
+    public class KeyValue
     {
         public string Key { get; set; }
 

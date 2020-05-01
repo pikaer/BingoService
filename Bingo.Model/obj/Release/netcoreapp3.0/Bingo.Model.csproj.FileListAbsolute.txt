@@ -1,0 +1,13 @@
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\bin\Release\netcoreapp3.0\Bingo.Model.deps.json
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\bin\Release\netcoreapp3.0\Bingo.Model.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\bin\Release\netcoreapp3.0\Bingo.Model.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\bin\Release\netcoreapp3.0\Bingo.Dao.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\bin\Release\netcoreapp3.0\Infrastructure.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\bin\Release\netcoreapp3.0\Bingo.Dao.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\bin\Release\netcoreapp3.0\Infrastructure.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Release\netcoreapp3.0\Bingo.Model.csprojAssemblyReference.cache
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Release\netcoreapp3.0\Bingo.Model.AssemblyInfoInputs.cache
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Release\netcoreapp3.0\Bingo.Model.AssemblyInfo.cs
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Release\netcoreapp3.0\Bingo.Model.csproj.CopyComplete
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Release\netcoreapp3.0\Bingo.Model.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Model\obj\Release\netcoreapp3.0\Bingo.Model.pdb

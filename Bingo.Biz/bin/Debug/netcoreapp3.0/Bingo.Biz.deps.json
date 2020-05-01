@@ -9,10 +9,22 @@
       "Bingo.Biz/1.0.0": {
         "dependencies": {
           "Bingo.Dao": "1.0.0",
-          "Bingo.Model": "1.0.0"
+          "Bingo.Model": "1.0.0",
+          "Bingo.Utils": "1.0.0"
         },
         "runtime": {
           "Bingo.Biz.dll": {}
+        }
+      },
+      "Dapper/2.0.35": {
+        "dependencies": {
+          "System.Reflection.Emit.Lightweight": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.35.21366"
+          }
         }
       },
       "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
@@ -245,6 +257,7 @@
           }
         }
       },
+      "System.Reflection.Emit.Lightweight/4.7.0": {},
       "System.Runtime.CompilerServices.Unsafe/4.7.0": {
         "runtime": {
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
@@ -372,6 +385,7 @@
       },
       "Bingo.Dao/1.0.0": {
         "dependencies": {
+          "Dapper": "2.0.35",
           "Infrastructure": "1.0.0",
           "System.Data.SqlClient": "4.8.1"
         },
@@ -386,6 +400,11 @@
         },
         "runtime": {
           "Bingo.Model.dll": {}
+        }
+      },
+      "Bingo.Utils/1.0.0": {
+        "runtime": {
+          "Bingo.Utils.dll": {}
         }
       },
       "Infrastructure/1.0.0": {
@@ -404,6 +423,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Dapper/2.0.35": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/xAgd8BO8EDnJ0sURWEV8LptHHvTKxoYiT63YUF2U/yWE2VyUCqR2jcrtEyNngT9Kjzppecz95UKiBla3PnR7g==",
+      "path": "dapper/2.0.35",
+      "hashPath": "dapper.2.0.35.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.0": {
       "type": "package",
@@ -531,6 +557,13 @@
       "path": "system.io.pipelines/4.7.0",
       "hashPath": "system.io.pipelines.4.7.0.nupkg.sha512"
     },
+    "System.Reflection.Emit.Lightweight/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a4OLB4IITxAXJeV74MDx49Oq2+PsF6Sml54XAFv+2RyWwtDBcabzoxiiJRhdhx+gaohLh4hEGCLQyBozXoQPqA==",
+      "path": "system.reflection.emit.lightweight/4.7.0",
+      "hashPath": "system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+    },
     "System.Runtime.CompilerServices.Unsafe/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -593,6 +626,11 @@
       "sha512": ""
     },
     "Bingo.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Bingo.Utils/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

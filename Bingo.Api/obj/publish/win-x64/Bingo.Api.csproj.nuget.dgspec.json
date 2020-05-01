@@ -1,0 +1,443 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Api\\Bingo.Api.csproj": {}
+  },
+  "projects": {
+    "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Api\\Bingo.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Api\\Bingo.Api.csproj",
+        "projectName": "Bingo.Api",
+        "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Api\\Bingo.Api.csproj",
+        "packagesPath": "C:\\Users\\14414\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Api\\obj\\publish\\win-x64\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\14414\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Biz\\Bingo.Biz.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Biz\\Bingo.Biz.csproj"
+              },
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.4.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    },
+    "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Biz\\Bingo.Biz.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Biz\\Bingo.Biz.csproj",
+        "projectName": "Bingo.Biz",
+        "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Biz\\Bingo.Biz.csproj",
+        "packagesPath": "C:\\Users\\14414\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Biz\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\14414\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\Bingo.Dao.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\Bingo.Dao.csproj"
+              },
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj"
+              },
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Utils\\Bingo.Utils.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Utils\\Bingo.Utils.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    },
+    "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\Bingo.Dao.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\Bingo.Dao.csproj",
+        "projectName": "Bingo.Dao",
+        "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\Bingo.Dao.csproj",
+        "packagesPath": "C:\\Users\\14414\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\14414\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.35, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    },
+    "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj",
+        "projectName": "Bingo.Model",
+        "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj",
+        "packagesPath": "C:\\Users\\14414\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\14414\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\Bingo.Dao.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Dao\\Bingo.Dao.csproj"
+              },
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    },
+    "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Utils\\Bingo.Utils.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Utils\\Bingo.Utils.csproj",
+        "projectName": "Bingo.Utils",
+        "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Utils\\Bingo.Utils.csproj",
+        "packagesPath": "C:\\Users\\14414\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Utils\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\14414\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    },
+    "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\Infrastructure.csproj",
+        "projectName": "Infrastructure",
+        "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\14414\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\14414\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.1.30, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

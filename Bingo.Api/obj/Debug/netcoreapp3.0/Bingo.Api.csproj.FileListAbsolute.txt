@@ -150,3 +150,6 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bin
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bingo.Api.csproj.CopyComplete
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bingo.Api.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bingo.Api.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Dapper.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Utils.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Utils.pdb

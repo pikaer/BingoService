@@ -47,4 +47,37 @@ namespace Bingo.Model.Base
         /// </summary>
         public T Data { get; set; }
     }
+
+    public class Response
+    {
+        /// <summary>
+        /// 错误码
+        /// </summary>
+        public ErrCodeEnum Code { get; set; }
+
+        /// <summary>
+        /// 返回文本
+        /// </summary>
+        public string ResultMessage { get; set; }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public Response()
+        {
+            Code = ErrCodeEnum.Success;
+            ResultMessage = ErrCodeEnum.Success.ToDescription();
+        }
+
+        public Response(ErrCodeEnum err, string msg = null)
+        {
+            Code = err;
+            ResultMessage = err.ToDescription();
+            if (!msg.IsNullOrEmpty())
+            {
+                ResultMessage = msg;
+            }
+        }
+    }
+
 }

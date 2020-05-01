@@ -50,12 +50,20 @@ namespace Infrastructure
 
         public bool Set(string key, string value, int expirySecond)
         {
+            if (db == null)
+            {
+                return false;
+            }
             TimeSpan expiry = TimeSpan.FromSeconds(expirySecond);
             return db.StringSet(key, value, expiry);
         }
 
         public string Get(string key)
         {
+            if (db == null)
+            {
+                return default;
+            }
             return db.StringGet(key);
         }
 
@@ -75,17 +83,21 @@ namespace Infrastructure
 
         public bool Set<T>(string key, T obj, int expirySecond)
         {
-            TimeSpan expiry = TimeSpan.FromSeconds(expirySecond);
             if (db == null)
             {
                 return false;
             }
+            TimeSpan expiry = TimeSpan.FromSeconds(expirySecond);
             string json = ObjectHelper.SerializeToString(obj);
             return db.StringSet(key, json, expiry);
         }
 
         public bool Remove(string key)
         {
+            if (db == null)
+            {
+                return false;
+            }
             return db.KeyDelete(key);
         }
     }

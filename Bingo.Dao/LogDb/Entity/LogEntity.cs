@@ -32,12 +32,12 @@ namespace Bingo.Dao.LogDb.Entity
         /// <summary>
         /// 日志标题
         /// </summary>
-        public string LogTitle { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// 日志内容
         /// </summary>
-        public string LogContent { get; set; }
+        public string Content { get; set; }
 
         /// <summary>
         /// 服务名称（标示）

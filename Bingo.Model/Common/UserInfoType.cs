@@ -5,9 +5,14 @@ namespace Bingo.Model.Common
 {
     public class UserInfoType
     {
-        public long UId;
+        public long UId { get; set; }
 
-        public string NickName;
+        public string NickName { get; set; }
+
+        /// <summary>
+        /// 是否已经注册账户
+        /// </summary>
+        public bool IsRegister { get; set; }
 
         /// <summary>
         /// 头像路径

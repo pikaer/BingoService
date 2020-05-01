@@ -3,5 +3,7 @@
     public interface IAppBiz
     {
         string GetOpenId(string loginCode);
+
+        bool MsgSecCheck(string message);
     }
 }

@@ -60,5 +60,9 @@ namespace Bingo.Model.Base
 
         [Description("用户金币余额不足")]
         CoinEmpty = 80002,
+
+        [Description("内容不合法")]
+        MessageCheckError = 80003,
+        
     }
 }

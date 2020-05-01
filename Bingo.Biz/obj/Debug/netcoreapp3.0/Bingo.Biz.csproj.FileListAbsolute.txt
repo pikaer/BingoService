@@ -13,3 +13,5 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bin
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.csproj.CopyComplete
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Utils.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Utils.pdb

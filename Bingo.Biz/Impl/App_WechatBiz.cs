@@ -32,5 +32,23 @@ namespace Bingo.Biz.Impl
             }
             return token.Access_token;
         }
+
+        public bool MsgSecCheck(string message)
+        {
+
+            var token = GetAccessToken();
+            if (token == null || token.IsNullOrEmpty())
+            {
+                return true;
+            }
+            string url = string.Format("https://api.weixin.qq.com/wxa/msg_sec_check?access_token={0}", token);
+
+            var request = new WeChatMsgSecCheckRequestDTO()
+            {
+                content = message
+            };
+            var response = HttpHelper.HttpPost<WeChatMsgSecCheckRequestDTO, WeChatResponseDTO>(url, request, 5);
+            return response != null && response.Errcode == 0;
+        }
     }
 }

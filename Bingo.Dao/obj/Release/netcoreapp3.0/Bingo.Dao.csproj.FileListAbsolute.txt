@@ -1,0 +1,11 @@
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\bin\Release\netcoreapp3.0\Bingo.Dao.deps.json
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\bin\Release\netcoreapp3.0\Bingo.Dao.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\bin\Release\netcoreapp3.0\Bingo.Dao.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\bin\Release\netcoreapp3.0\Infrastructure.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\bin\Release\netcoreapp3.0\Infrastructure.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\obj\Release\netcoreapp3.0\Bingo.Dao.csprojAssemblyReference.cache
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\obj\Release\netcoreapp3.0\Bingo.Dao.AssemblyInfoInputs.cache
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\obj\Release\netcoreapp3.0\Bingo.Dao.AssemblyInfo.cs
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\obj\Release\netcoreapp3.0\Bingo.Dao.csproj.CopyComplete
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\obj\Release\netcoreapp3.0\Bingo.Dao.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Dao\obj\Release\netcoreapp3.0\Bingo.Dao.pdb

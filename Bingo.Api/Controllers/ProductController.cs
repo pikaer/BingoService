@@ -19,16 +19,10 @@ namespace Bingo.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult MomentList()
+        public JsonResult MomentList(RequestContext<MomentListRequest> request)
         {
             try
             {
-                string json = GetInputString();
-                if (string.IsNullOrEmpty(json))
-                {
-                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotAllowedEmpty_Code);
-                }
-                var request = json.JsonToObject<RequestContext<MomentListRequest>>();
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
