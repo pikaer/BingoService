@@ -53,7 +53,7 @@ namespace Bingo.Model.Base
         /// <summary>
         /// 错误码
         /// </summary>
-        public ErrCodeEnum Code { get; set; }
+        public ErrCodeEnum ResultCode { get; set; }
 
         /// <summary>
         /// 返回文本
@@ -65,13 +65,13 @@ namespace Bingo.Model.Base
         /// </summary>
         public Response()
         {
-            Code = ErrCodeEnum.Success;
+            ResultCode = ErrCodeEnum.Success;
             ResultMessage = ErrCodeEnum.Success.ToDescription();
         }
 
         public Response(ErrCodeEnum err, string msg = null)
         {
-            Code = err;
+            ResultCode = err;
             ResultMessage = err.ToDescription();
             if (!msg.IsNullOrEmpty())
             {

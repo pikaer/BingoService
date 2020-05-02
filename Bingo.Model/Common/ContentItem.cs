@@ -23,5 +23,7 @@ namespace Bingo.Model.Common
         /// 图标
         /// </summary>
         public string Icon { get; set; }
+
+        public int Index { get; set; }
     }
 }

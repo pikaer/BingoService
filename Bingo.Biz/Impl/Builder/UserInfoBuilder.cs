@@ -15,6 +15,7 @@ namespace Bingo.Biz.Impl.Builder
                 Gender = userInfo.Gender,
                 NickName=userInfo.NickName,
                 Portrait=userInfo.Portrait,
+                IsRegister=userInfo.IsRegister,
                 TagList=new List<TagItem>()
             };
             int index = 1;

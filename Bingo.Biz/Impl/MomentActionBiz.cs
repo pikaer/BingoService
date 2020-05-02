@@ -12,10 +12,15 @@ namespace Bingo.Biz.Impl
     public class MomentActionBiz : IMomentActionBiz
     {
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
-        private readonly IMomentContentDao momentContentDao = SingletonProvider<MomentContentDao>.Instance;
 
-        public bool Publish(RequestContext<PublishMomentRequest> request)
+        public Response Publish(RequestContext<PublishMomentRequest> request)
         {
+            bool msgSec=AppFactory.Factory(request.Head.Platform).MsgSecCheck(request.Data.Content);
+            if (!msgSec)
+            {
+                return new Response(ErrCodeEnum.MessageCheckError);
+            }
+            var response = new Response();
             var moment = new MomentEntity()
             {
                 MomentId = Guid.NewGuid(),
@@ -24,24 +29,21 @@ namespace Bingo.Biz.Impl
                 IsHide = request.Data.IsHide,
                 IsOffLine = request.Data.IsOffLine,
                 HidingNickName = request.Data.HidingNickName,
-                State = MomentStateEnum.审核中
+                State = MomentStateEnum.正常发布中,
+                NeedCount=request.Data.NeedCount,
+                Place=request.Data.Place,
+                ExpectGender = request.Data.ExpectGender,
+                ShareType = request.Data.ShareType,
+                Content = request.Data.Content,
+                CreateTime=DateTime.Now,
+                UpdateTime=DateTime.Now
             };
-            momentDao.Insert(moment);
-            foreach(var item in request.Data.ContentList)
+            if (!string.IsNullOrEmpty(request.Data.StopTime))
             {
-                var momentEntity = new MomentContentEntity()
-                {
-                    MomentId = moment.MomentId,
-                    MomentContentId = Guid.NewGuid(),
-                    Title = item.Title,
-                    Content = item.Content,
-                    TagType = item.TagType,
-                    CreateTime = DateTime.Now,
-                    UpdateTime = DateTime.Now
-                };
-                momentContentDao.Insert(momentEntity);
+                moment.StopTime = DateTime.Parse(request.Data.StopTime);
             }
-            return true;
+            momentDao.Insert(moment);
+            return response;
         }
     }
 }

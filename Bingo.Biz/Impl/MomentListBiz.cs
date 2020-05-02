@@ -17,7 +17,6 @@ namespace Bingo.Biz.Impl
         private readonly ILogBiz log= SingletonProvider<LogBiz>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
-        private readonly IMomentContentDao momentContentDao = SingletonProvider<MomentContentDao>.Instance;
         private readonly RedisHelper redisClient = RedisHelper.Instance;
 
         public ResponseContext<MomentListResponse> MomentList(RequestContext<MomentListRequest> request)
@@ -39,15 +38,14 @@ namespace Bingo.Biz.Impl
                 foreach(var moment in moments)
                 {
                     var userInfo = uerInfoBiz.GetUserInfoByUid(moment.UId);
-                    var contentList = momentContentDao.GetContentListByMomentId(moment.MomentId);
-                    if (userInfo == null || contentList.IsNullOrEmpty())
+                    if (userInfo == null)
                     {
                         continue;
                     }
                     var dto = new MomentDetailType()
                     {
                         UserInfo = UserInfoBuilder.BuildUserInfo(userInfo),
-                        ContentList= MomentContentBuilder.BuilderContent(contentList)
+                        ContentList= MomentContentBuilder.BuilderContent(moment)
                     };
                     response.Data.MomentList.Add(dto);
                 }

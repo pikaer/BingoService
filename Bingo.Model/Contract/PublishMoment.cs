@@ -1,5 +1,4 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
-using System.Collections.Generic;
 
 namespace Bingo.Model.Contract
 {
@@ -20,15 +19,32 @@ namespace Bingo.Model.Contract
         /// </summary>
         public string HidingNickName { get; set; }
 
-        public List<MomentContentType> ContentList { get; set; }
-    }
+        /// <summary>
+        /// 限定人数
+        /// </summary>
+        public int NeedCount { get; set; }
 
-    public class MomentContentType
-    {
-        public string Title { get; set; }
+        /// <summary>
+        /// 活动截止时间
+        /// </summary>
+        public string StopTime { get; set; }
 
+        /// <summary>
+        /// 活动位置（针对线下活动）
+        /// </summary>
+        public string Place { get; set; }
+
+        /// <summary>
+        /// 活动说明
+        /// </summary>
         public string Content { get; set; }
 
-        public TagTypeEnum TagType { get; set; }
+        /// <summary>
+        /// 期待性别
+        /// </summary>
+        public GenderEnum ExpectGender { get; set; }
+
+        public ShareTypeEnum ShareType { get; set; }
     }
+
 }

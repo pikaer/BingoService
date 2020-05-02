@@ -85,12 +85,12 @@ namespace Bingo.Api.Controllers
                 var success = userInfoBiz.UpdateUserLocation(request.Head.UId, request.Data.Latitude, request.Data.Longitude);
                 if (success)
                 {
-                    response.Code = ErrCodeEnum.Success;
+                    response.ResultCode = ErrCodeEnum.Success;
                     response.ResultMessage = "更新成功";
                 }
                 else
                 {
-                    response.Code = ErrCodeEnum.Failure;
+                    response.ResultCode = ErrCodeEnum.Failure;
                     response.ResultMessage = "更新失败";
                 }
                 return new JsonResult(response);

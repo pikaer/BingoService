@@ -31,22 +31,11 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
-                if (request.Data == null || request.Data.ContentList.IsNullOrEmpty())
+                if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                var response = new Response();
-                bool success = momentActionBiz.Publish(request);
-                if (!success)
-                {
-                    response.Code = ErrCodeEnum.MessageCheckError;
-                    response.ResultMessage = ErrCodeEnum.MessageCheckError.ToDescription();
-                }
-                else
-                {
-                    response.ResultMessage = "发布成功";
-                }
-                return new JsonResult(response);
+                return new JsonResult(momentActionBiz.Publish(request));
             }
             catch (Exception ex)
             {

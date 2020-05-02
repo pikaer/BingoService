@@ -7,6 +7,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 {
     public class MomentDao : DbBase, IMomentDao
     {
+        private readonly string SELECT_MomentEntity = "SELECT MomentId,UId,IsDelete,IsOffLine,IsHide,HidingNickName,State,NeedCount,StopTime,Place,ExpectGender,ShareType,Content,CreateTime,UpdateTime FROM dbo.Moment ";
         protected override DbEnum GetDbEnum()
         {
             return DbEnum.BingoDb;
@@ -32,6 +33,12 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,IsHide
                                   ,HidingNickName
                                   ,State
+                                  ,NeedCount
+                                  ,StopTime
+                                  ,Place
+                                  ,ExpectGender
+                                  ,ShareType
+                                  ,Content
                                   ,CreateTime
                                   ,UpdateTime)
                             VALUES
@@ -42,6 +49,12 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@IsHide
                                   ,@HidingNickName
                                   ,@State
+                                  ,@NeedCount
+                                  ,@StopTime
+                                  ,@Place
+                                  ,@ExpectGender
+                                  ,@ShareType
+                                  ,@Content
                                   ,@CreateTime
                                   ,@UpdateTime)";
             using var Db = GetDbConnection();
@@ -50,7 +63,9 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public List<MomentEntity> GetMomentListByParam()
         {
-            throw new NotImplementedException();
+            var sql = SELECT_MomentEntity;
+            using var Db = GetDbConnection();
+            return Db.Query<MomentEntity>(sql).AsList();
         }
     }
 }

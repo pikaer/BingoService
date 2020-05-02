@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Infrastructure
 {
@@ -13,10 +11,14 @@ namespace Infrastructure
         /// <param name="datetime">时间：2018-09-04 0630：30.000</param>
         /// <param name="yyyyMMddHHmm">是否精确到时分秒</param>
         /// <returns></returns>
-        public static string GetDateDesc(this DateTime datetime, bool yyyyMMddHHmm = false)
+        public static string GetDateDesc(this DateTime? dateSpan, bool yyyyMMddHHmm = false)
         {
+            if (!dateSpan.HasValue)
+            {
+                return string.Empty;
+            }
             string rtn;
-
+            var datetime = dateSpan.Value;
             var now = DateTime.Now;
             var today = now.Date;  //2018-9-4 0:00:00 今天凌晨
             var yesterday = now.AddDays(-1).Date;  //2018-9-3 0:00:00  昨天凌晨

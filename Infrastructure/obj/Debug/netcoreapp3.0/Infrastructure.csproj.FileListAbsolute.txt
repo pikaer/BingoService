@@ -5,3 +5,4 @@ D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Debug\netcoreapp3.
 D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Debug\netcoreapp3.0\Infrastructure.AssemblyInfo.cs
 D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Debug\netcoreapp3.0\Infrastructure.dll
 D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Debug\netcoreapp3.0\Infrastructure.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Infrastructure\obj\Debug\netcoreapp3.0\Infrastructure.csprojAssemblyReference.cache

@@ -35,7 +35,7 @@ namespace Bingo.Api.Controllers
                 bool msgOk=AppFactory.Factory(request.Head.Platform).MsgSecCheck(request.Data.TextContent);
                 if (!msgOk)
                 {
-                    response.Code = ErrCodeEnum.MessageCheckError;
+                    response.ResultCode = ErrCodeEnum.MessageCheckError;
                     response.ResultMessage = ErrCodeEnum.MessageCheckError.ToDescription();
                 }
                 return new JsonResult(response);

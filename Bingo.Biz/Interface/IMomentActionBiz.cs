@@ -5,6 +5,6 @@ namespace Bingo.Biz.Interface
 {
     public interface IMomentActionBiz
     {
-        bool Publish(RequestContext<PublishMomentRequest> request);
+        Response Publish(RequestContext<PublishMomentRequest> request);
     }
 }

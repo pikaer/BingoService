@@ -60,5 +60,10 @@ namespace Bingo.Dao.BingoDb.Entity
         public GenderEnum ExpectGender { get; set; }
 
         public ShareTypeEnum ShareType { get; set; }
+
+        /// <summary>
+        /// 活动说明
+        /// </summary>
+        public string Content { get; set; }
     }
 }
