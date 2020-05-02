@@ -13,6 +13,7 @@ namespace Bingo.Api.Controllers
     public class ProductController : BaseController
     {
         private readonly IMomentListBiz mentListBiz = SingletonProvider<MomentListBiz>.Instance;
+        private readonly IMomentActionBiz momentActionBiz = SingletonProvider<MomentActionBiz>.Instance;
 
         /// <summary>
         /// 动态列表
@@ -39,7 +40,32 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentList", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "ProductController.MomentList", ex);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult MomentDetail(RequestContext<MyPublishMomentDetailRequest> request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!HeadCheck(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                if (request.Data == null || request.Data.MomentId == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentActionBiz.MyPublishMomentDetail(request.Data.MomentId));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "ProductController.MomentDetail", ex);
             }
         }
     }

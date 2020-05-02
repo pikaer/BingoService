@@ -15,12 +15,16 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public MomentEntity GetMomentByMomentId(Guid momentId)
         {
-            throw new NotImplementedException();
+            var sql = SELECT_MomentEntity + @" Where MomentId=@MomentId";
+            using var Db = GetDbConnection();
+            return Db.QueryFirstOrDefault<MomentEntity>(sql, new { MomentId = momentId });
         }
 
         public List<MomentEntity> GetMomentListByUid(long uid)
         {
-            throw new NotImplementedException();
+            var sql = SELECT_MomentEntity+ @" Where UId=@UId order by CreateTime desc";
+            using var Db = GetDbConnection();
+            return Db.Query<MomentEntity>(sql,new { UId= uid }).AsList();
         }
 
         public int Insert(MomentEntity entity)
@@ -65,7 +69,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public List<MomentEntity> GetMomentListByParam()
         {
-            var sql = SELECT_MomentEntity;
+            var sql = SELECT_MomentEntity+ " order by CreateTime desc";
             using var Db = GetDbConnection();
             return Db.Query<MomentEntity>(sql).AsList();
         }

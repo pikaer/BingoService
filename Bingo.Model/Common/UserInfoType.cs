@@ -30,6 +30,11 @@ namespace Bingo.Model.Common
         public GenderEnum Gender { get; set; }
 
 
+        /// <summary>
+        /// 个性签名
+        /// </summary>
+        public string Signature { get; set; }
+
         public List<TagItem> TagList { get; set; }
     }
 }

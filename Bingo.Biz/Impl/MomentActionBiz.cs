@@ -39,8 +39,9 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = moment.MomentId,
                     State = moment.State,
-                    ShareFlag= moment.State== MomentStateEnum.正常发布中,
-                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State),
+                    IsOverTime= MomentContentBuilder.IsOverTime(moment.StopTime),
+                    ShareFlag = moment.State== MomentStateEnum.正常发布中,
+                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime),
                     TextColor= MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment),
                     ContentList = MomentContentBuilder.BuilderContent(moment)
@@ -63,8 +64,9 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = momentId,
                     State = moment.State,
+                    IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
-                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State),
+                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(moment.UId), moment),
                     ContentList = MomentContentBuilder.BuilderContent(moment),

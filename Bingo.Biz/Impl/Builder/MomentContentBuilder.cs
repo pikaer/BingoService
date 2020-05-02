@@ -1,6 +1,7 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Common;
 using Infrastructure;
+using System;
 using System.Collections.Generic;
 
 namespace Bingo.Biz.Impl.Builder
@@ -17,6 +18,11 @@ namespace Bingo.Biz.Impl.Builder
             AddItem(resultList, index++, "地点", moment.Place);
             if (moment.StopTime.HasValue)
             {
+                string stopStr = moment.StopTime.Value.ToString("yyyy-MM-dd HH:mm");
+                if (IsOverTime(moment.StopTime))
+                {
+                    stopStr += "(已过期)";
+                }
                 AddItem(resultList, index++, "截止时间", moment.StopTime.Value.ToString("yyyy-MM-dd HH:mm"));
             }
             AddItem(resultList, index++, "活动主题", moment.Title);
@@ -55,8 +61,12 @@ namespace Bingo.Biz.Impl.Builder
             }
         }
 
-        public static string MomentStateMap(MomentStateEnum state)
+        public static string MomentStateMap(MomentStateEnum state,DateTime? stopTime)
         {
+            if(IsOverTime(stopTime))
+            {
+                return "已失效";
+            }
             switch (state)
             {
                 case MomentStateEnum.正常发布中:
@@ -72,6 +82,11 @@ namespace Bingo.Biz.Impl.Builder
                 default:
                     return "进行中";
             }
+        }
+
+        public static bool IsOverTime(DateTime? stopTime)
+        {
+            return stopTime.HasValue && stopTime.Value < DateTime.Now;
         }
 
         public static TextColorEnum TextColorMap(MomentStateEnum state)

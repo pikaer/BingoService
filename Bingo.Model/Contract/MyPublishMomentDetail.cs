@@ -33,6 +33,11 @@ namespace Bingo.Model.Contract
         /// </summary>
         public bool ShareFlag { get; set; }
 
+        /// <summary>
+        /// 是否已过期
+        /// </summary>
+        public bool IsOverTime { get; set; }
+
         public List<ApplyDetailItem>ApplyList { get; set; }
     }
 }

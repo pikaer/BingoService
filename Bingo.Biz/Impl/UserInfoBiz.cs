@@ -55,7 +55,8 @@ namespace Bingo.Biz.Impl
                 NickName = userInfo.NickName,
                 IsRegister = userInfo.IsRegister,
                 Portrait = userInfo.Portrait,
-                Gender = userInfo.Gender
+                Gender = userInfo.Gender,
+                Signature=userInfo.Signature
             };
             return response;
         }
@@ -142,7 +143,8 @@ namespace Bingo.Biz.Impl
                     NickName = userInfo.NickName,
                     IsRegister = userInfo.IsRegister,
                     Portrait = userInfo.Portrait,
-                    Gender = userInfo.Gender
+                    Gender = userInfo.Gender,
+                    Signature= userInfo.Signature,
                 };
             }
             return response;
