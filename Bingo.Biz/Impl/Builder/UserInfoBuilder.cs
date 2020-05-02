@@ -7,8 +7,12 @@ namespace Bingo.Biz.Impl.Builder
 {
     public static class UserInfoBuilder
     {
-        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo)
+        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, MomentEntity moment=null)
         {
+            if (userInfo == null)
+            {
+                return null;
+            }
             var result = new UserInfoType
             {
                 UId = userInfo.UId,
@@ -18,6 +22,14 @@ namespace Bingo.Biz.Impl.Builder
                 IsRegister=userInfo.IsRegister,
                 TagList=new List<TagItem>()
             };
+            if (moment != null)
+            {
+                result.IsHide = moment.IsHide;
+                if (moment.IsHide)
+                {
+                    result.NickName = moment.HidingNickName;
+                }
+            }
             int index = 1;
             AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetAgeYear(), index++);
             AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetConstellation(), index++);

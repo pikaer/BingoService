@@ -24,7 +24,6 @@ namespace Infrastructure
                         if (redisClient == null)
                         {
                             redisClient = new RedisHelper();
-
                         }
                     }
                 }
@@ -50,55 +49,92 @@ namespace Infrastructure
 
         public bool Set(string key, string value, int expirySecond)
         {
-            if (db == null)
+            try
+            {
+                if (db == null)
+                {
+                    return false;
+                }
+                TimeSpan expiry = TimeSpan.FromSeconds(expirySecond);
+                return db.StringSet(key, value, expiry);
+            }
+            catch
             {
                 return false;
             }
-            TimeSpan expiry = TimeSpan.FromSeconds(expirySecond);
-            return db.StringSet(key, value, expiry);
         }
 
         public string Get(string key)
         {
-            if (db == null)
+            try
+            {
+                if (db == null)
+                {
+                    return default;
+                }
+                return db.StringGet(key);
+            }
+            catch
             {
                 return default;
             }
-            return db.StringGet(key);
+            
         }
 
         public T Get<T>(string key)
         {
-            if (db == null)
+            try
+            {
+                if (db == null)
+                {
+                    return default;
+                }
+                var value = db.StringGet(key);
+                if (value.IsNullOrEmpty)
+                {
+                    return default;
+                }
+                return ObjectHelper.JsonToObject<T>(value);
+            }
+            catch
             {
                 return default;
             }
-            var value = db.StringGet(key);
-            if (value.IsNullOrEmpty)
-            {
-                return default;
-            }
-            return ObjectHelper.JsonToObject<T>(value);
         }
 
         public bool Set<T>(string key, T obj, int expirySecond)
         {
-            if (db == null)
+            try
+            {
+                if (db == null)
+                {
+                    return false;
+                }
+                TimeSpan expiry = TimeSpan.FromSeconds(expirySecond);
+                string json = ObjectHelper.SerializeToString(obj);
+                return db.StringSet(key, json, expiry);
+            }
+            catch
             {
                 return false;
             }
-            TimeSpan expiry = TimeSpan.FromSeconds(expirySecond);
-            string json = ObjectHelper.SerializeToString(obj);
-            return db.StringSet(key, json, expiry);
+            
         }
 
         public bool Remove(string key)
         {
-            if (db == null)
+            try
+            {
+                if (db == null)
+                {
+                    return false;
+                }
+                return db.KeyDelete(key);
+            }
+            catch
             {
                 return false;
             }
-            return db.KeyDelete(key);
         }
     }
 

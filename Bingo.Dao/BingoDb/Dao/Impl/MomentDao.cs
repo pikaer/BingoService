@@ -7,7 +7,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 {
     public class MomentDao : DbBase, IMomentDao
     {
-        private readonly string SELECT_MomentEntity = "SELECT MomentId,UId,IsDelete,IsOffLine,IsHide,HidingNickName,State,NeedCount,StopTime,Place,ExpectGender,ShareType,Content,CreateTime,UpdateTime FROM dbo.Moment ";
+        private readonly string SELECT_MomentEntity = "SELECT MomentId,UId,IsDelete,IsOffLine,IsHide,HidingNickName,State,NeedCount,StopTime,Place,ExpectGender,ShareType,Title,Content,CreateTime,UpdateTime FROM dbo.Moment ";
         protected override DbEnum GetDbEnum()
         {
             return DbEnum.BingoDb;
@@ -38,6 +38,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,Place
                                   ,ExpectGender
                                   ,ShareType
+                                  ,Title
                                   ,Content
                                   ,CreateTime
                                   ,UpdateTime)
@@ -54,6 +55,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@Place
                                   ,@ExpectGender
                                   ,@ShareType
+                                  ,@Title
                                   ,@Content
                                   ,@CreateTime
                                   ,@UpdateTime)";

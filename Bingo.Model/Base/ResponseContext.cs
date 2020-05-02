@@ -14,6 +14,13 @@ namespace Bingo.Model.Base
             Data = default;
         }
 
+        public ResponseContext(ErrCodeEnum codeEnum)
+        {
+            ResultCode = codeEnum;
+            ResultMessage = codeEnum.ToDescription();
+            Data = default;
+        }
+
         public ResponseContext(T data)
         {
             ResultCode = ErrCodeEnum.Success;

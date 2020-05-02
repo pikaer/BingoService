@@ -14,10 +14,6 @@ namespace Bingo.Api.Controllers
     {
         private readonly IMomentActionBiz momentActionBiz = SingletonProvider<MomentActionBiz>.Instance;
 
-        /// <summary>
-        /// 文本内容安全检测
-        /// </summary>
-        /// <returns></returns>
         [HttpPost]
         public JsonResult PublishMoment(RequestContext<PublishMomentRequest> request)
         {
@@ -42,5 +38,56 @@ namespace Bingo.Api.Controllers
                 return ErrorJsonResult(ErrCodeEnum.InnerError, "PublishController.PublishMoment", ex);
             }
         }
+
+        [HttpPost]
+        public JsonResult MyPublishList(RequestContext<MyPublishListRequest> request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!HeadCheck(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentActionBiz.MyPublishList(request));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "PublishController.MyPublishList", ex);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult MyPublishMomentDetail(RequestContext<MyPublishMomentDetailRequest> request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!HeadCheck(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                if (request.Data == null||request.Data.MomentId==null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentActionBiz.MyPublishMomentDetail(request.Data.MomentId));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "PublishController.MyPublishMomentDetail", ex);
+            }
+        }
+
     }
 }

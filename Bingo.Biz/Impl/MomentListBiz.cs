@@ -44,7 +44,7 @@ namespace Bingo.Biz.Impl
                     }
                     var dto = new MomentDetailType()
                     {
-                        UserInfo = UserInfoBuilder.BuildUserInfo(userInfo),
+                        UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment),
                         ContentList= MomentContentBuilder.BuilderContent(moment)
                     };
                     response.Data.MomentList.Add(dto);

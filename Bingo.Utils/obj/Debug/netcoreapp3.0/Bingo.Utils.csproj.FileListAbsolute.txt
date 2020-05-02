@@ -1,8 +1,8 @@
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Debug\netcoreapp3.0\Bingo.Utils.deps.json
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Debug\netcoreapp3.0\Bingo.Utils.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Debug\netcoreapp3.0\Bingo.Utils.pdb
-D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.csprojAssemblyReference.cache
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.AssemblyInfoInputs.cache
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.AssemblyInfo.cs
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.csprojAssemblyReference.cache

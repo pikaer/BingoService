@@ -7,6 +7,7 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bin
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Api.runtimeconfig.dev.json
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Api.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Api.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Dapper.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Microsoft.CodeAnalysis.dll
@@ -134,10 +135,12 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\run
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Biz.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Dao.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Model.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Utils.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Infrastructure.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Biz.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Model.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Dao.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Utils.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Infrastructure.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bingo.Api.csprojAssemblyReference.cache
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\staticwebassets\Bingo.Api.StaticWebAssets.Manifest.cache
@@ -150,6 +153,3 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bin
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bingo.Api.csproj.CopyComplete
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bingo.Api.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\obj\Debug\netcoreapp3.0\Bingo.Api.pdb
-D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Dapper.dll
-D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Utils.dll
-D:\Code\DotNet\BingoFramework\BingoService\Bingo.Api\bin\Debug\netcoreapp3.0\Bingo.Utils.pdb

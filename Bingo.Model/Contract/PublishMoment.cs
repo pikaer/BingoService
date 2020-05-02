@@ -15,6 +15,11 @@ namespace Bingo.Model.Contract
         public bool IsHide { get; set; }
 
         /// <summary>
+        /// 活动主题
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
         /// 匿名时候对应的昵称
         /// </summary>
         public string HidingNickName { get; set; }

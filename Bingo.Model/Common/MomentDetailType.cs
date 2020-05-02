@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Bingo.Model.Common
 {
     public class MomentDetailType
     {
+        /// <summary>
+        /// 动态Id
+        /// </summary>
+        public Guid MomentId { get; set; }
+
         /// <summary>
         /// 用户信息
         /// </summary>

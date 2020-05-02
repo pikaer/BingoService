@@ -62,6 +62,11 @@ namespace Bingo.Dao.BingoDb.Entity
         public ShareTypeEnum ShareType { get; set; }
 
         /// <summary>
+        /// 活动主题
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
         /// 活动说明
         /// </summary>
         public string Content { get; set; }
