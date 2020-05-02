@@ -23,7 +23,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public bool Insert(ApplyDetailEntity entity)
         {
-            var sql = @"INSERT INTO dbo.Moment
+            var sql = @"INSERT INTO dbo.ApplyDetail
                                   (ApplyDetailId
                                   ,ApplyId
                                   ,UId

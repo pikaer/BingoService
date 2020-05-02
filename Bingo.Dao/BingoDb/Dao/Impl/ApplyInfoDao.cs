@@ -23,7 +23,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public bool Insert(ApplyInfoEntity entity)
         {
-            var sql = @"INSERT INTO dbo.Moment
+            var sql = @"INSERT INTO dbo.ApplyInfo
                                   (ApplyId
                                   ,MomentId
                                   ,MomentUId
@@ -43,6 +43,31 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@UpdateTime)";
             using var Db = GetDbConnection();
             return Db.Execute(sql, entity)>0;
+        }
+
+        public ApplyInfoEntity GetByMomentIdAndUId(Guid momentId, long uId)
+        {
+            var sql = SELECT_ApplyInfoEntity + @" Where MomentId=@MomentId and UId=@UId";
+            using var Db = GetDbConnection();
+            return Db.QueryFirstOrDefault<ApplyInfoEntity>(sql, new { MomentId = momentId, UId= uId });
+        }
+
+        public bool UpdateState(ApplyStateEnum applyState, Guid applyId)
+        {
+            using var Db = GetDbConnection();
+            string sql = @"UPDATE dbo.ApplyInfo
+                               SET ApplyState = @ApplyState
+                                  ,UpdateTime = @UpdateTime
+                               WHERE ApplyId=@ApplyId";
+            return Db.Execute(sql, new { UpdateTime = DateTime.Now, ApplyId = applyId, ApplyState= applyState }) > 0;
+          
+        }
+
+        public ApplyInfoEntity GetByApplyId(Guid applyId)
+        {
+            var sql = SELECT_ApplyInfoEntity + @" Where ApplyId=@ApplyId";
+            using var Db = GetDbConnection();
+            return Db.QueryFirstOrDefault<ApplyInfoEntity>(sql, new { ApplyId = applyId});
         }
     }
 }

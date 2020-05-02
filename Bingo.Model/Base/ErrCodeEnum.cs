@@ -63,6 +63,9 @@ namespace Bingo.Model.Base
 
         [Description("内容不合法")]
         MessageCheckError = 80003,
-        
+
+        [Description("活动已失效")]
+        IsOverTime = 80004,
+
     }
 }

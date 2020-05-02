@@ -8,6 +8,12 @@ namespace Bingo.Dao.BingoDb.Dao
     {
         bool Insert(ApplyInfoEntity entity);
 
+        bool UpdateState(ApplyStateEnum applyState, Guid applyId);
+
+        ApplyInfoEntity GetByMomentIdAndUId(Guid momentId, long uId);
+
+        ApplyInfoEntity GetByApplyId(Guid applyId);
+
         List<ApplyInfoEntity> GetListByMomentId(Guid momentId);
     }
 }
