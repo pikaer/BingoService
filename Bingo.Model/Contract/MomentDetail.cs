@@ -1,11 +1,10 @@
-﻿using Bingo.Dao.BingoDb.Entity;
-using Bingo.Model.Common;
+﻿using Bingo.Model.Common;
 using System;
 using System.Collections.Generic;
 
 namespace Bingo.Model.Contract
 {
-    public class MyPublishMomentDetailRequest
+    public class MomentDetailRequest
     {
         /// <summary>
         /// 动态Id
@@ -13,15 +12,14 @@ namespace Bingo.Model.Contract
         public Guid MomentId { get; set; }
     }
 
-    public class MyPublishMomentDetailType : MomentDetailType
+    public class MomentDetailResponse : MomentDetailType
     {
-       
-        public MomentStateEnum State { get; set; }
-
         /// <summary>
-        /// 状态描述
+        /// 按钮文案
         /// </summary>
-        public string StateDesc { get; set; }
+        public string BtnText { get; set; }
+
+        public bool BtnVisable { get; set; }
 
         /// <summary>
         /// 状态文本采用字体颜色
@@ -39,10 +37,10 @@ namespace Bingo.Model.Contract
         public bool ApplyFlag { get; set; }
 
         /// <summary>
-        /// 是否已过期
+        /// 是否可以申请
         /// </summary>
-        public bool IsOverTime { get; set; }
+        public bool AskFlag { get; set; }
 
-        public List<ApplyDetailItem>ApplyList { get; set; }
+        public List<ApplyDetailItem> ApplyList { get; set; }
     }
 }

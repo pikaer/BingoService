@@ -39,31 +39,6 @@ namespace Bingo.Api.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult CancelAsk(RequestContext<CancelAskRequest> request)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
-                }
-                if (!HeadCheck(request.Head))
-                {
-                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
-                }
-                if (request.Data == null)
-                {
-                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
-                }
-                return new JsonResult(askActivityBiz.CancelAsk(request));
-            }
-            catch (Exception ex)
-            {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "AskController.CancelAsk", ex);
-            }
-        }
-
 
         [HttpPost]
         public JsonResult AskAction(RequestContext<AskActionRequest> request)

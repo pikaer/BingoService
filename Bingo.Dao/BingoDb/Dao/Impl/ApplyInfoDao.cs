@@ -47,6 +47,10 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public ApplyInfoEntity GetByMomentIdAndUId(Guid momentId, long uId)
         {
+            if (uId <= 0)
+            {
+                return null;
+            }
             var sql = SELECT_ApplyInfoEntity + @" Where MomentId=@MomentId and UId=@UId";
             using var Db = GetDbConnection();
             return Db.QueryFirstOrDefault<ApplyInfoEntity>(sql, new { MomentId = momentId, UId= uId });

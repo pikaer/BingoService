@@ -45,7 +45,7 @@ namespace Bingo.Api.Controllers
         }
 
         [HttpPost]
-        public JsonResult MomentDetail(RequestContext<MyPublishMomentDetailRequest> request)
+        public JsonResult MomentDetail(RequestContext<MomentDetailRequest> request)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentActionBiz.MyPublishMomentDetail(request.Data.MomentId));
+                return new JsonResult(momentActionBiz.MomentDetail(request.Data.MomentId, request.Head.UId));
             }
             catch (Exception ex)
             {

@@ -24,10 +24,7 @@ namespace Bingo.Biz.Impl
             {
                 return new Response(ErrCodeEnum.DataIsnotExist,"活动不存在");
             }
-            if(moment.IsDelete || moment.State!= MomentStateEnum.正常发布中|| MomentContentBuilder.IsOverTime(moment.StopTime))
-            {
-                return new Response(ErrCodeEnum.IsOverTime, "活动已失效");
-            }
+
             var appLyList = applyInfoDao.GetListByMomentId(request.Data.MomentId);
             if (appLyList.NotEmpty())
             {
@@ -37,12 +34,17 @@ namespace Bingo.Biz.Impl
                     return new Response(ErrCodeEnum.Failure, "你已申请过，不能重复申请");
                 }
                 var usableList = appLyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过).ToList();
-                if(usableList.NotEmpty()&& usableList.Count>= moment.NeedCount)
+                if (usableList.NotEmpty() && usableList.Count >= moment.NeedCount)
                 {
                     return new Response(ErrCodeEnum.Failure, "人数已满，无法申请");
                 }
             }
 
+            if (moment.IsDelete || moment.State!= MomentStateEnum.正常发布中|| MomentContentBuilder.IsOverTime(moment.StopTime))
+            {
+                return new Response(ErrCodeEnum.IsOverTime, "活动已失效");
+            }
+            
             var dto = new ApplyInfoEntity()
             {
                 ApplyId = Guid.NewGuid(),
@@ -61,6 +63,10 @@ namespace Bingo.Biz.Impl
             if (applyInfo == null)
             {
                 return new Response(ErrCodeEnum.DataIsnotExist, "申请不存在");
+            }
+            if (string.Equals(request.Data.Action, "cancel"))
+            {
+                applyInfoDao.UpdateState(ApplyStateEnum.申请已撤销, applyInfo.ApplyId);
             }
             if (string.Equals(request.Data.Action, "reask"))
             {
@@ -92,15 +98,5 @@ namespace Bingo.Biz.Impl
             return new Response(ErrCodeEnum.Success, "提交成功");
         }
 
-        public Response CancelAsk(RequestContext<CancelAskRequest> request)
-        {
-            var applyInfo=applyInfoDao.GetByMomentIdAndUId(request.Data.MomentId, request.Head.UId);
-            if (applyInfo == null)
-            {
-                return new Response(ErrCodeEnum.DataIsnotExist, "申请不存在");
-            }
-            applyInfoDao.UpdateState(ApplyStateEnum.申请已撤销, applyInfo.ApplyId);
-            return new Response(ErrCodeEnum.Success, "取消申请成功");
-        }
     }
 }

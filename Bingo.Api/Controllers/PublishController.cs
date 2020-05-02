@@ -64,7 +64,31 @@ namespace Bingo.Api.Controllers
             }
         }
 
-        
+
+        [HttpPost]
+        public JsonResult MyPublishMomentDetail(RequestContext<MyPublishMomentDetailRequest> request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!HeadCheck(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentActionBiz.MyPublishMomentDetail(request.Data.MomentId));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "PublishController.MyPublishMomentDetailRequest", ex);
+            }
+        }
 
     }
 }

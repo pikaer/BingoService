@@ -9,5 +9,6 @@ namespace Bingo.Biz.Interface
         Response Publish(RequestContext<PublishMomentRequest> request);
         ResponseContext<MyPublishListResponse> MyPublishList(RequestContext<MyPublishListRequest> request);
         ResponseContext<MyPublishMomentDetailType> MyPublishMomentDetail(Guid momentId);
+        ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId);
     }
 }
