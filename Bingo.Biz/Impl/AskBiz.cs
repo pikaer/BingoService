@@ -70,41 +70,52 @@ namespace Bingo.Biz.Impl
             {
                 return new Response(ErrCodeEnum.DataIsnotExist, "申请不存在");
             }
-            bool success = false;
+            string remark =string.Empty;
             if (string.Equals(request.Data.Action, "cancel"))
             {
-                success=applyInfoDao.UpdateState(ApplyStateEnum.申请已撤销, applyInfo.ApplyId);
+                applyInfoDao.UpdateState(ApplyStateEnum.申请已撤销, applyInfo.ApplyId);
+                remark="撤销活动申请";
             }
             if (string.Equals(request.Data.Action, "reask"))
             {
-                success=applyInfoDao.UpdateState(ApplyStateEnum.申请中, applyInfo.ApplyId);
+                applyInfoDao.UpdateState(ApplyStateEnum.申请中, applyInfo.ApplyId);
+                remark = "申请加入活动";
             }
             if (string.Equals(request.Data.Action, "pass"))
             {
-                success=applyInfoDao.UpdateState(ApplyStateEnum.申请通过, applyInfo.ApplyId);
+                applyInfoDao.UpdateState(ApplyStateEnum.申请通过, applyInfo.ApplyId);
+                remark = "通过了活动申请";
             }
             if (string.Equals(request.Data.Action, "black"))
             {
-                success=applyInfoDao.UpdateState(ApplyStateEnum.永久拉黑, applyInfo.ApplyId);
+                applyInfoDao.UpdateState(ApplyStateEnum.永久拉黑, applyInfo.ApplyId);
+                remark = "拉黑了活动申请";
             }
             if (string.Equals(request.Data.Action, "refuse"))
             {
-                success=applyInfoDao.UpdateState(ApplyStateEnum.被拒绝, applyInfo.ApplyId);
-            }
-            if (success&&!string.IsNullOrEmpty(request.Data.Remark))
-            {
-                var detail = new ApplyDetailEntity()
+                applyInfoDao.UpdateState(ApplyStateEnum.被拒绝, applyInfo.ApplyId);
+                if (!string.IsNullOrEmpty(request.Data.Remark))
                 {
-                    ApplyDetailId = Guid.NewGuid(),
-                    ApplyId = applyInfo.ApplyId,
-                    UId = request.Head.UId,
-                    Content = request.Data.Remark,
-                    CreateTime =DateTime.Now,
-                    UpdateTime=DateTime.Now
-                };
-                applyDetailDao.Insert(detail);
+                    remark = request.Data.Remark;
+                }
+                
             }
+            InsertDetail(request.Data.ApplyId, request.Head.UId, remark);
             return new Response(ErrCodeEnum.Success, "提交成功");
+        }
+
+        private void InsertDetail(Guid applyId,long uId,string remark)
+        {
+            var detail = new ApplyDetailEntity()
+            {
+                ApplyDetailId = Guid.NewGuid(),
+                ApplyId = applyId,
+                UId = uId,
+                Content = remark,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now
+            };
+            applyDetailDao.Insert(detail);
         }
 
         public ResponseContext<AskMomentListResponse> AskMomentList(long uId)
@@ -168,7 +179,7 @@ namespace Bingo.Biz.Impl
                 MomentId = moment.MomentId,
                 UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
                 ContentList = MomentContentBuilder.BuilderContent(moment),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyId)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo)
             };
             return response;
         }

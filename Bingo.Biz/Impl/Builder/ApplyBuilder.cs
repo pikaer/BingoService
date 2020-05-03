@@ -42,24 +42,33 @@ namespace Bingo.Biz.Impl.Builder
         }
 
 
-        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId)
+        public static List<ApplyDetailItem> GetApplyDetails(ApplyInfoEntity applyInfo)
         {
-            var applyDetaiList = applyDetailDao.GetListByApplyId(applyId);
+            var resultList = new List<ApplyDetailItem>
+            {
+                new ApplyDetailItem()
+                {
+                    CreateTimeDesc = DateTimeHelper.GetDateDesc(applyInfo.CreateTime, true),
+                    Content = "申请加入活动",
+                    UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(applyInfo.UId))
+                }
+            };
+
+            var applyDetaiList = applyDetailDao.GetListByApplyId(applyInfo.ApplyId);
             if (applyDetaiList.IsNullOrEmpty())
             {
-                return null;
+                return resultList;
             }
 
-            var resultList = new List<ApplyDetailItem>();
             var resultDic = GetUserInfo(applyDetaiList);
             foreach (var item in applyDetaiList)
             {
-                var result = new ApplyDetailItem()
+                resultList.Add(new ApplyDetailItem()
                 {
                     CreateTimeDesc = DateTimeHelper.GetDateDesc(item.CreateTime, true),
                     Content = item.Content,
                     UserInfo = resultDic[item.UId]
-                };
+                });
             }
             return resultList;
         }

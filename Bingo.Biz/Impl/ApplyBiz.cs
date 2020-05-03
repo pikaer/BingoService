@@ -38,7 +38,7 @@ namespace Bingo.Biz.Impl
                 MomentId = moment.MomentId,
                 UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
                 ContentList = MomentContentBuilder.BuilderContent(moment),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyId)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo)
             };
             return response;
         }
@@ -52,7 +52,7 @@ namespace Bingo.Biz.Impl
                     MomentList = new List<ApplyMomentDetailType>()
                 }
             };
-            var applyList = applyInfoDao.GetListByMomentUId(uId);
+            var applyList = applyInfoDao.GetListByUId(uId);
             var myUserInfo = uerInfoBiz.GetUserInfoByUid(uId);
             if (applyList.IsNullOrEmpty() || myUserInfo == null)
             {

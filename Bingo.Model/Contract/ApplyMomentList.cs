@@ -6,7 +6,10 @@ namespace Bingo.Model.Contract
 {
     public class ApplyMomentListRequest
     {
-        public string Source { get; set; }
+        /// <summary>
+        /// 页码（分页传递数据）
+        /// </summary>
+        public int PageIndex { get; set; }
     }
 
     public class ApplyMomentListResponse
