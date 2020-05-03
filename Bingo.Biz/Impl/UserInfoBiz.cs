@@ -1,4 +1,5 @@
-﻿using Bingo.Biz.Interface;
+﻿using Bingo.Biz.Impl.Builder;
+using Bingo.Biz.Interface;
 using Bingo.Dao.BingoDb.Dao;
 using Bingo.Dao.BingoDb.Dao.Impl;
 using Bingo.Dao.BingoDb.Entity;
@@ -49,15 +50,7 @@ namespace Bingo.Biz.Impl
                 response.ResultMessage= ErrCodeEnum.UserNoExist.ToDescription();
                 return response;
             }
-            response.Data = new UserInfoType()
-            {
-                UId = uid,
-                NickName = userInfo.NickName,
-                IsRegister = userInfo.IsRegister,
-                Portrait = userInfo.Portrait,
-                Gender = userInfo.Gender,
-                Signature=userInfo.Signature
-            };
+            response.Data = UserInfoBuilder.BuildUserInfo(userInfo);
             return response;
         }
 
@@ -137,15 +130,7 @@ namespace Bingo.Biz.Impl
                 var userInfoKey = RedisKeyConst.UserInfoByOpenIdAndUIdCacheKey(userInfo.OpenId, userInfo.UId);
                 redisClient.Remove(userInfoKey);
                 userInfo=GetUserInfoByUid(request.Head.UId);
-                response.Data = new UserInfoType()
-                {
-                    UId = request.Head.UId,
-                    NickName = userInfo.NickName,
-                    IsRegister = userInfo.IsRegister,
-                    Portrait = userInfo.Portrait,
-                    Gender = userInfo.Gender,
-                    Signature= userInfo.Signature,
-                };
+                response.Data = UserInfoBuilder.BuildUserInfo(userInfo);
             }
             return response;
         }

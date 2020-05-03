@@ -8,15 +8,17 @@ using Bingo.Model.Contract;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bingo.Biz.Impl
 {
     public class ApplyBiz : IApplyBiz
     {
         private readonly IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
+        private readonly IApplyDetailDao applyDetailDao = SingletonProvider<ApplyDetailDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
 
-        public ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId)
+        public ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId,long uId)
         {
             var response = new ResponseContext<ApplyMomentDetailResponse>();
             var applyInfo = applyInfoDao.GetByApplyId(applyId);
@@ -24,10 +26,9 @@ namespace Bingo.Biz.Impl
             {
                 return response;
             }
-            var myUserInfo = uerInfoBiz.GetUserInfoByUid(applyInfo.UId);
             var userInfo = uerInfoBiz.GetUserInfoByUid(applyInfo.MomentUId);
             var moment = MomentBuilder.GetMoment(applyInfo.MomentId);
-            if (myUserInfo == null || userInfo == null || moment == null)
+            if (userInfo == null || moment == null)
             {
                 return response;
             }
@@ -41,9 +42,9 @@ namespace Bingo.Biz.Impl
                 NextAction= ApplyBuilder.BtnActionMap(applyInfo.ApplyState),
                 BtnVisable =!string.IsNullOrEmpty(btnText),
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
-                UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
+                UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, null, uId== userInfo.UId),
                 ContentList = MomentContentBuilder.BuilderContent(moment),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, uId)
             };
             return response;
         }
@@ -65,21 +66,38 @@ namespace Bingo.Biz.Impl
             }
             foreach (var apply in applyList)
             {
-                var userInfo = uerInfoBiz.GetUserInfoByUid(apply.UId);
+                var momentUserInfo = uerInfoBiz.GetUserInfoByUid(apply.MomentUId);
                 var moment = MomentBuilder.GetMoment(apply.MomentId);
-                if (moment == null || userInfo == null)
+                if (moment == null || momentUserInfo == null)
                 {
                     continue;
                 }
+                
                 var result = new ApplyMomentDetailType()
                 {
                     ApplyId = apply.ApplyId,
                     ApplyStateDesc = ApplyStateMap(apply.ApplyState),
                     TextColor = ApplyBuilder.TextColorMap(apply.ApplyState),
                     MomentId = moment.MomentId,
-                    UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo),
                     ContentList = MomentContentBuilder.BuilderContent(moment)
                 };
+                var detailList = applyDetailDao.GetListByApplyId(apply.ApplyId);
+                if (detailList.NotEmpty())
+                {
+                    detailList = detailList.OrderByDescending(a => a.CreateTime).ToList();
+                    var itemUser= uerInfoBiz.GetUserInfoByUid(detailList[0].UId);
+                    if (itemUser != null)
+                    {
+                        string nickName = itemUser.UId == uId ? "我" : itemUser.NickName;
+                        if (nickName.Length > 7)
+                        {
+                            nickName = nickName.Substring(0, 6) + "...";
+                        }
+                        result.CreateTimeDesc = DateTimeHelper.GetDateDesc(detailList[0].CreateTime, true);
+                        result.Remark = string.Format("{0}：{1}",nickName,detailList[0].Content);
+                    }
+                }
                 response.Data.MomentList.Add(result);
             }
             return response;

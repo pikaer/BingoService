@@ -45,6 +45,11 @@ namespace Bingo.Dao.BingoDb.Entity
         public int NeedCount { get; set; }
 
         /// <summary>
+        /// 已经申请人数
+        /// </summary>
+        public int ApplyCount { get; set; }
+
+        /// <summary>
         /// 活动截止时间
         /// </summary>
         public DateTime? StopTime { get; set; }

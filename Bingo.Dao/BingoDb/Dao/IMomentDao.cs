@@ -16,6 +16,8 @@ namespace Bingo.Dao.BingoDb.Dao
 
         bool UpdateStopTime(Guid momentId);
 
+        bool UpdateApplyCount(Guid momentId);
+
         bool Delete(Guid momentId);
 
     }

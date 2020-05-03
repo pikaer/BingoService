@@ -45,7 +45,7 @@ namespace Bingo.Biz.Impl
                     var dto = new MomentDetailType()
                     {
                         MomentId=moment.MomentId,
-                        UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment),
+                        UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment, request.Head.UId==userInfo.UId),
                         ContentList= MomentContentBuilder.BuilderContent(moment)
                     };
                     response.Data.MomentList.Add(dto);
@@ -66,11 +66,17 @@ namespace Bingo.Biz.Impl
             {
                 return new ResponseContext<MomentDetailResponse>(ErrCodeEnum.DataIsnotExist);
             }
+            var userInfo = uerInfoBiz.GetUserInfoByUid(moment.UId);
+            if (userInfo == null)
+            {
+                return new ResponseContext<MomentDetailResponse>(ErrCodeEnum.DataIsnotExist);
+            }
             var applyInfo = applyInfoDao.GetByMomentIdAndUId(momentId, uid);
             bool isApply = applyInfo != null;
             bool selfFlag = moment.UId == uid;
             string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, selfFlag, ApplyBuilder.IsOverCount(moment));
             string stateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime,ApplyBuilder.IsOverCount(moment));
+            
             return new ResponseContext<MomentDetailResponse>()
             {
                 Data = new MomentDetailResponse()
@@ -85,7 +91,7 @@ namespace Bingo.Biz.Impl
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(moment.UId), moment),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment, userInfo.UId==uid),
                     ContentList = MomentContentBuilder.BuilderContent(moment),
                     ApplyList = ApplyBuilder.GetApplyList(momentId)
                 }

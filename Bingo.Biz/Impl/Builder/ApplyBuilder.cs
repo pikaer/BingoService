@@ -16,6 +16,12 @@ namespace Bingo.Biz.Impl.Builder
         private readonly static IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
         private readonly static IApplyDetailDao applyDetailDao = SingletonProvider<ApplyDetailDao>.Instance;
 
+        /// <summary>
+        /// 获取动态申请列表
+        /// </summary>
+        /// <param name="momentId">动态Id</param>
+        /// <param name="passApply">仅仅查看申请通过数据</param>
+        /// <returns></returns>
         public static List<ApplyDetailItem> GetApplyList(Guid momentId)
         {
             var applyList = applyInfoDao.GetListByMomentId(momentId);
@@ -23,6 +29,7 @@ namespace Bingo.Biz.Impl.Builder
             {
                 return null;
             }
+            applyList = applyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过).ToList();
             var resultList = new List<ApplyDetailItem>();
             foreach (var apply in applyList)
             {
@@ -42,7 +49,7 @@ namespace Bingo.Biz.Impl.Builder
         }
 
 
-        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId)
+        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId, long uId)
         {
             var applyDetaiList = applyDetailDao.GetListByApplyId(applyId);
             if (applyDetaiList.IsNullOrEmpty())
@@ -50,7 +57,7 @@ namespace Bingo.Biz.Impl.Builder
                 return null;
             }
             var resultList = new List<ApplyDetailItem>();
-            var resultDic = GetUserInfo(applyDetaiList);
+            var resultDic = GetUserInfo(applyDetaiList, uId);
             foreach (var item in applyDetaiList)
             {
                 resultList.Add(new ApplyDetailItem()
@@ -63,29 +70,19 @@ namespace Bingo.Biz.Impl.Builder
             return resultList;
         }
 
-        private static Dictionary<long, UserInfoType> GetUserInfo(List<ApplyDetailEntity> applyDetaiList)
+        private static Dictionary<long, UserInfoType> GetUserInfo(List<ApplyDetailEntity> applyDetaiList, long uId)
         {
             var resultDic = new Dictionary<long, UserInfoType>();
             foreach (var item in applyDetaiList.GroupBy(a => a.UId))
             {
-                resultDic.Add(item.Key, UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key)));
+                resultDic.Add(item.Key, UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key),null, item.Key== uId));
             }
             return resultDic;
         }
 
         public static bool IsOverCount(MomentEntity moment)
         {
-            var aplyList = applyInfoDao.GetListByMomentId(moment.MomentId);
-            if (aplyList.IsNullOrEmpty())
-            {
-                return false;
-            }
-            var usableList = aplyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过).ToList();
-            if (usableList.NotEmpty() && usableList.Count >= moment.NeedCount)
-            {
-                return true;
-            }
-            return false;
+            return moment.ApplyCount>=moment.NeedCount;
         }
 
         public static string TextColorMap(ApplyStateEnum applyState)

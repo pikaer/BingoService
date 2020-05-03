@@ -7,6 +7,6 @@ namespace Bingo.Biz.Interface
     public interface IApplyBiz
     {
         ResponseContext<ApplyMomentListResponse> ApplyMomentList(long uId);
-        ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId);
+        ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId,long uId);
     }
 }

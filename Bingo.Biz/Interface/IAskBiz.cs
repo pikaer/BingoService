@@ -12,6 +12,6 @@ namespace Bingo.Biz.Interface
 
         ResponseContext<AskMomentListResponse> AskMomentList(long uId);
 
-        ResponseContext<AskMomentDetailResponse> AskMomentDetail(Guid applyId);
+        ResponseContext<AskMomentDetailResponse> AskMomentDetail(Guid applyId, long uId);
     }
 }

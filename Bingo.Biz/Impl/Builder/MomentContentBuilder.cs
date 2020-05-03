@@ -23,12 +23,13 @@ namespace Bingo.Biz.Impl.Builder
                 {
                     stopStr += "(已过期)";
                 }
-                AddItem(resultList, index++, "截止时间", moment.StopTime.Value.ToString("yyyy-MM-dd HH:mm"));
+                AddItem(resultList, index++, "截止时间", stopStr);
             }
             AddItem(resultList, index++, "活动主题", moment.Title);
             AddItem(resultList, index++, "说明", moment.Content);
             return resultList;
         }
+
 
         private static void AddItem(List<ContentItem> resultList,int index,string title, string content, TagTypeEnum type= TagTypeEnum.Default,string icon=null)
         {
@@ -64,26 +65,20 @@ namespace Bingo.Biz.Impl.Builder
 
         public static string BtnTextMap(MomentStateEnum state, DateTime? stopTime,bool isApply, bool selfFlag, bool isOverCount)
         {
-            if (selfFlag)
+            if (isApply)
             {
-                return "查看发布详情";
+                return "查看申请详情";
             }
-            if (isApply|| IsOverTime(stopTime)|| isOverCount)
+            if (IsOverTime(stopTime) || isOverCount)
             {
                 return "";
             }
-            switch (state)
+            if (state== MomentStateEnum.正常发布中)
             {
-                case MomentStateEnum.正常发布中:
-                    return "申请参与";
-                case MomentStateEnum.审核中:
-                case MomentStateEnum.被投诉审核中:
-                case MomentStateEnum.审核被拒绝:
-                case MomentStateEnum.被关小黑屋中:
-                case MomentStateEnum.永久不支持上线:
-                default:
-                    return "";
+                return "申请参与";
             }
+
+            return "";
         }
 
         public static string MomentStateMap(MomentStateEnum state, DateTime? stopTime, bool isOverCount)

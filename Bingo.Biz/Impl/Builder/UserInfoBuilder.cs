@@ -7,7 +7,7 @@ namespace Bingo.Biz.Impl.Builder
 {
     public static class UserInfoBuilder
     {
-        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, MomentEntity moment=null)
+        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, MomentEntity moment=null, bool isSelf = false)
         {
             if (userInfo == null)
             {
@@ -32,6 +32,10 @@ namespace Bingo.Biz.Impl.Builder
                     result.NickName = moment.HidingNickName;
                     AddTag(result.TagList, TagTypeEnum.Default, "匿名发布", index++);
                 }
+            }
+            if (isSelf)
+            {
+                result.NickName = string.Format("{0}(我)", result.NickName);
             }
             AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetAgeYear(), index++);
             AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetConstellation(), index++);

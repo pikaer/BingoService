@@ -66,7 +66,7 @@ namespace Bingo.Biz.Impl
                     ShareFlag = moment.State== MomentStateEnum.正常发布中,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount),
                     TextColor= MomentContentBuilder.TextColorMap(moment.State),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
                     ContentList = MomentContentBuilder.BuilderContent(moment)
                 };
                 response.Data.MomentList.Add(dto);
@@ -82,6 +82,7 @@ namespace Bingo.Biz.Impl
                 return new ResponseContext<MyPublishMomentDetailType>(ErrCodeEnum.DataIsnotExist);
             }
             bool overCount = ApplyBuilder.IsOverCount(moment);
+            var userInfo = uerInfoBiz.GetUserInfoByUid(moment.UId);
             return new ResponseContext<MyPublishMomentDetailType>()
             {
                 Data = new MyPublishMomentDetailType()
@@ -92,7 +93,7 @@ namespace Bingo.Biz.Impl
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime, overCount),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(moment.UId), moment),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
                     ContentList = MomentContentBuilder.BuilderContent(moment),
                     ApplyList= ApplyBuilder.GetApplyList(momentId)
                 }

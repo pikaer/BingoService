@@ -7,7 +7,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 {
     public class MomentDao : DbBase, IMomentDao
     {
-        private readonly string SELECT_MomentEntity = "SELECT MomentId,UId,IsDelete,IsOffLine,IsHide,HidingNickName,State,NeedCount,StopTime,Place,ExpectGender,ShareType,Title,Content,CreateTime,UpdateTime FROM dbo.Moment ";
+        private readonly string SELECT_MomentEntity = "SELECT MomentId,UId,IsDelete,IsOffLine,IsHide,HidingNickName,State,NeedCount,ApplyCount,StopTime,Place,ExpectGender,ShareType,Title,Content,CreateTime,UpdateTime FROM dbo.Moment ";
         protected override DbEnum GetDbEnum()
         {
             return DbEnum.BingoDb;
@@ -38,6 +38,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,HidingNickName
                                   ,State
                                   ,NeedCount
+                                  ,ApplyCount
                                   ,StopTime
                                   ,Place
                                   ,ExpectGender
@@ -55,6 +56,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@HidingNickName
                                   ,@State
                                   ,@NeedCount
+                                  ,@ApplyCount
                                   ,@StopTime
                                   ,@Place
                                   ,@ExpectGender
@@ -69,7 +71,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public List<MomentEntity> GetMomentListByParam()
         {
-            var sql = SELECT_MomentEntity+ " WHERE IsDelete=0  order by CreateTime desc";
+            var sql = SELECT_MomentEntity+ " WHERE IsDelete=0 and NeedCount>ApplyCount  order by CreateTime desc";
             using var Db = GetDbConnection();
             return Db.Query<MomentEntity>(sql).AsList();
         }
@@ -78,6 +80,20 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
         {
             var sql = @"UPDATE dbo.Moment
                         SET StopTime = @UpdateTime,
+                            UpdateTime = @UpdateTime
+                        WHERE MomentId=@MomentId";
+            using var Db = GetDbConnection();
+            return Db.Execute(sql, new
+            {
+                MomentId = momentId,
+                UpdateTime = DateTime.Now
+            }) > 0;
+        }
+
+        public bool UpdateApplyCount(Guid momentId)
+        {
+            var sql = @"UPDATE dbo.Moment
+                        SET ApplyCount = ApplyCount+1 ,
                             UpdateTime = @UpdateTime
                         WHERE MomentId=@MomentId";
             using var Db = GetDbConnection();

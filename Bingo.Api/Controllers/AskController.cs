@@ -103,7 +103,7 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(askBiz.AskMomentDetail(request.Data.ApplyId));
+                return new JsonResult(askBiz.AskMomentDetail(request.Data.ApplyId,request.Head.UId));
             }
             catch (Exception ex)
             {

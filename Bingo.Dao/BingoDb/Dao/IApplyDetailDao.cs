@@ -1,7 +1,6 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Bingo.Dao.BingoDb.Dao
 {
