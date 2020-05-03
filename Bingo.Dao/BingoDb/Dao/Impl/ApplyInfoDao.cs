@@ -16,7 +16,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public List<ApplyInfoEntity> GetListByMomentId(Guid momentId)
         {
-            var sql = SELECT_ApplyInfoEntity+ @" Where MomentId=@MomentId";
+            var sql = SELECT_ApplyInfoEntity+ @" Where MomentId=@MomentId  order by UpdateTime desc ";
             using var Db = GetDbConnection();
             return Db.Query<ApplyInfoEntity>(sql,new { MomentId= momentId }).AsList();
         }
@@ -80,7 +80,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             {
                 return null;
             }
-            var sql = SELECT_ApplyInfoEntity + @" Where MomentUId=@MomentUId";
+            var sql = SELECT_ApplyInfoEntity + @" Where MomentUId=@MomentUId  order by UpdateTime desc ";
             using var Db = GetDbConnection();
             return Db.Query<ApplyInfoEntity>(sql, new { MomentUId = uId }).AsList();
         }
@@ -91,7 +91,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             {
                 return null;
             }
-            var sql = SELECT_ApplyInfoEntity + @" Where UId=@UId";
+            var sql = SELECT_ApplyInfoEntity + @" Where UId=@UId  order by UpdateTime desc ";
             using var Db = GetDbConnection();
             return Db.Query<ApplyInfoEntity>(sql, new { UId = uId }).AsList();
         }

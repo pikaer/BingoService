@@ -46,7 +46,7 @@ namespace Bingo.Biz.Impl
                     {
                         MomentId=moment.MomentId,
                         UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment, request.Head.UId==userInfo.UId),
-                        ContentList= MomentContentBuilder.BuilderContent(moment)
+                        ContentList= MomentContentBuilder.BuilderContent(moment,true)
                     };
                     response.Data.MomentList.Add(dto);
                 }
@@ -92,7 +92,7 @@ namespace Bingo.Biz.Impl
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment, userInfo.UId==uid),
-                    ContentList = MomentContentBuilder.BuilderContent(moment),
+                    ContentList = MomentContentBuilder.BuilderContent(moment,true),
                     ApplyList = ApplyBuilder.GetApplyList(momentId)
                 }
             };

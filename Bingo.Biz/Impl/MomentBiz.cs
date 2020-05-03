@@ -67,7 +67,7 @@ namespace Bingo.Biz.Impl
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount),
                     TextColor= MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
-                    ContentList = MomentContentBuilder.BuilderContent(moment)
+                    ContentList = MomentContentBuilder.BuilderContent(moment,false)
                 };
                 response.Data.MomentList.Add(dto);
             }
@@ -94,7 +94,7 @@ namespace Bingo.Biz.Impl
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime, overCount),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
-                    ContentList = MomentContentBuilder.BuilderContent(moment),
+                    ContentList = MomentContentBuilder.BuilderContent(moment,false),
                     ApplyList= ApplyBuilder.GetApplyList(momentId)
                 }
             };

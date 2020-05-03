@@ -43,7 +43,7 @@ namespace Bingo.Biz.Impl
                 BtnVisable =!string.IsNullOrEmpty(btnText),
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, null, uId== userInfo.UId),
-                ContentList = MomentContentBuilder.BuilderContent(moment),
+                ContentList = MomentContentBuilder.BuilderContent(moment,applyInfo.ApplyState!=ApplyStateEnum.申请通过),
                 ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, uId)
             };
             return response;
@@ -80,7 +80,7 @@ namespace Bingo.Biz.Impl
                     TextColor = ApplyBuilder.TextColorMap(apply.ApplyState),
                     MomentId = moment.MomentId,
                     UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo),
-                    ContentList = MomentContentBuilder.BuilderContent(moment)
+                    ContentList = MomentContentBuilder.BuilderContent2Contact(moment, momentUserInfo,apply.ApplyState==ApplyStateEnum.申请通过)
                 };
                 var detailList = applyDetailDao.GetListByApplyId(apply.ApplyId);
                 if (detailList.NotEmpty())
