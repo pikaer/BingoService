@@ -5,3 +5,4 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\B
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.AssemblyInfo.cs
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Debug\netcoreapp3.0\Bingo.Utils.csprojAssemblyReference.cache

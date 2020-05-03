@@ -14,8 +14,31 @@ namespace Bingo.Biz.Impl
     public class MomentBiz : IMomentBiz
     {
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
-        private readonly IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
+
+        public Response MomentAction(Guid momentId,string action)
+        {
+            var moment = MomentBuilder.GetMoment(momentId);
+            if (moment == null)
+            {
+                return new Response(ErrCodeEnum.DataIsnotExist);
+            }
+            string message = "操作成功";
+            switch (action)
+            {
+                case "stop":
+                    momentDao.UpdateStopTime(momentId);
+                    message = "已停止活动";
+                    break;
+                case "delete":
+                    momentDao.Delete(momentId);
+                    message = "删除成功";
+                    break;
+                default:
+                     break;
+            }
+            return new Response(ErrCodeEnum.Success, message);
+        }
 
         public ResponseContext<MyPublishListResponse> MyPublishList(RequestContext<MyPublishListRequest> request)
         {
@@ -34,13 +57,14 @@ namespace Bingo.Biz.Impl
             }
             foreach (var moment in momentList)
             {
+                bool overCount = ApplyBuilder.IsOverCount(moment);
                 var dto = new MyPublishMomentDetailType()
                 {
                     MomentId = moment.MomentId,
                     State = moment.State,
                     IsOverTime= MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State== MomentStateEnum.正常发布中,
-                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime),
+                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount),
                     TextColor= MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment),
                     ContentList = MomentContentBuilder.BuilderContent(moment)
@@ -57,6 +81,7 @@ namespace Bingo.Biz.Impl
             {
                 return new ResponseContext<MyPublishMomentDetailType>(ErrCodeEnum.DataIsnotExist);
             }
+            bool overCount = ApplyBuilder.IsOverCount(moment);
             return new ResponseContext<MyPublishMomentDetailType>()
             {
                 Data = new MyPublishMomentDetailType()
@@ -65,7 +90,7 @@ namespace Bingo.Biz.Impl
                     State = moment.State,
                     IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
-                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime),
+                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime, overCount),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(moment.UId), moment),
                     ContentList = MomentContentBuilder.BuilderContent(moment),

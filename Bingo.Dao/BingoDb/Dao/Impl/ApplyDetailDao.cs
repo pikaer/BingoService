@@ -16,7 +16,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public List<ApplyDetailEntity> GetListByApplyId(Guid applyId)
         {
-            var sql = SELECT_ApplyInfoEntity + @" Where ApplyId=@ApplyId";
+            var sql = SELECT_ApplyInfoEntity + @" Where ApplyId=@ApplyId order by CreateTime ";
             using var Db = GetDbConnection();
             return Db.Query<ApplyDetailEntity>(sql, new { ApplyId = applyId }).AsList();
         }

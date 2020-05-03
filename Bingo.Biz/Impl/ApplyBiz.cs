@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Bingo.Biz.Impl.Builder;
+﻿using Bingo.Biz.Impl.Builder;
 using Bingo.Biz.Interface;
 using Bingo.Dao.BingoDb.Dao;
 using Bingo.Dao.BingoDb.Dao.Impl;
@@ -8,6 +6,8 @@ using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Base;
 using Bingo.Model.Contract;
 using Infrastructure;
+using System;
+using System.Collections.Generic;
 
 namespace Bingo.Biz.Impl
 {
@@ -31,14 +31,19 @@ namespace Bingo.Biz.Impl
             {
                 return response;
             }
+            string btnText = ApplyBuilder.BtnTextMap(applyInfo.ApplyState);
             response.Data = new ApplyMomentDetailResponse()
             {
                 ApplyState = applyInfo.ApplyState,
                 ApplyStateDesc = ApplyStateMap(applyInfo.ApplyState),
                 MomentId = moment.MomentId,
+                BtnText= btnText,
+                NextAction= ApplyBuilder.BtnActionMap(applyInfo.ApplyState),
+                BtnVisable =!string.IsNullOrEmpty(btnText),
+                TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
                 ContentList = MomentContentBuilder.BuilderContent(moment),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId)
             };
             return response;
         }

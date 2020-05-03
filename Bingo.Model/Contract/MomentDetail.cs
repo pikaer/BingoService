@@ -22,9 +22,14 @@ namespace Bingo.Model.Contract
         public bool BtnVisable { get; set; }
 
         /// <summary>
+        /// 状态
+        /// </summary>
+        public string StateDesc { get; set; }
+
+        /// <summary>
         /// 状态文本采用字体颜色
         /// </summary>
-        public TextColorEnum TextColor { get; set; }
+        public string TextColor { get; set; }
 
         /// <summary>
         /// 分享标志
@@ -37,9 +42,19 @@ namespace Bingo.Model.Contract
         public bool ApplyFlag { get; set; }
 
         /// <summary>
+        /// 申请Id
+        /// </summary>
+        public Guid ApplyId { get; set; }
+
+        /// <summary>
         /// 是否可以申请
         /// </summary>
         public bool AskFlag { get; set; }
+
+        /// <summary>
+        /// 自己发布的动态
+        /// </summary>
+        public bool SelfFlag { get; set; }
 
         public List<ApplyDetailItem> ApplyList { get; set; }
     }

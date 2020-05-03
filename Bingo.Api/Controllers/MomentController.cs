@@ -90,5 +90,30 @@ namespace Bingo.Api.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult MomentAction(RequestContext<MomentActionRequest> request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!HeadCheck(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentBiz.MomentAction(request.Data.MomentId, request.Data.Action));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.MomentAction", ex);
+            }
+        }
+
     }
 }

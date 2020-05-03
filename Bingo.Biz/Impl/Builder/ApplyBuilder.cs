@@ -42,24 +42,14 @@ namespace Bingo.Biz.Impl.Builder
         }
 
 
-        public static List<ApplyDetailItem> GetApplyDetails(ApplyInfoEntity applyInfo)
+        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId)
         {
-            var resultList = new List<ApplyDetailItem>
-            {
-                new ApplyDetailItem()
-                {
-                    CreateTimeDesc = DateTimeHelper.GetDateDesc(applyInfo.CreateTime, true),
-                    Content = "申请加入活动",
-                    UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(applyInfo.UId))
-                }
-            };
-
-            var applyDetaiList = applyDetailDao.GetListByApplyId(applyInfo.ApplyId);
+            var applyDetaiList = applyDetailDao.GetListByApplyId(applyId);
             if (applyDetaiList.IsNullOrEmpty())
             {
-                return resultList;
+                return null;
             }
-
+            var resultList = new List<ApplyDetailItem>();
             var resultDic = GetUserInfo(applyDetaiList);
             foreach (var item in applyDetaiList)
             {
@@ -98,19 +88,54 @@ namespace Bingo.Biz.Impl.Builder
             return false;
         }
 
-        public static TextColorEnum TextColorMap(ApplyStateEnum applyState)
+        public static string TextColorMap(ApplyStateEnum applyState)
         {
             switch (applyState)
             {
                 case ApplyStateEnum.申请中:
-                    return TextColorEnum.Red;
+                    //红色
+                    return "#fa6e4f";
                 case ApplyStateEnum.申请通过:
-                    return TextColorEnum.Green;
+                    //绿色
+                    return "#2cbb60";
                 case ApplyStateEnum.被拒绝:
                 case ApplyStateEnum.申请已撤销:
                 case ApplyStateEnum.永久拉黑:
                 default:
-                    return TextColorEnum.Default;
+                    //黑色
+                    return "#8e8e8e";
+            }
+        }
+
+        public static string BtnTextMap(ApplyStateEnum applyState)
+        {
+            switch (applyState)
+            {
+                case ApplyStateEnum.申请中:
+                    return "撤销申请";
+                case ApplyStateEnum.被拒绝:
+                case ApplyStateEnum.申请已撤销:
+                    return "再次申请";
+                case ApplyStateEnum.申请通过:
+                case ApplyStateEnum.永久拉黑:
+                default:
+                    return "";
+            }
+        }
+
+        public static string BtnActionMap(ApplyStateEnum applyState)
+        {
+            switch (applyState)
+            {
+                case ApplyStateEnum.申请中:
+                    return "cancel";
+                case ApplyStateEnum.被拒绝:
+                case ApplyStateEnum.申请已撤销:
+                    return "reask";
+                case ApplyStateEnum.申请通过:
+                case ApplyStateEnum.永久拉黑:
+                default:
+                    return "";
             }
         }
     }

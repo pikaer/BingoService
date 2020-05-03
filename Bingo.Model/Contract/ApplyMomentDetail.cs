@@ -35,8 +35,12 @@ namespace Bingo.Model.Contract
         /// <summary>
         /// 状态文本采用字体颜色
         /// </summary>
-        public TextColorEnum TextColor { get; set; }
+        public string TextColor { get; set; }
 
+        /// <summary>
+        /// reask=重新申请,cancel=取消申请
+        /// </summary>
+        public string NextAction { get; set; }
 
         public List<ApplyDetailItem> ApplyList { get; set; }
     }

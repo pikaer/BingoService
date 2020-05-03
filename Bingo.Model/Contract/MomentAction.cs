@@ -2,7 +2,7 @@
 
 namespace Bingo.Model.Contract
 {
-    public class AskActivityRequest
+    public class MomentActionRequest
     {
         /// <summary>
         /// 动态Id
@@ -10,10 +10,8 @@ namespace Bingo.Model.Contract
         public Guid MomentId { get; set; }
 
         /// <summary>
-        /// 请求来源
+        /// stop=停止,delete=删除
         /// </summary>
-        public string Source { get; set; }
-
-        public string Remark { get; set; }
+        public string Action { get; set; }
     }
 }

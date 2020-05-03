@@ -29,7 +29,7 @@ namespace Bingo.Model.Contract
         /// <summary>
         /// 状态文本采用字体颜色
         /// </summary>
-        public TextColorEnum TextColor { get; set; }
+        public string TextColor { get; set; }
 
         /// <summary>
         /// 是否已过期
@@ -37,11 +37,6 @@ namespace Bingo.Model.Contract
         public bool IsOverTime { get; set; }
 
         public bool BtnVisable { get; set; }
-
-        /// <summary>
-        /// 按钮文案
-        /// </summary>
-        public string BtnText { get; set; }
 
         public List<ApplyDetailItem> ApplyList { get; set; }
     }

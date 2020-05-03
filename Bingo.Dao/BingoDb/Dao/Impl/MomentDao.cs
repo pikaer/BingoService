@@ -15,14 +15,14 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public MomentEntity GetMomentByMomentId(Guid momentId)
         {
-            var sql = SELECT_MomentEntity + @" Where MomentId=@MomentId";
+            var sql = SELECT_MomentEntity + @" Where MomentId=@MomentId ";
             using var Db = GetDbConnection();
             return Db.QueryFirstOrDefault<MomentEntity>(sql, new { MomentId = momentId });
         }
 
         public List<MomentEntity> GetMomentListByUid(long uid)
         {
-            var sql = SELECT_MomentEntity+ @" Where UId=@UId order by CreateTime desc";
+            var sql = SELECT_MomentEntity+ @" Where UId=@UId  and IsDelete=0  order by CreateTime desc";
             using var Db = GetDbConnection();
             return Db.Query<MomentEntity>(sql,new { UId= uid }).AsList();
         }
@@ -69,9 +69,37 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public List<MomentEntity> GetMomentListByParam()
         {
-            var sql = SELECT_MomentEntity+ " order by CreateTime desc";
+            var sql = SELECT_MomentEntity+ " WHERE IsDelete=0  order by CreateTime desc";
             using var Db = GetDbConnection();
             return Db.Query<MomentEntity>(sql).AsList();
+        }
+
+        public bool UpdateStopTime(Guid momentId)
+        {
+            var sql = @"UPDATE dbo.Moment
+                        SET StopTime = @UpdateTime,
+                            UpdateTime = @UpdateTime
+                        WHERE MomentId=@MomentId";
+            using var Db = GetDbConnection();
+            return Db.Execute(sql, new
+            {
+                MomentId = momentId,
+                UpdateTime = DateTime.Now
+            }) > 0;
+        }
+
+        public bool Delete(Guid momentId)
+        {
+            var sql = @"UPDATE dbo.Moment
+                        SET IsDelete =1,
+                            UpdateTime = @UpdateTime
+                        WHERE MomentId=@MomentId";
+            using var Db = GetDbConnection();
+            return Db.Execute(sql, new
+            {
+                MomentId = momentId,
+                UpdateTime = DateTime.Now
+            }) > 0;
         }
     }
 }

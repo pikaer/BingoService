@@ -60,6 +60,14 @@ namespace Bingo.Biz.Impl
                 UpdateTime = DateTime.Now
             };
             applyInfoDao.Insert(dto);
+
+            string remark = "申请加入该活动";
+            if (!string.IsNullOrEmpty(request.Data.Remark))
+            {
+                remark = request.Data.Remark;
+            }
+            InsertDetail(dto.ApplyId, request.Head.UId, remark);
+
             return new Response(ErrCodeEnum.Success, "申请提交成功");
         }
 
@@ -79,7 +87,7 @@ namespace Bingo.Biz.Impl
             if (string.Equals(request.Data.Action, "reask"))
             {
                 applyInfoDao.UpdateState(ApplyStateEnum.申请中, applyInfo.ApplyId);
-                remark = "申请加入活动";
+                remark = "重新申请加入活动";
             }
             if (string.Equals(request.Data.Action, "pass"))
             {
@@ -177,9 +185,11 @@ namespace Bingo.Biz.Impl
                 ApplyStateDesc = ApplyStateMap(applyInfo.ApplyState),
                 IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                 MomentId = moment.MomentId,
+                TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
+                BtnVisable= applyInfo.ApplyState== ApplyStateEnum.申请中,
                 ContentList = MomentContentBuilder.BuilderContent(moment),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId)
             };
             return response;
         }

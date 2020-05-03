@@ -61,42 +61,16 @@ namespace Bingo.Biz.Impl.Builder
             }
         }
 
-        public static string MomentStateMap(MomentStateEnum state,DateTime? stopTime)
-        {
-            if(IsOverTime(stopTime))
-            {
-                return "已失效";
-            }
-            switch (state)
-            {
-                case MomentStateEnum.正常发布中:
-                    return "进行中";
-                case MomentStateEnum.审核中:
-                case MomentStateEnum.被投诉审核中:
-                    return "审核中";
-                case MomentStateEnum.审核被拒绝:
-                    return "审核不通过";
-                case MomentStateEnum.被关小黑屋中:
-                case MomentStateEnum.永久不支持上线:
-                    return "被关小黑屋中";
-                default:
-                    return "进行中";
-            }
-        }
 
-        public static string BtnTextMap(MomentStateEnum state, DateTime? stopTime,bool isApply, bool isOverCount)
+        public static string BtnTextMap(MomentStateEnum state, DateTime? stopTime,bool isApply, bool selfFlag, bool isOverCount)
         {
-            if (isApply)
+            if (selfFlag)
             {
-                return "查看我的申请";
+                return "查看发布详情";
             }
-            if (IsOverTime(stopTime))
+            if (isApply|| IsOverTime(stopTime)|| isOverCount)
             {
-                return "活动已过期";
-            }
-            if (isOverCount)
-            {
-                return "人数已满";
+                return "";
             }
             switch (state)
             {
@@ -112,25 +86,52 @@ namespace Bingo.Biz.Impl.Builder
             }
         }
 
+        public static string MomentStateMap(MomentStateEnum state, DateTime? stopTime, bool isOverCount)
+        {
+            if (IsOverTime(stopTime))
+            {
+                return "活动已过期";
+            }
+            if (isOverCount)
+            {
+                return "活动人数已满";
+            }
+            switch (state)
+            {
+                case MomentStateEnum.正常发布中:
+                    return "活动进行中";
+                case MomentStateEnum.审核中:
+                case MomentStateEnum.被投诉审核中:
+                    return "活动审核中";
+                case MomentStateEnum.审核被拒绝:
+                    return "活动审核不通过";
+                case MomentStateEnum.被关小黑屋中:
+                case MomentStateEnum.永久不支持上线:
+                    return "被关小黑屋中";
+                default:
+                    return "活动已过期";
+            }
+        }
+
         public static bool IsOverTime(DateTime? stopTime)
         {
             return stopTime.HasValue && stopTime.Value < DateTime.Now;
         }
 
-        public static TextColorEnum TextColorMap(MomentStateEnum state)
+        public static string TextColorMap(MomentStateEnum state)
         {
             switch (state)
             {
                 case MomentStateEnum.正常发布中:
-                    return TextColorEnum.Green;
+                    return "#2cbb60";
                 case MomentStateEnum.审核中:
                 case MomentStateEnum.被投诉审核中:
                 case MomentStateEnum.审核被拒绝:
-                    return TextColorEnum.Red;
+                    return "#fa6e4f";
                 case MomentStateEnum.被关小黑屋中:
                 case MomentStateEnum.永久不支持上线:
                 default:
-                    return TextColorEnum.Default; 
+                    return "#8e8e8e"; 
             }
         }
     }

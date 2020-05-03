@@ -38,6 +38,6 @@ namespace Bingo.Model.Contract
         /// <summary>
         /// 状态文本采用字体颜色
         /// </summary>
-        public TextColorEnum TextColor { get; set; }
+        public string TextColor { get; set; }
     }
 }

@@ -14,5 +14,9 @@ namespace Bingo.Dao.BingoDb.Dao
 
         int Insert(MomentEntity entity);
 
+        bool UpdateStopTime(Guid momentId);
+
+        bool Delete(Guid momentId);
+
     }
 }

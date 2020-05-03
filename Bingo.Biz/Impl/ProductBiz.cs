@@ -18,7 +18,6 @@ namespace Bingo.Biz.Impl
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
         private readonly static IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
-        private readonly RedisHelper redisClient = RedisHelper.Instance;
 
         public ResponseContext<MomentListResponse> MomentList(RequestContext<MomentListRequest> request)
         {
@@ -67,16 +66,22 @@ namespace Bingo.Biz.Impl
             {
                 return new ResponseContext<MomentDetailResponse>(ErrCodeEnum.DataIsnotExist);
             }
-            bool isApply = applyInfoDao.GetByMomentIdAndUId(momentId, uid) != null;
-            string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, ApplyBuilder.IsOverCount(moment));
+            var applyInfo = applyInfoDao.GetByMomentIdAndUId(momentId, uid);
+            bool isApply = applyInfo != null;
+            bool selfFlag = moment.UId == uid;
+            string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, selfFlag, ApplyBuilder.IsOverCount(moment));
+            string stateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime,ApplyBuilder.IsOverCount(moment));
             return new ResponseContext<MomentDetailResponse>()
             {
                 Data = new MomentDetailResponse()
                 {
                     MomentId = momentId,
+                    ApplyId= isApply? applyInfo.ApplyId:Guid.Empty,
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
                     ApplyFlag = isApply,
+                    SelfFlag= selfFlag,
                     BtnText = btnText,
+                    StateDesc=stateDesc,
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
