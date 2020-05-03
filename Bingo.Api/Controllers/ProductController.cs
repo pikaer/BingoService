@@ -12,8 +12,7 @@ namespace Bingo.Api.Controllers
     [ApiController]
     public class ProductController : BaseController
     {
-        private readonly IMomentListBiz mentListBiz = SingletonProvider<MomentListBiz>.Instance;
-        private readonly IMomentActionBiz momentActionBiz = SingletonProvider<MomentActionBiz>.Instance;
+        private readonly IProductBiz productBiz = SingletonProvider<ProductBiz>.Instance;
 
         /// <summary>
         /// 动态列表
@@ -36,7 +35,7 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(mentListBiz.MomentList(request));
+                return new JsonResult(productBiz.MomentList(request));
             }
             catch (Exception ex)
             {
@@ -61,7 +60,7 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentActionBiz.MomentDetail(request.Data.MomentId, request.Head.UId));
+                return new JsonResult(productBiz.MomentDetail(request.Data.MomentId, request.Head.UId));
             }
             catch (Exception ex)
             {

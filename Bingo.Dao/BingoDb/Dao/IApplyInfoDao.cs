@@ -15,5 +15,9 @@ namespace Bingo.Dao.BingoDb.Dao
         ApplyInfoEntity GetByApplyId(Guid applyId);
 
         List<ApplyInfoEntity> GetListByMomentId(Guid momentId);
+
+        List<ApplyInfoEntity> GetListByMomentUId(long uId);
+
+        List<ApplyInfoEntity> GetListByUId(long uId);
     }
 }

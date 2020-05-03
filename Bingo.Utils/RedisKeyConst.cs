@@ -1,4 +1,6 @@
-﻿namespace Bingo.Utils
+﻿using System;
+
+namespace Bingo.Utils
 {
     public class RedisKeyConst
     {
@@ -6,7 +8,7 @@
         private static readonly string UserInfoKeyByOpenIdKey = "UserInfoKeyByOpenIdKey_{0}";
         private static readonly string UserInfoKeyByUIdKey = "UserInfoKeyByUIdKey_{0}";
         private static readonly string UserInfoByOpenIdAndUIdKey = "UserInfoByOpenIdAndUIdKey_{0}_{1}";
-
+        private static readonly string MomentCacheKeyByMomentId = "MomentCacheKeyByMomentId_{0}";
         /// <summary>
         /// 通过openId 获取缓存key
         /// </summary>
@@ -29,6 +31,11 @@
         public static string UserInfoByOpenIdAndUIdCacheKey(string openId,long uid)
         {
             return string.Format(UserInfoByOpenIdAndUIdKey, uid, openId);
+        }
+
+        public static string MomentCacheKey(Guid momentId)
+        {
+            return string.Format(MomentCacheKeyByMomentId, momentId.ToString());
         }
     }
 }

@@ -4,11 +4,13 @@ using System;
 
 namespace Bingo.Biz.Interface
 {
-    public interface IMomentActionBiz
+    public interface IMomentBiz
     {
         Response Publish(RequestContext<PublishMomentRequest> request);
+
         ResponseContext<MyPublishListResponse> MyPublishList(RequestContext<MyPublishListRequest> request);
+        
         ResponseContext<MyPublishMomentDetailType> MyPublishMomentDetail(Guid momentId);
-        ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId);
+        
     }
 }

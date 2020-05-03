@@ -4,16 +4,14 @@ using Bingo.Dao.BingoDb.Dao;
 using Bingo.Dao.BingoDb.Dao.Impl;
 using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Base;
-using Bingo.Model.Common;
 using Bingo.Model.Contract;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bingo.Biz.Impl
 {
-    public class MomentActionBiz : IMomentActionBiz
+    public class MomentBiz : IMomentBiz
     {
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
         private readonly IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
@@ -71,76 +69,9 @@ namespace Bingo.Biz.Impl
                     TextColor = MomentContentBuilder.TextColorMap(moment.State),
                     UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(moment.UId), moment),
                     ContentList = MomentContentBuilder.BuilderContent(moment),
-                    ApplyList= GetApplyList(momentId)
+                    ApplyList= ApplyBuilder.GetApplyList(momentId)
                 }
             };
-        }
-
-        public ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId,long uid)
-        {
-            var moment = momentDao.GetMomentByMomentId(momentId);
-            if (moment == null)
-            {
-                return new ResponseContext<MomentDetailResponse>(ErrCodeEnum.DataIsnotExist);
-            }
-            bool isApply = applyInfoDao.GetByMomentIdAndUId(momentId, uid)!=null;
-            string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, IsOverCount(moment));
-            return new ResponseContext<MomentDetailResponse>()
-            {
-                Data = new MomentDetailResponse()
-                {
-                    MomentId = momentId,
-                    ShareFlag = moment.State == MomentStateEnum.正常发布中,
-                    ApplyFlag = isApply,
-                    BtnText = btnText,
-                    AskFlag=string.Equals(btnText, "申请参与"),
-                    BtnVisable=!string.IsNullOrEmpty(btnText),
-                    TextColor = MomentContentBuilder.TextColorMap(moment.State),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(moment.UId), moment),
-                    ContentList = MomentContentBuilder.BuilderContent(moment),
-                    ApplyList = GetApplyList(momentId)
-                }
-            };
-        }
-
-        private bool IsOverCount(MomentEntity moment)
-        {
-            var aplyList=applyInfoDao.GetListByMomentId(moment.MomentId);
-            if (aplyList.IsNullOrEmpty())
-            {
-                return false;
-            }
-            var usableList = aplyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过).ToList();
-            if(usableList.NotEmpty()&& usableList.Count>= moment.NeedCount)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private List<ApplyDetailItem> GetApplyList(Guid momentId)
-        {
-            var applyList = applyInfoDao.GetListByMomentId(momentId);
-            if (applyList.IsNullOrEmpty())
-            {
-                return null;
-            }
-            var resultList = new List<ApplyDetailItem>();
-            foreach (var apply in applyList)
-            {
-                var userInfo = uerInfoBiz.GetUserInfoByUid(apply.UId);
-                if (userInfo == null)
-                {
-                    continue;
-                }
-                var result = new ApplyDetailItem()
-                {
-                    UserInfo=UserInfoBuilder.BuildUserInfo(userInfo),
-                    CreateTimeDesc = DateTimeHelper.GetDateDesc(userInfo.CreateTime, true),
-                };
-                resultList.Add(result);
-            }
-            return resultList;
         }
 
         public Response Publish(RequestContext<PublishMomentRequest> request)

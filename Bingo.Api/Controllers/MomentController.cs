@@ -10,9 +10,9 @@ namespace Bingo.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PublishController : BaseController
+    public class MomentController : BaseController
     {
-        private readonly IMomentActionBiz momentActionBiz = SingletonProvider<MomentActionBiz>.Instance;
+        private readonly IMomentBiz momentBiz = SingletonProvider<MomentBiz>.Instance;
 
         [HttpPost]
         public JsonResult PublishMoment(RequestContext<PublishMomentRequest> request)
@@ -31,11 +31,11 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentActionBiz.Publish(request));
+                return new JsonResult(momentBiz.Publish(request));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "PublishController.PublishMoment", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.PublishMoment", ex);
             }
         }
 
@@ -56,11 +56,11 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentActionBiz.MyPublishList(request));
+                return new JsonResult(momentBiz.MyPublishList(request));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "PublishController.MyPublishList", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.MyPublishList", ex);
             }
         }
 
@@ -82,11 +82,11 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentActionBiz.MyPublishMomentDetail(request.Data.MomentId));
+                return new JsonResult(momentBiz.MyPublishMomentDetail(request.Data.MomentId));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "PublishController.MyPublishMomentDetailRequest", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.MyPublishMomentDetailRequest", ex);
             }
         }
 

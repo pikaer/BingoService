@@ -73,5 +73,27 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             using var Db = GetDbConnection();
             return Db.QueryFirstOrDefault<ApplyInfoEntity>(sql, new { ApplyId = applyId});
         }
+
+        public List<ApplyInfoEntity> GetListByMomentUId(long uId)
+        {
+            if (uId <= 0)
+            {
+                return null;
+            }
+            var sql = SELECT_ApplyInfoEntity + @" Where MomentUId=@MomentUId";
+            using var Db = GetDbConnection();
+            return Db.Query<ApplyInfoEntity>(sql, new { MomentUId = uId }).AsList();
+        }
+
+        public List<ApplyInfoEntity> GetListByUId(long uId)
+        {
+            if (uId <= 0)
+            {
+                return null;
+            }
+            var sql = SELECT_ApplyInfoEntity + @" Where UId=@UId";
+            using var Db = GetDbConnection();
+            return Db.Query<ApplyInfoEntity>(sql, new { UId = uId }).AsList();
+        }
     }
 }
