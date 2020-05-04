@@ -146,6 +146,7 @@ namespace Bingo.Biz.Impl
                 ApplyStateDesc = ApplyStateMap(applyInfo.ApplyState),
                 IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                 MomentId = moment.MomentId,
+                ShareTitle = moment.Content,
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo, head),
                 BtnVisable= applyInfo.ApplyState== ApplyStateEnum.申请中,

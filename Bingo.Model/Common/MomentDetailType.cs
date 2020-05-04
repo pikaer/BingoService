@@ -11,6 +11,11 @@ namespace Bingo.Model.Common
         public Guid MomentId { get; set; }
 
         /// <summary>
+        /// 分享标题
+        /// </summary>
+        public string ShareTitle { get; set; }
+
+        /// <summary>
         /// 用户信息
         /// </summary>
         public UserInfoType UserInfo { get; set; }

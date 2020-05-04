@@ -109,7 +109,7 @@ namespace Bingo.Biz.Impl.Builder
         {
             if (isApply)
             {
-                return "查看申请详情";
+                return "查看我的申请";
             }
             if (IsOverTime(stopTime) || isOverCount|| selfFlag)
             {

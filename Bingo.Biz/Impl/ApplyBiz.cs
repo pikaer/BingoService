@@ -38,7 +38,8 @@ namespace Bingo.Biz.Impl
                 ApplyState = applyInfo.ApplyState,
                 ApplyStateDesc = ApplyStateMap(applyInfo.ApplyState),
                 MomentId = moment.MomentId,
-                BtnText= btnText,
+                ShareTitle = moment.Content,
+                BtnText = btnText,
                 NextAction= ApplyBuilder.BtnActionMap(applyInfo.ApplyState),
                 BtnVisable =!string.IsNullOrEmpty(btnText),
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
@@ -78,6 +79,7 @@ namespace Bingo.Biz.Impl
                     ApplyId = apply.ApplyId,
                     ApplyStateDesc = ApplyStateMap(apply.ApplyState),
                     TextColor = ApplyBuilder.TextColorMap(apply.ApplyState),
+                    ShareTitle = moment.Content,
                     MomentId = moment.MomentId,
                     UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent2Contact(moment, momentUserInfo,apply.ApplyState==ApplyStateEnum.申请通过)

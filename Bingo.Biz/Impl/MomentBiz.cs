@@ -64,7 +64,8 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = moment.MomentId,
                     State = moment.State,
-                    ApplyCountDesc=ApplyBuilder.GetApplyCountDesc(applyList),
+                    ShareTitle = moment.Content,
+                    ApplyCountDesc =ApplyBuilder.GetApplyCountDesc(applyList),
                     ApplyCountColor= ApplyBuilder.GetApplyCountColor(applyList),
                     IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State== MomentStateEnum.正常发布中,
@@ -93,6 +94,7 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = momentId,
                     State = moment.State,
+                    ShareTitle = moment.Content,
                     IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime, overCount),

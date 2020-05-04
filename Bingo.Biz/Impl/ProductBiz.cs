@@ -45,6 +45,7 @@ namespace Bingo.Biz.Impl
                     var dto = new MomentDetailType()
                     {
                         MomentId=moment.MomentId,
+                        ShareTitle = moment.Content,
                         UserInfo = UserInfoBuilder.BuildUserInfo(userInfo,request.Head),
                         ContentList= MomentContentBuilder.BuilderContent(moment,true)
                     };
@@ -87,6 +88,7 @@ namespace Bingo.Biz.Impl
                     ApplyFlag = isApply,
                     BtnText = btnText,
                     StateDesc=stateDesc,
+                    ShareTitle= moment.Content,
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
@@ -126,6 +128,7 @@ namespace Bingo.Biz.Impl
                     ApplyFlag = isApply,
                     BtnText = btnText,
                     StateDesc = stateDesc,
+                    ShareTitle = moment.Content,
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
