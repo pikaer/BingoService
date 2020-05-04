@@ -2,6 +2,7 @@
 using Bingo.Dao.BingoDb.Dao;
 using Bingo.Dao.BingoDb.Dao.Impl;
 using Bingo.Dao.BingoDb.Entity;
+using Bingo.Model.Base;
 using Bingo.Model.Common;
 using Bingo.Utils;
 using Infrastructure;
@@ -24,7 +25,7 @@ namespace Bingo.Biz.Impl.Builder
         /// <param name="momentId">动态Id</param>
         /// <param name="passApply">仅仅查看申请通过数据</param>
         /// <returns></returns>
-        public static List<ApplyItem> GetApplyList(Guid momentId, bool isValid, long momentUId = 0)
+        public static List<ApplyItem> GetApplyList(Guid momentId, bool isValid, RequestHead head,long momentUId = 0)
         {
             var applyList = applyInfoDao.GetListByMomentId(momentId);
             if (applyList.IsNullOrEmpty())
@@ -49,7 +50,7 @@ namespace Bingo.Biz.Impl.Builder
                     ApplyId = apply.ApplyId,
                     StateDesc = StateDescMap(apply.ApplyState),
                     TextColor = TextColorMap(apply.ApplyState),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ShowBorder = index != applyList.Count - 1,
                     CreateTimeDesc = DateTimeHelper.GetDateDesc(apply.CreateTime, true),
                 };
@@ -72,7 +73,7 @@ namespace Bingo.Biz.Impl.Builder
         }
 
 
-        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId, long uId)
+        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId, RequestHead head)
         {
             var applyDetaiList = applyDetailDao.GetListByApplyId(applyId);
             if (applyDetaiList.IsNullOrEmpty())
@@ -80,7 +81,7 @@ namespace Bingo.Biz.Impl.Builder
                 return null;
             }
             var resultList = new List<ApplyDetailItem>();
-            var resultDic = GetUserInfo(applyDetaiList, uId);
+            var resultDic = GetUserInfo(applyDetaiList, head);
             foreach (var item in applyDetaiList)
             {
                 resultList.Add(new ApplyDetailItem()
@@ -129,12 +130,12 @@ namespace Bingo.Biz.Impl.Builder
         }
 
 
-        private static Dictionary<long, UserInfoType> GetUserInfo(List<ApplyDetailEntity> applyDetaiList, long uId)
+        private static Dictionary<long, UserInfoType> GetUserInfo(List<ApplyDetailEntity> applyDetaiList, RequestHead head)
         {
             var resultDic = new Dictionary<long, UserInfoType>();
             foreach (var item in applyDetaiList.GroupBy(a => a.UId))
             {
-                resultDic.Add(item.Key, UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key), null, item.Key == uId));
+                resultDic.Add(item.Key, UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key), head));
             }
             return resultDic;
         }

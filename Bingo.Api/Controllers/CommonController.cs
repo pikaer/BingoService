@@ -17,16 +17,18 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult MsgSecCheck(RequestContext<MsgSecCheckRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (request.Head == null)
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null || request.Data.TextContent.IsNullOrEmpty())
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
@@ -42,7 +44,7 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "CommonController.MsgSecCheck", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "CommonController.MsgSecCheck", ex);
             }
         }
     }

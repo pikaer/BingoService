@@ -18,7 +18,7 @@ namespace Bingo.Biz.Impl
         private readonly IApplyDetailDao applyDetailDao = SingletonProvider<ApplyDetailDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
 
-        public ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId,long uId)
+        public ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId, RequestHead head)
         {
             var response = new ResponseContext<ApplyMomentDetailResponse>();
             var applyInfo = applyInfoDao.GetByApplyId(applyId);
@@ -42,14 +42,14 @@ namespace Bingo.Biz.Impl
                 NextAction= ApplyBuilder.BtnActionMap(applyInfo.ApplyState),
                 BtnVisable =!string.IsNullOrEmpty(btnText),
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
-                UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, null, uId== userInfo.UId),
+                UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                 ContentList = MomentContentBuilder.BuilderContent(moment,applyInfo.ApplyState!=ApplyStateEnum.申请通过),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, uId)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head)
             };
             return response;
         }
 
-        public ResponseContext<ApplyMomentListResponse> ApplyMomentList(long uId)
+        public ResponseContext<ApplyMomentListResponse> ApplyMomentList(RequestHead head)
         {
             var response = new ResponseContext<ApplyMomentListResponse>
             {
@@ -58,8 +58,8 @@ namespace Bingo.Biz.Impl
                     MomentList = new List<ApplyMomentDetailType>()
                 }
             };
-            var applyList = applyInfoDao.GetListByUId(uId);
-            var myUserInfo = uerInfoBiz.GetUserInfoByUid(uId);
+            var applyList = applyInfoDao.GetListByUId(head.UId);
+            var myUserInfo = uerInfoBiz.GetUserInfoByUid(head.UId);
             if (applyList.IsNullOrEmpty() || myUserInfo == null)
             {
                 return response;
@@ -79,7 +79,7 @@ namespace Bingo.Biz.Impl
                     ApplyStateDesc = ApplyStateMap(apply.ApplyState),
                     TextColor = ApplyBuilder.TextColorMap(apply.ApplyState),
                     MomentId = moment.MomentId,
-                    UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent2Contact(moment, momentUserInfo,apply.ApplyState==ApplyStateEnum.申请通过)
                 };
                 var detailList = applyDetailDao.GetListByApplyId(apply.ApplyId);
@@ -89,7 +89,7 @@ namespace Bingo.Biz.Impl
                     var itemUser= uerInfoBiz.GetUserInfoByUid(detailList[0].UId);
                     if (itemUser != null)
                     {
-                        string nickName = itemUser.UId == uId ? "我" : itemUser.NickName;
+                        string nickName = itemUser.UId == head.UId ? "我" : itemUser.NickName;
                         if (nickName.Length > 7)
                         {
                             nickName = nickName.Substring(0, 6) + "...";

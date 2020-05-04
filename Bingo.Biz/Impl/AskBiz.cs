@@ -7,7 +7,6 @@ using Bingo.Model.Base;
 using Bingo.Model.Contract;
 using Infrastructure;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Bingo.Biz.Impl
@@ -126,61 +125,7 @@ namespace Bingo.Biz.Impl
             applyDetailDao.Insert(detail);
         }
 
-        public ResponseContext<AskMomentListResponse> AskMomentList(long uId)
-        {
-            var response = new ResponseContext<AskMomentListResponse>
-            {
-                Data = new AskMomentListResponse()
-                {
-                    MomentList = new List<AskMomentDetailType>()
-                }
-            };
-            var applyList=applyInfoDao.GetListByMomentUId(uId);
-            var myUserInfo = uerInfoBiz.GetUserInfoByUid(uId);
-            if (applyList.IsNullOrEmpty()|| myUserInfo==null)
-            {
-                return response;
-            }
-            
-            foreach (var apply in applyList)
-            {
-                var userInfo = uerInfoBiz.GetUserInfoByUid(apply.UId);
-                var moment = MomentBuilder.GetMoment(apply.MomentId);
-                if (moment == null || userInfo == null)
-                {
-                    continue;
-                }
-                var result = new AskMomentDetailType()
-                {
-                    ApplyId = apply.ApplyId,
-                    ApplyStateDesc = ApplyStateMap(apply.ApplyState),
-                    TextColor = ApplyBuilder.TextColorMap(apply.ApplyState),
-                    MomentId = moment.MomentId,
-                    UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
-                    ContentList = MomentContentBuilder.BuilderContent(moment, apply.ApplyState!=ApplyStateEnum.申请通过)
-                };
-                var detailList = applyDetailDao.GetListByApplyId(apply.ApplyId);
-                if (detailList.NotEmpty())
-                {
-                    detailList = detailList.OrderByDescending(a => a.CreateTime).ToList();
-                    var itemUser = uerInfoBiz.GetUserInfoByUid(detailList[0].UId);
-                    if (itemUser != null)
-                    {
-                        string nickName = itemUser.UId == uId ? "我" : itemUser.NickName;
-                        if (nickName.Length > 7)
-                        {
-                            nickName = nickName.Substring(0, 6) + "...";
-                        }
-                        result.CreateTimeDesc = DateTimeHelper.GetDateDesc(detailList[0].CreateTime, true);
-                        result.Remark = string.Format("{0}：{1}", nickName, detailList[0].Content);
-                    }
-                }
-                response.Data.MomentList.Add(result);
-            }
-            return response;
-        }
-
-        public ResponseContext<AskMomentDetailResponse> AskMomentDetail(Guid applyId,long uId)
+        public ResponseContext<AskMomentDetailResponse> AskMomentDetail(Guid applyId, RequestHead head)
         {
             var response = new ResponseContext<AskMomentDetailResponse>();
             var applyInfo = applyInfoDao.GetByApplyId(applyId);
@@ -202,10 +147,10 @@ namespace Bingo.Biz.Impl
                 IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                 MomentId = moment.MomentId,
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
-                UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo, moment,true),
+                UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo, head),
                 BtnVisable= applyInfo.ApplyState== ApplyStateEnum.申请中,
                 ContentList = MomentContentBuilder.BuilderContent2Contact(moment, myUserInfo, applyInfo.ApplyState == ApplyStateEnum.申请通过),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId,uId)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head)
             };
             return response;
         }

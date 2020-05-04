@@ -95,5 +95,23 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                 UpdateTime = DateTime.Now
             }) > 0;
         }
+
+        public bool UpdateUserInfo(UserInfoEntity userInfo)
+        {
+            var sql = @"UPDATE dbo.UserInfo
+                        SET NickName =@NickName,
+                            Gender = @Gender,
+                            LiveState = @LiveState,
+                            Grade = @Grade,
+                            SchoolName = @SchoolName,
+                            BirthDate = @BirthDate,
+                            Mobile =@Mobile,
+                            WeChatNo =@WeChatNo,
+                            QQNo =@QQNo,
+                            UpdateTime = @UpdateTime
+                        WHERE UId=@UId";
+            using var Db = GetDbConnection();
+            return Db.Execute(sql, userInfo) > 0;
+        }
     }
 }

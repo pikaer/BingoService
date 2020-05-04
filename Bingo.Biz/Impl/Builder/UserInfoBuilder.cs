@@ -1,4 +1,5 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
+using Bingo.Model.Base;
 using Bingo.Model.Common;
 using Infrastructure;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ namespace Bingo.Biz.Impl.Builder
 {
     public static class UserInfoBuilder
     {
-        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, MomentEntity moment=null, bool isSelf = false)
+        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, RequestHead head,bool needDistance=true)
         {
             if (userInfo == null)
             {
@@ -17,6 +18,8 @@ namespace Bingo.Biz.Impl.Builder
             {
                 UId = userInfo.UId,
                 Gender = userInfo.Gender,
+                Latitude=userInfo.Latitude,
+                Longitude=userInfo.Longitude,
                 NickName=userInfo.NickName,
                 Portrait=userInfo.Portrait,
                 Signature=userInfo.Signature,
@@ -24,18 +27,14 @@ namespace Bingo.Biz.Impl.Builder
                 TagList=new List<TagItem>()
             };
             int index = 1;
-            if (moment != null)
-            {
-                result.IsHide = moment.IsHide;
-                if (moment.IsHide)
-                {
-                    result.NickName = moment.HidingNickName;
-                    AddTag(result.TagList, TagTypeEnum.Default, "匿名发布", index++);
-                }
-            }
-            if (isSelf)
+            if (head.UId== userInfo.UId)
             {
                 result.NickName = string.Format("{0}(我)", result.NickName);
+            }
+            var distance = LocationHelper.GetDistanceDesc(userInfo.Latitude, userInfo.Longitude, head.Latitude, head.Longitude);
+            if (!string.IsNullOrEmpty(distance)&& needDistance)
+            {
+                AddTag(result.TagList, TagTypeEnum.LocationInfo, distance, index++);
             }
             AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetAgeYear(), index++);
             AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetConstellation(), index++);

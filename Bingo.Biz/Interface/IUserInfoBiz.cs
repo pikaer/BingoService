@@ -11,12 +11,16 @@ namespace Bingo.Biz.Interface
 
         UserInfoEntity GetUserInfoByOpenId(string openId);
 
-        long GetUIdByCode(string code, PlatformEnum platform);
+        ResponseContext<LoginResponse> GetLoginInfoByCode(string code, PlatformEnum platform);
 
-        ResponseContext<UserInfoType> GetUserInfo(long uid);
+        ResponseContext<UserInfoType> GetUserInfo(RequestHead head);
 
         bool UpdateUserLocation(long uId, double latitude, double longitude);
 
         ResponseContext<UserInfoType> Register(RequestContext<RegisterRequest> request);
+
+        Response UpdateUserInfo(RequestContext<UpdateUserInfoType> request);
+
+        ResponseContext<UpdateUserInfoType> GetUserUpdateInfo(RequestHead head);
     }
 }

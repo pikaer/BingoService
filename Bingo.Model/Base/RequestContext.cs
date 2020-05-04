@@ -9,13 +9,11 @@ namespace Bingo.Model.Base
         /// <summary>
         /// 请求头
         /// </summary>
-
         public RequestHead Head { get; set; }
 
         /// <summary>
         /// 请求体
         /// </summary>
-
         public T Data { get; set; }
 
         /// <summary>
@@ -44,6 +42,16 @@ namespace Bingo.Model.Base
         /// 用户Id
         /// </summary>
         public long UId { get; set; }
+
+        /// <summary>
+        /// 纬度，范围为 -90~90，负数表示南纬
+        /// </summary>
+        public double Latitude { get; set; }
+
+        /// <summary>
+        /// 经度，范围为 -180~180，负数表示西经
+        /// </summary>
+        public double Longitude { get; set; }
 
         /// <summary>
         /// 渠道

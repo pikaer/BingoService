@@ -13,5 +13,7 @@ namespace Bingo.Dao.BingoDb.Dao
         bool UpdateUserLocation(long uId, double latitude, double longitude);
 
         bool Register(long uId, GenderEnum gender, string nickName, string avatarUrl,string country,string province,string city);
+
+        bool UpdateUserInfo(UserInfoEntity userInfo);
     }
 }

@@ -17,46 +17,50 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult ApplyMomentList(RequestContext<ApplyMomentListRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
-                return new JsonResult(applyBiz.ApplyMomentList(request.Head.UId));
+                head = request.Head;
+                return new JsonResult(applyBiz.ApplyMomentList(head));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "ApplyController.ApplyMomentList", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "ApplyController.ApplyMomentList", ex);
             }
         }
 
         [HttpPost]
         public JsonResult ApplyMomentDetail(RequestContext<AskMomentDetailRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(applyBiz.ApplyMomentDetail(request.Data.ApplyId, request.Head.UId));
+                return new JsonResult(applyBiz.ApplyMomentDetail(request.Data.ApplyId, request.Head));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "ApplyController.ApplyMomentDetail", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "ApplyController.ApplyMomentDetail", ex);
             }
         }
     }

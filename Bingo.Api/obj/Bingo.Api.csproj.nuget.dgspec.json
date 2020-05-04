@@ -314,7 +314,11 @@
         },
         "frameworks": {
           "netcoreapp3.0": {
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj": {
+                "projectPath": "D:\\Code\\DotNet\\BingoFramework\\BingoService\\Bingo.Model\\Bingo.Model.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

@@ -21,17 +21,19 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult MomentList(RequestContext<MomentListRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (request.Head == null)
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
-                if (request.Data == null || request.Data.PageIndex < 0||request.Head==null||request.Head.UId<=0)
+                head = request.Head;
+                if (request.Data == null || request.Data.PageIndex < 0)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
@@ -39,32 +41,63 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "ProductController.MomentList", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "ProductController.MomentList", ex);
             }
         }
 
         [HttpPost]
         public JsonResult MomentDetail(RequestContext<MomentDetailRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null || request.Data.MomentId == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(productBiz.MomentDetail(request.Data.MomentId, request.Head.UId));
+                return new JsonResult(productBiz.MomentDetail(request.Data.MomentId, request.Head));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "ProductController.MomentDetail", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "ProductController.MomentDetail", ex);
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult ShareDetail(RequestContext<ShareDetailRequest> request)
+        {
+            RequestHead head = default;
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                //不校验Auth
+                if (!CheckHead(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                head = request.Head;
+                if (request.Data == null || request.Data.MomentId == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(productBiz.ShareDetail(request.Data.MomentId, request.Head));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "ProductController.ShareDetail", ex);
             }
         }
     }

@@ -17,40 +17,54 @@ namespace Bingo.Biz.Impl
         private readonly IUserInfoDao userInfoDao = SingletonProvider<UserInfoDao>.Instance;
         private readonly RedisHelper redisClient = RedisHelper.Instance;
 
-        public long GetUIdByCode(string code, PlatformEnum platform)
+        public ResponseContext<LoginResponse> GetLoginInfoByCode(string code, PlatformEnum platform)
         {
+            var response = new ResponseContext<LoginResponse>();
             var openId = AppFactory.Factory(platform).GetOpenId(code);
             if (string.IsNullOrEmpty(openId))
             {
-                return 0;
+                response.ResultCode = ErrCodeEnum.Failure;
+                response.ResultMessage = "登录失败,请稍后重试";
+                return response;
             }
             var userInfo = GetUserInfoByOpenId(openId);
-            if (userInfo != null)
+            if (userInfo == null)
             {
-                return userInfo.UId;
+                userInfo = new UserInfoEntity()
+                {
+                    OpenId = openId,
+                    Platform = platform,
+                    CreateTime = DateTime.Now,
+                    UpdateTime = DateTime.Now,
+                    LastLoginTime = DateTime.Now
+                };
+                userInfo.UId = userInfoDao.InsertUserInfo(userInfo);
             }
-            userInfo = new UserInfoEntity()
+            if (userInfo == null)
             {
-                OpenId = openId,
-                Platform = platform,
-                CreateTime=DateTime.Now,
-                UpdateTime=DateTime.Now,
-                LastLoginTime = DateTime.Now
+                response.ResultCode = ErrCodeEnum.Failure;
+                response.ResultMessage = "登录失败,请稍后重试";
+                return response;
+            }
+            response.Data=new LoginResponse()
+            {
+                UId = userInfo.UId,
+                Token = TokenUtil.GenerateToken(userInfo.Platform.ToString(), userInfo.UId)
             };
-            return userInfoDao.InsertUserInfo(userInfo);
+            return response;
         }
 
-        public ResponseContext<UserInfoType> GetUserInfo(long uid)
+        public ResponseContext<UserInfoType> GetUserInfo(RequestHead head)
         {
             var response = new ResponseContext<UserInfoType>();
-            var userInfo = GetUserInfoByUid(uid);
+            var userInfo = GetUserInfoByUid(head.UId);
             if (userInfo == null)
             {
                 response.ResultCode = ErrCodeEnum.UserNoExist;
                 response.ResultMessage= ErrCodeEnum.UserNoExist.ToDescription();
                 return response;
             }
-            response.Data = UserInfoBuilder.BuildUserInfo(userInfo);
+            response.Data = UserInfoBuilder.BuildUserInfo(userInfo, head,false);
             return response;
         }
 
@@ -130,10 +144,78 @@ namespace Bingo.Biz.Impl
                 var userInfoKey = RedisKeyConst.UserInfoByOpenIdAndUIdCacheKey(userInfo.OpenId, userInfo.UId);
                 redisClient.Remove(userInfoKey);
                 userInfo=GetUserInfoByUid(request.Head.UId);
-                response.Data = UserInfoBuilder.BuildUserInfo(userInfo);
+                response.Data = UserInfoBuilder.BuildUserInfo(userInfo, request.Head,false);
             }
             return response;
         }
+
+        public ResponseContext<UpdateUserInfoType> GetUserUpdateInfo(RequestHead head)
+        {
+            var response = new ResponseContext<UpdateUserInfoType>();
+            var userInfo = GetUserInfoByUid(head.UId);
+            if (userInfo == null|| userInfo.Platform!=head.Platform)
+            {
+                response.ResultCode = ErrCodeEnum.UserNoExist;
+                response.ResultMessage = "用户不存在";
+                return response;
+            }
+            response.Data = new UpdateUserInfoType()
+            {
+                Portrait= userInfo.Portrait,
+                NickName = userInfo.NickName,
+                Gender = userInfo.Gender,
+                LiveState = userInfo.LiveState,
+                Grade = userInfo.Grade,
+                SchoolName = userInfo.SchoolName,
+                BirthDate = userInfo.BirthDate.HasValue?userInfo.BirthDate.Value.ToString("yyyy-MM-dd"):"1990-01-01",
+                Mobile = userInfo.Mobile,
+                WeChatNo = userInfo.WeChatNo,
+                QQNo = userInfo.QQNo
+            }; 
+            return response;
+        }
+
+        public Response UpdateUserInfo(RequestContext<UpdateUserInfoType> request)
+        {
+            Response response = new Response();
+            var userInfo = GetUserInfoByUid(request.Head.UId);
+            if (userInfo == null || userInfo.Platform != request.Head.Platform)
+            {
+                response.ResultCode = ErrCodeEnum.UserNoExist;
+                response.ResultMessage = "用户不存在";
+                return response;
+            }
+            userInfo = new UserInfoEntity()
+            {
+                UId=request.Head.UId,
+                OpenId= userInfo.OpenId,
+                NickName = request.Data.NickName,
+                Gender = request.Data.Gender,
+                LiveState = request.Data.LiveState,
+                Grade = request.Data.Grade,
+                SchoolName = request.Data.SchoolName,
+                BirthDate = Convert.ToDateTime(request.Data.BirthDate),
+                Mobile = request.Data.Mobile,
+                WeChatNo = request.Data.WeChatNo,
+                QQNo = request.Data.QQNo,
+                UpdateTime = DateTime.Now
+            };
+            bool success = userInfoDao.UpdateUserInfo(userInfo);
+            if (!success)
+            {
+                return new Response(ErrCodeEnum.Failure,"修改失败");
+            }
+            else
+            {
+                //刷新缓存
+                var userInfoKey = RedisKeyConst.UserInfoByOpenIdAndUIdCacheKey(userInfo.OpenId, userInfo.UId);
+                redisClient.Remove(userInfoKey);
+                GetUserInfoByUid(request.Head.UId);
+            }
+            return response;
+        }
+
+
 
         public bool UpdateUserLocation(long uId, double latitude, double longitude)
         {

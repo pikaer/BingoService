@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bingo.Model.Contract
 {
-    public class MomentDetailRequest
+    public class ShareDetailRequest
     {
         /// <summary>
         /// 动态Id
@@ -12,7 +12,7 @@ namespace Bingo.Model.Contract
         public Guid MomentId { get; set; }
     }
 
-    public class MomentDetailResponse : MomentDetailType
+    public class ShareDetailResponse : MomentDetailType
     {
         /// <summary>
         /// 按钮文案
@@ -31,7 +31,6 @@ namespace Bingo.Model.Contract
         /// </summary>
         public string TextColor { get; set; }
 
-
         /// <summary>
         /// 是否已申请（true,是展示跳转详情）
         /// </summary>
@@ -46,7 +45,6 @@ namespace Bingo.Model.Contract
         /// 是否可以申请
         /// </summary>
         public bool AskFlag { get; set; }
-
 
         public List<ApplyItem> ApplyList { get; set; }
     }

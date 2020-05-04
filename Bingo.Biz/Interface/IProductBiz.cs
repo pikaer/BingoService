@@ -6,11 +6,10 @@ namespace Bingo.Biz.Interface
 {
     public interface IProductBiz
     {
-        /// <summary>
-        /// 动态列表
-        /// </summary>
         ResponseContext<MomentListResponse> MomentList(RequestContext<MomentListRequest> request);
 
-        ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId, long uId);
+        ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId, RequestHead head);
+        
+        ResponseContext<ShareDetailResponse> ShareDetail(Guid momentId, RequestHead head);
     }
 }

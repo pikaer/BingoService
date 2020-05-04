@@ -70,7 +70,7 @@ namespace Bingo.Biz.Impl
                     ShareFlag = moment.State== MomentStateEnum.正常发布中,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount),
                     TextColor= MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, request.Head),
                     ContentList = MomentContentBuilder.BuilderContent(moment,false)
                 };
                 response.Data.MomentList.Add(dto);
@@ -78,7 +78,7 @@ namespace Bingo.Biz.Impl
             return response;
         }
 
-        public ResponseContext<MyPublishMomentDetailType> MyPublishMomentDetail(Guid momentId)
+        public ResponseContext<MyPublishMomentDetailType> MyPublishMomentDetail(Guid momentId, RequestHead head)
         {
             var moment = momentDao.GetMomentByMomentId(momentId);
             if (moment == null)
@@ -97,9 +97,9 @@ namespace Bingo.Biz.Impl
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime, overCount),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent(moment,false),
-                    ApplyList= ApplyBuilder.GetApplyList(momentId,false, moment.UId)
+                    ApplyList= ApplyBuilder.GetApplyList(momentId,false, head,moment.UId)
                 }
             };
         }

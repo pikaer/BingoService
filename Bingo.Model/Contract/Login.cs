@@ -8,5 +8,10 @@
     public class LoginResponse
     {
         public long UId { get; set; }
+
+        /// <summary>
+        /// Token信息
+        /// </summary>
+        public string Token { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace Bingo.Biz.Impl
                     var dto = new MomentDetailType()
                     {
                         MomentId=moment.MomentId,
-                        UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment, request.Head.UId==userInfo.UId),
+                        UserInfo = UserInfoBuilder.BuildUserInfo(userInfo,request.Head),
                         ContentList= MomentContentBuilder.BuilderContent(moment,true)
                     };
                     response.Data.MomentList.Add(dto);
@@ -59,7 +59,7 @@ namespace Bingo.Biz.Impl
             }
         }
 
-        public ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId, long uid)
+        public ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId, RequestHead head)
         {
             var moment = momentDao.GetMomentByMomentId(momentId);
             if (moment == null)
@@ -71,9 +71,9 @@ namespace Bingo.Biz.Impl
             {
                 return new ResponseContext<MomentDetailResponse>(ErrCodeEnum.DataIsnotExist);
             }
-            var applyInfo = applyInfoDao.GetByMomentIdAndUId(momentId, uid);
+            var applyInfo = applyInfoDao.GetByMomentIdAndUId(momentId, head.UId);
             bool isApply = applyInfo != null;
-            bool selfFlag = moment.UId == uid;
+            bool selfFlag = moment.UId == head.UId;
             bool overCount = ApplyBuilder.IsOverCount(moment);
             string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, selfFlag, overCount);
             string stateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount);
@@ -84,20 +84,56 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = momentId,
                     ApplyId= isApply? applyInfo.ApplyId:Guid.Empty,
-                    ShareFlag = moment.State == MomentStateEnum.正常发布中,
                     ApplyFlag = isApply,
-                    SelfFlag= selfFlag,
                     BtnText = btnText,
                     StateDesc=stateDesc,
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
-                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment, userInfo.UId==uid),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent(moment,true),
-                    ApplyList = ApplyBuilder.GetApplyList(momentId,true)
+                    ApplyList = ApplyBuilder.GetApplyList(momentId,true,head)
                 }
             };
         }
 
+
+        public ResponseContext<ShareDetailResponse> ShareDetail(Guid momentId, RequestHead head)
+        {
+            var moment = momentDao.GetMomentByMomentId(momentId);
+            if (moment == null)
+            {
+                return new ResponseContext<ShareDetailResponse>(ErrCodeEnum.DataIsnotExist);
+            }
+            var userInfo = uerInfoBiz.GetUserInfoByUid(moment.UId);
+            if (userInfo == null)
+            {
+                return new ResponseContext<ShareDetailResponse>(ErrCodeEnum.DataIsnotExist);
+            }
+            var applyInfo = applyInfoDao.GetByMomentIdAndUId(momentId, head.UId);
+            bool isApply = applyInfo != null;
+            bool selfFlag = moment.UId == head.UId;
+            bool overCount = ApplyBuilder.IsOverCount(moment);
+            string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, selfFlag, overCount);
+            string stateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount);
+
+            return new ResponseContext<ShareDetailResponse>()
+            {
+                Data = new ShareDetailResponse()
+                {
+                    MomentId = momentId,
+                    ApplyId = isApply ? applyInfo.ApplyId : Guid.Empty,
+                    ApplyFlag = isApply,
+                    BtnText = btnText,
+                    StateDesc = stateDesc,
+                    AskFlag = string.Equals(btnText, "申请参与"),
+                    BtnVisable = !string.IsNullOrEmpty(btnText),
+                    TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
+                    UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
+                    ContentList = MomentContentBuilder.BuilderContent(moment, true),
+                    ApplyList = ApplyBuilder.GetApplyList(momentId, true, head)
+                }
+            };
+        }
     }
 }

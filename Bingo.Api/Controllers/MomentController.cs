@@ -17,16 +17,18 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult PublishMoment(RequestContext<PublishMomentRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
@@ -35,23 +37,25 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.PublishMoment", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.PublishMoment", ex);
             }
         }
 
         [HttpPost]
         public JsonResult MyPublishList(RequestContext<MyPublishListRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
@@ -60,7 +64,7 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.MyPublishList", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.MyPublishList", ex);
             }
         }
 
@@ -68,41 +72,45 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult MyPublishMomentDetail(RequestContext<MyPublishMomentDetailRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentBiz.MyPublishMomentDetail(request.Data.MomentId));
+                return new JsonResult(momentBiz.MyPublishMomentDetail(request.Data.MomentId, head));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.MyPublishMomentDetailRequest", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.MyPublishMomentDetailRequest", ex);
             }
         }
 
         [HttpPost]
         public JsonResult MomentAction(RequestContext<MomentActionRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
@@ -111,7 +119,7 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "MomentController.MomentAction", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.MomentAction", ex);
             }
         }
 

@@ -17,6 +17,7 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult Login(RequestContext<LoginRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
@@ -27,43 +28,39 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null || request.Data.Code.IsNullOrEmpty() || request.Head == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                var response = new ResponseContext<LoginResponse>()
-                {
-                    Data = new LoginResponse()
-                    {
-                        UId = userInfoBiz.GetUIdByCode(request.Data.Code, request.Head.Platform)
-                    }
-                };
-                return new JsonResult(response);
+                return new JsonResult(userInfoBiz.GetLoginInfoByCode(request.Data.Code, request.Head.Platform));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "UserInfoController.Login", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "UserInfoController.Login", ex);
             }
         }
 
         [HttpPost]
         public JsonResult GetUserInfo(RequestContext<GetUserInfoRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
-                return new JsonResult(userInfoBiz.GetUserInfo(request.Head.UId));
+                head = request.Head;
+                return new JsonResult(userInfoBiz.GetUserInfo(request.Head));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "UserInfoController.GetUserInfo", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head,"UserInfoController.GetUserInfo", ex);
             }
         }
 
@@ -71,16 +68,18 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult UpdateUserLocation(RequestContext<UpdateUserLocationRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 var response = new Response();
                 var success = userInfoBiz.UpdateUserLocation(request.Head.UId, request.Data.Latitude, request.Data.Longitude);
                 if (success)
@@ -97,7 +96,7 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "UserInfoController.UpdateUserLocation", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "UserInfoController.UpdateUserLocation", ex);
             }
         }
 
@@ -105,26 +104,85 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult Register(RequestContext<RegisterRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
+                if (!CheckAuth(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
-                }
-                if (!HeadCheck(request.Head))
-                {
-                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
                 return new JsonResult(userInfoBiz.Register(request));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "UserInfoController.Register", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head,"UserInfoController.Register", ex);
             }
         }
+
+
+        [HttpPost]
+        public JsonResult GetUserUpdateInfo(RequestContext<object> request)
+        {
+            RequestHead head = default;
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!CheckAuth(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                head = request.Head;
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(userInfoBiz.GetUserUpdateInfo(request.Head));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "UserInfoController.GetUserUpdateInfo", ex);
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult UpdateUserInfo(RequestContext<UpdateUserInfoType> request)
+        {
+            RequestHead head = default;
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!CheckAuth(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                head = request.Head;
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(userInfoBiz.UpdateUserInfo(request));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "UserInfoController.UpdateUserInfo", ex);
+            }
+        }
+
     }
 }

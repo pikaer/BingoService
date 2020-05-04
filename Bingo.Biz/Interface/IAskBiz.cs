@@ -10,8 +10,6 @@ namespace Bingo.Biz.Interface
 
         Response AskAction(RequestContext<AskActionRequest> request);
 
-        ResponseContext<AskMomentListResponse> AskMomentList(long uId);
-
-        ResponseContext<AskMomentDetailResponse> AskMomentDetail(Guid applyId, long uId);
+        ResponseContext<AskMomentDetailResponse> AskMomentDetail(Guid applyId, RequestHead head);
     }
 }

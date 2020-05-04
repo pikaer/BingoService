@@ -419,6 +419,9 @@
       "Bingo.Utils/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.0",
+        "dependencies": {
+          "Bingo.Model": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Bingo.Utils.dll": {}
         },

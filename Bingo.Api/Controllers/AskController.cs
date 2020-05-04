@@ -17,16 +17,18 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult AskActivity(RequestContext<AskActivityRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
@@ -35,7 +37,7 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "AskController.AskActivity", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "AskController.AskActivity", ex);
             }
         }
 
@@ -43,16 +45,18 @@ namespace Bingo.Api.Controllers
         [HttpPost]
         public JsonResult AskAction(RequestContext<AskActionRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null||string.IsNullOrEmpty(request.Data.Action))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
@@ -61,53 +65,35 @@ namespace Bingo.Api.Controllers
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "AskController.AskAction", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "AskController.AskAction", ex);
             }
         }
 
-        [HttpPost]
-        public JsonResult AskMomentList(RequestContext<AskMomentListRequest> request)
-        {
-            try
-            {
-                if (request == null)
-                {
-                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
-                }
-                if (!HeadCheck(request.Head))
-                {
-                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
-                }
-                return new JsonResult(askBiz.AskMomentList(request.Head.UId));
-            }
-            catch (Exception ex)
-            {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "AskController.AskMomentList", ex);
-            }
-        }
 
         [HttpPost]
         public JsonResult AskMomentDetail(RequestContext<AskMomentDetailRequest> request)
         {
+            RequestHead head = default;
             try
             {
                 if (request == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
                 }
-                if (!HeadCheck(request.Head))
+                if (!CheckAuth(request.Head))
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
+                head = request.Head;
                 if (request.Data == null)
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(askBiz.AskMomentDetail(request.Data.ApplyId,request.Head.UId));
+                return new JsonResult(askBiz.AskMomentDetail(request.Data.ApplyId,request.Head));
             }
             catch (Exception ex)
             {
-                return ErrorJsonResult(ErrCodeEnum.InnerError, "AskController.AskMomentDetail", ex);
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "AskController.AskMomentDetail", ex);
             }
         }
     }
