@@ -12,10 +12,6 @@ namespace Bingo.Model.Contract
 
     public class MyPublishListResponse
     {
-        /// <summary>
-        /// 是否最后一页
-        /// </summary>
-        public bool IsLastPage { get; set; }
 
         public List<MyPublishMomentDetailType> MomentList { get; set; }
     }

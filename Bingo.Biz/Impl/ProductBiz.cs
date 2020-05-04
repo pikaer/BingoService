@@ -74,9 +74,10 @@ namespace Bingo.Biz.Impl
             var applyInfo = applyInfoDao.GetByMomentIdAndUId(momentId, uid);
             bool isApply = applyInfo != null;
             bool selfFlag = moment.UId == uid;
-            string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, selfFlag, ApplyBuilder.IsOverCount(moment));
-            string stateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime,ApplyBuilder.IsOverCount(moment));
-            
+            bool overCount = ApplyBuilder.IsOverCount(moment);
+            string btnText = MomentContentBuilder.BtnTextMap(moment.State, moment.StopTime, isApply, selfFlag, overCount);
+            string stateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount);
+      
             return new ResponseContext<MomentDetailResponse>()
             {
                 Data = new MomentDetailResponse()
@@ -90,10 +91,10 @@ namespace Bingo.Biz.Impl
                     StateDesc=stateDesc,
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
-                    TextColor = MomentContentBuilder.TextColorMap(moment.State),
+                    TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment, userInfo.UId==uid),
                     ContentList = MomentContentBuilder.BuilderContent(moment,true),
-                    ApplyList = ApplyBuilder.GetApplyList(momentId)
+                    ApplyList = ApplyBuilder.GetApplyList(momentId,true)
                 }
             };
         }

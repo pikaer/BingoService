@@ -56,6 +56,6 @@ namespace Bingo.Model.Contract
         /// </summary>
         public bool SelfFlag { get; set; }
 
-        public List<ApplyDetailItem> ApplyList { get; set; }
+        public List<ApplyItem> ApplyList { get; set; }
     }
 }

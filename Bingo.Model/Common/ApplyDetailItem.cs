@@ -11,7 +11,6 @@
         /// 提交时间
         /// </summary>
         public string CreateTimeDesc { get; set; }
-
         /// <summary>
         /// 申请内容
         /// </summary>

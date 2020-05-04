@@ -202,7 +202,7 @@ namespace Bingo.Biz.Impl
                 IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                 MomentId = moment.MomentId,
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
-                UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo),
+                UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo, moment,true),
                 BtnVisable= applyInfo.ApplyState== ApplyStateEnum.申请中,
                 ContentList = MomentContentBuilder.BuilderContent2Contact(moment, myUserInfo, applyInfo.ApplyState == ApplyStateEnum.申请通过),
                 ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId,uId)

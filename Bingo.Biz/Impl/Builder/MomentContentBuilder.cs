@@ -1,5 +1,6 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Common;
+using Bingo.Utils;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -154,20 +155,24 @@ namespace Bingo.Biz.Impl.Builder
             return stopTime.HasValue && stopTime.Value < DateTime.Now;
         }
 
-        public static string TextColorMap(MomentStateEnum state)
+        public static string TextColorMap(MomentStateEnum state, DateTime? stopTime, bool isOverCount)
         {
+            if (IsOverTime(stopTime)|| isOverCount)
+            {
+                return CommonConst.Color_Black;
+            }
             switch (state)
             {
                 case MomentStateEnum.正常发布中:
-                    return "#2cbb60";
+                    return CommonConst.Color_Green;
                 case MomentStateEnum.审核中:
                 case MomentStateEnum.被投诉审核中:
                 case MomentStateEnum.审核被拒绝:
-                    return "#fa6e4f";
+                    return CommonConst.Color_Red;
                 case MomentStateEnum.被关小黑屋中:
                 case MomentStateEnum.永久不支持上线:
                 default:
-                    return "#8e8e8e"; 
+                    return CommonConst.Color_Black; 
             }
         }
     }

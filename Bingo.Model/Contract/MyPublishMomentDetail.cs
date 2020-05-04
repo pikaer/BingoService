@@ -15,7 +15,13 @@ namespace Bingo.Model.Contract
 
     public class MyPublishMomentDetailType : MomentDetailType
     {
-       
+        /// <summary>
+        /// 申请人数描述
+        /// </summary>
+        public string ApplyCountDesc { get; set; }
+
+        public string ApplyCountColor { get; set; }
+
         public MomentStateEnum State { get; set; }
 
         /// <summary>
@@ -34,15 +40,10 @@ namespace Bingo.Model.Contract
         public bool ShareFlag { get; set; }
 
         /// <summary>
-        /// 是否已申请（true,是展示跳转详情）
-        /// </summary>
-        public bool ApplyFlag { get; set; }
-
-        /// <summary>
         /// 是否已过期
         /// </summary>
         public bool IsOverTime { get; set; }
 
-        public List<ApplyDetailItem>ApplyList { get; set; }
+        public List<ApplyItem> ApplyList { get; set; }
     }
 }

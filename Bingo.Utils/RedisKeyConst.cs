@@ -9,6 +9,7 @@ namespace Bingo.Utils
         private static readonly string UserInfoKeyByUIdKey = "UserInfoKeyByUIdKey_{0}";
         private static readonly string UserInfoByOpenIdAndUIdKey = "UserInfoByOpenIdAndUIdKey_{0}_{1}";
         private static readonly string MomentCacheKeyByMomentId = "MomentCacheKeyByMomentId_{0}";
+
         /// <summary>
         /// 通过openId 获取缓存key
         /// </summary>

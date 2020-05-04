@@ -3,10 +3,12 @@ using Bingo.Dao.BingoDb.Dao;
 using Bingo.Dao.BingoDb.Dao.Impl;
 using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Common;
+using Bingo.Utils;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Bingo.Biz.Impl.Builder
 {
@@ -22,27 +24,48 @@ namespace Bingo.Biz.Impl.Builder
         /// <param name="momentId">动态Id</param>
         /// <param name="passApply">仅仅查看申请通过数据</param>
         /// <returns></returns>
-        public static List<ApplyDetailItem> GetApplyList(Guid momentId)
+        public static List<ApplyItem> GetApplyList(Guid momentId, bool isValid, long momentUId = 0)
         {
             var applyList = applyInfoDao.GetListByMomentId(momentId);
             if (applyList.IsNullOrEmpty())
             {
                 return null;
             }
-            applyList = applyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过).ToList();
-            var resultList = new List<ApplyDetailItem>();
-            foreach (var apply in applyList)
+            if (isValid)
             {
+                applyList = applyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过).ToList();
+            }
+            var resultList = new List<ApplyItem>();
+            for (var index = 0; index < applyList.Count; index++)
+            {
+                var apply = applyList[index];
                 var userInfo = uerInfoBiz.GetUserInfoByUid(apply.UId);
                 if (userInfo == null)
                 {
                     continue;
                 }
-                var result = new ApplyDetailItem()
+                var result = new ApplyItem()
                 {
+                    ApplyId = apply.ApplyId,
+                    StateDesc = StateDescMap(apply.ApplyState),
+                    TextColor = TextColorMap(apply.ApplyState),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo),
+                    ShowBorder = index != applyList.Count - 1,
                     CreateTimeDesc = DateTimeHelper.GetDateDesc(apply.CreateTime, true),
                 };
+                if (!isValid)
+                {
+                    var applyDetaiList = applyDetailDao.GetListByApplyId(apply.ApplyId);
+                    if (applyDetaiList.NotEmpty())
+                    {
+                        applyDetaiList = applyDetaiList.Where(a => a.UId != momentUId).OrderByDescending(a => a.CreateTime).ToList();
+                        if (applyDetaiList.NotEmpty())
+                        {
+                            result.Content = applyDetaiList[0].Content;
+                        }
+                    }
+                }
+
                 resultList.Add(result);
             }
             return resultList;
@@ -70,19 +93,55 @@ namespace Bingo.Biz.Impl.Builder
             return resultList;
         }
 
+        public static string GetApplyCountDesc(List<ApplyInfoEntity> applyList)
+        {
+            if (applyList.IsNullOrEmpty())
+            {
+                return "已通过:0人 待处理:0人";
+            }
+
+            var text = new StringBuilder();
+            var passCount = applyList.Count(a => a.ApplyState == ApplyStateEnum.申请通过);
+            text.AppendFormat("已通过:{0}人 ", passCount);
+
+            var askCount = applyList.Count(a => a.ApplyState == ApplyStateEnum.申请中);
+            text.AppendFormat("待处理:{0}人", askCount);
+
+            return text.ToString();
+        }
+
+        public static string GetApplyCountColor(List<ApplyInfoEntity> applyList)
+        {
+            if (applyList.IsNullOrEmpty())
+            {
+                //黑色
+                return "black";
+            }
+            var askCount = applyList.Count(a => a.ApplyState == ApplyStateEnum.申请中);
+            if (askCount > 0)
+            {
+                //红色
+                return CommonConst.Color_Red;
+            }
+
+            //黑色
+            return "black";
+        }
+
+
         private static Dictionary<long, UserInfoType> GetUserInfo(List<ApplyDetailEntity> applyDetaiList, long uId)
         {
             var resultDic = new Dictionary<long, UserInfoType>();
             foreach (var item in applyDetaiList.GroupBy(a => a.UId))
             {
-                resultDic.Add(item.Key, UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key),null, item.Key== uId));
+                resultDic.Add(item.Key, UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key), null, item.Key == uId));
             }
             return resultDic;
         }
 
         public static bool IsOverCount(MomentEntity moment)
         {
-            return moment.ApplyCount>=moment.NeedCount;
+            return moment.ApplyCount >= moment.NeedCount;
         }
 
         public static string TextColorMap(ApplyStateEnum applyState)
@@ -91,16 +150,16 @@ namespace Bingo.Biz.Impl.Builder
             {
                 case ApplyStateEnum.申请中:
                     //红色
-                    return "#fa6e4f";
+                    return CommonConst.Color_Red;
                 case ApplyStateEnum.申请通过:
                     //绿色
-                    return "#2cbb60";
+                    return CommonConst.Color_Green;
                 case ApplyStateEnum.被拒绝:
                 case ApplyStateEnum.申请已撤销:
                 case ApplyStateEnum.永久拉黑:
                 default:
                     //黑色
-                    return "#8e8e8e";
+                    return CommonConst.Color_Black;
             }
         }
 
@@ -119,6 +178,26 @@ namespace Bingo.Biz.Impl.Builder
                     return "";
             }
         }
+
+        public static string StateDescMap(ApplyStateEnum applyState)
+        {
+            switch (applyState)
+            {
+                case ApplyStateEnum.申请中:
+                    return "待通过";
+                case ApplyStateEnum.被拒绝:
+                    return "已拒绝";
+                case ApplyStateEnum.申请已撤销:
+                    return "对方撤销申请";
+                case ApplyStateEnum.申请通过:
+                    return "已通过";
+                case ApplyStateEnum.永久拉黑:
+                    return "已拉黑对方";
+                default:
+                    return "";
+            }
+        }
+
 
         public static string BtnActionMap(ApplyStateEnum applyState)
         {

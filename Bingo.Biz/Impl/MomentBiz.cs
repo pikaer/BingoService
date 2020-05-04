@@ -15,6 +15,7 @@ namespace Bingo.Biz.Impl
     {
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
+        private readonly static IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
 
         public Response MomentAction(Guid momentId,string action)
         {
@@ -58,14 +59,17 @@ namespace Bingo.Biz.Impl
             foreach (var moment in momentList)
             {
                 bool overCount = ApplyBuilder.IsOverCount(moment);
+                var applyList = applyInfoDao.GetListByMomentId(moment.MomentId);
                 var dto = new MyPublishMomentDetailType()
                 {
                     MomentId = moment.MomentId,
                     State = moment.State,
-                    IsOverTime= MomentContentBuilder.IsOverTime(moment.StopTime),
+                    ApplyCountDesc=ApplyBuilder.GetApplyCountDesc(applyList),
+                    ApplyCountColor= ApplyBuilder.GetApplyCountColor(applyList),
+                    IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State== MomentStateEnum.正常发布中,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount),
-                    TextColor= MomentContentBuilder.TextColorMap(moment.State),
+                    TextColor= MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
                     ContentList = MomentContentBuilder.BuilderContent(moment,false)
                 };
@@ -92,10 +96,10 @@ namespace Bingo.Biz.Impl
                     IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime, overCount),
-                    TextColor = MomentContentBuilder.TextColorMap(moment.State),
+                    TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, moment,true),
                     ContentList = MomentContentBuilder.BuilderContent(moment,false),
-                    ApplyList= ApplyBuilder.GetApplyList(momentId)
+                    ApplyList= ApplyBuilder.GetApplyList(momentId,false, moment.UId)
                 }
             };
         }
