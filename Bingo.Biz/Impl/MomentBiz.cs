@@ -31,13 +31,25 @@ namespace Bingo.Biz.Impl
                 case "stop":
                     momentDao.UpdateStopTime(momentId);
                     message = "已停止活动";
+                    InsertApplyDetail(momentId, "停止活动", uId);
                     break;
                 case "delete":
                     momentDao.Delete(momentId);
                     message = "删除成功";
                     break;
+                case "complain":
+                    remark = "申诉理由：" + remark;
+                    momentDao.UpdateState(momentId, MomentStateEnum.审核中);
+                    InsertApplyDetail(momentId, remark, uId);
+                    message = "提交成功";
+                    break;
+                case "black":
                 case "pass":
                 case "refuse":
+                    if (moment.State != MomentStateEnum.审核中)
+                    {
+                        return new Response(ErrCodeEnum.Failure, "用户修改了动态，审核失败");
+                    }
                     var userInfo = uerInfoBiz.GetUserInfoByUid(uId);
                     if(userInfo==null|| userInfo.UserType == UserTypeEnum.Default || userInfo.UserType== UserTypeEnum.SimulationUser)
                     {
@@ -45,18 +57,23 @@ namespace Bingo.Biz.Impl
                     }
                     else
                     {
-                        MomentStateEnum momentState;
                         if (action.Equals("pass"))
                         {
-                            momentState = MomentStateEnum.正常发布中;
+                            remark = "审核通过，发布成功";
+                        }
+                        MomentStateEnum momentState;
+                        if (action.Equals("black"))
+                        {
+                            remark = "拉黑此活动申请";
+                            momentState = MomentStateEnum.被关小黑屋中;
                         }
                         else
                         {
+                            remark = "审核被拒,拒绝理由：" + remark;
                             momentState = MomentStateEnum.审核被拒绝;
                         }
                         momentDao.UpdateState(momentId, momentState);
                     }
-                    momentDao.Delete(momentId);
                     InsertApplyDetail(momentId, remark, uId);
                     message = "操作成功";
                     break;
@@ -73,7 +90,7 @@ namespace Bingo.Biz.Impl
                 ApplyDetailId = Guid.NewGuid(),
                 UId = uId,
                 MomentId = momentId,
-                ApplyDetailType = ApplyDetailTypeEnum.动态审核详情,
+                Type = ApplyDetailTypeEnum.动态审核详情,
                 Content = remark,
                 CreateTime = DateTime.Now,
                 UpdateTime = DateTime.Now
@@ -141,7 +158,8 @@ namespace Bingo.Biz.Impl
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent(moment,false),
-                    ApplyList= ApplyBuilder.GetApplyList(momentId,false, head,moment.UId)
+                    ApplyList= ApplyBuilder.GetApplyList(momentId,false, head,moment.UId),
+                    CheckList= ApplyBuilder.GetCheckDetails(moment, userInfo, head),
                 }
             };
         }
@@ -208,8 +226,14 @@ namespace Bingo.Biz.Impl
             };
         }
 
-        public Response UpdateMoment(UpdateMomentType moment)
+        public Response UpdateMoment(UpdateMomentType moment, long uId)
         {
+            var momentInfo = momentDao.GetMomentByMomentId(moment.MomentId);
+            bool canEdit = momentInfo.State != MomentStateEnum.审核中 || momentInfo.State != MomentStateEnum.审核被拒绝;
+            if (momentInfo==null||!canEdit)
+            {
+                return new Response(ErrCodeEnum.Failure, "你的动态已审核通过，不能修改，可以删除后重发哦~");
+            }
             var entity = new MomentEntity()
             {
                 MomentId = moment.MomentId,
@@ -231,6 +255,7 @@ namespace Bingo.Biz.Impl
             bool sucess=momentDao.UpdateMoment(entity);
             if (sucess)
             {
+                InsertApplyDetail(moment.MomentId, "修改活动内容，重新审核中", uId);
                 return new Response();
             }
             else

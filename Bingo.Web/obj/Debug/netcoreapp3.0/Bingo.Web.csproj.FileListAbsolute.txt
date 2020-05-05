@@ -107,3 +107,4 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Web\bin\Debug\netcoreapp3.0\Bin
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Web\obj\Debug\netcoreapp3.0\Bingo.Web.MvcApplicationPartsAssemblyInfo.cache
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Web\obj\Debug\netcoreapp3.0\Bingo.Web.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Web\obj\Debug\netcoreapp3.0\Bingo.Web.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Web\obj\Debug\netcoreapp3.0\Bingo.Web.csprojAssemblyReference.cache

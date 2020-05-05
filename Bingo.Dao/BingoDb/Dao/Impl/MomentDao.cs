@@ -36,7 +36,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public int PendingCount()
         {
-            var sql = @"SELECT count (1)  FROM dbo.Moment Where State=101  and IsDelete=0 and StopTime>GETDATE() order by CreateTime ";
+            var sql = @"SELECT count (1)  FROM dbo.Moment Where State=101  and IsDelete=0 and StopTime>GETDATE()";
             using var Db = GetDbConnection();
             return Db.QueryFirst<int>(sql);
         }

@@ -10,7 +10,7 @@ namespace Bingo.Model.Contract
         public Guid MomentId { get; set; }
 
         /// <summary>
-        /// stop=停止,delete=删除,pass=审核通过,refuse=审核不通过,
+        /// stop=停止,delete=删除,pass=审核通过,refuse=审核不通过,complain=申诉,black=拉黑申请
         /// </summary>
         public string Action { get; set; }
 

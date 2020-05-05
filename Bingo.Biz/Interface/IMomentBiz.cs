@@ -14,7 +14,7 @@ namespace Bingo.Biz.Interface
 
         Response MomentAction(Guid momentId, string action, string remark, long uId);
 
-        Response UpdateMoment(UpdateMomentType moment);
+        Response UpdateMoment(UpdateMomentType moment,long uId);
 
         ResponseContext<UpdateMomentType> MomentUpdateDetail(Guid momentId);
     }

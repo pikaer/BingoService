@@ -38,6 +38,6 @@ namespace Bingo.Model.Contract
         public string TextColor { get; set; }
 
 
-        public List<ApplyItem> ApplyList { get; set; }
+        public List<ApplyDetailItem> ApplyList { get; set; }
     }
 }

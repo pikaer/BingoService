@@ -119,7 +119,7 @@ namespace Bingo.Biz.Impl
                 ApplyId = applyId,
                 UId = uId,
                 MomentId=momentId,
-                ApplyDetailType=ApplyDetailTypeEnum.活动申请详情,
+                Type = ApplyDetailTypeEnum.活动申请详情,
                 Content = remark,
                 CreateTime = DateTime.Now,
                 UpdateTime = DateTime.Now

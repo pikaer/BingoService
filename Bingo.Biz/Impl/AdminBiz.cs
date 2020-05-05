@@ -2,6 +2,7 @@
 using Bingo.Biz.Interface;
 using Bingo.Dao.BingoDb.Dao;
 using Bingo.Dao.BingoDb.Dao.Impl;
+using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Base;
 using Bingo.Model.Contract;
 using Infrastructure;
@@ -34,7 +35,7 @@ namespace Bingo.Biz.Impl
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, request.Head),
                     ContentList = MomentContentBuilder.BuilderContent(moment, false),
-                    ApplyList = ApplyBuilder.GetApplyList(moment.MomentId, false, request.Head, moment.UId)
+                    ApplyList = ApplyBuilder.GetCheckDetails(moment, userInfo, request.Head)
                 }
             };
         }
@@ -67,7 +68,7 @@ namespace Bingo.Biz.Impl
                     State = moment.State,
                     ShareTitle = moment.Content,
                     ApplyCountDesc = ApplyBuilder.GetServiceCountDesc(applyList,moment.UId),
-                    StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, false),
+                    StateDesc = moment.State== MomentStateEnum.审核中?"待审核":"已审核通过",
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, false),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, request.Head),
                     ContentList = MomentContentBuilder.BuilderContent(moment, false)
@@ -79,11 +80,12 @@ namespace Bingo.Biz.Impl
 
         public ResponseContext<ServiceDetailResponse> ServiceDetail(RequestHead head)
         {
+            int pendingCount = momentDao.PendingCount();
             var response = new ResponseContext<ServiceDetailResponse>()
             {
                 Data = new ServiceDetailResponse()
                 {
-                    PendingCount=momentDao.PendingCount()
+                    Remark = string.Format("待审核总数：{0}",pendingCount)
                 }
             };
             return response;

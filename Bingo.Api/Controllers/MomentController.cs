@@ -141,7 +141,7 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentBiz.UpdateMoment(request.Data));
+                return new JsonResult(momentBiz.UpdateMoment(request.Data,request.Head.UId));
             }
             catch (Exception ex)
             {

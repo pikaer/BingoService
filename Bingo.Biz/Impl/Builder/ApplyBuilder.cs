@@ -25,7 +25,7 @@ namespace Bingo.Biz.Impl.Builder
         /// <param name="momentId">动态Id</param>
         /// <param name="passApply">仅仅查看申请通过数据</param>
         /// <returns></returns>
-        public static List<ApplyItem> GetApplyList(Guid momentId, bool isValid, RequestHead head,long momentUId = 0)
+        public static List<ApplyItem> GetApplyList(Guid momentId, bool isValid, RequestHead head, long momentUId = 0)
         {
             var applyList = applyInfoDao.GetListByMomentId(momentId);
             if (applyList.IsNullOrEmpty())
@@ -34,7 +34,7 @@ namespace Bingo.Biz.Impl.Builder
             }
             if (isValid)
             {
-                applyList = applyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过||a.UId==head.UId||a.MomentUId==head.UId).ToList();
+                applyList = applyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过 || a.UId == head.UId || a.MomentUId == head.UId).ToList();
             }
             var resultList = new List<ApplyItem>();
             for (var index = 0; index < applyList.Count; index++)
@@ -79,6 +79,35 @@ namespace Bingo.Biz.Impl.Builder
             return resultList;
         }
 
+        public static List<ApplyDetailItem> GetCheckDetails(MomentEntity moment, UserInfoEntity momentUserInfo, RequestHead head)
+        {
+            var resultList = new List<ApplyDetailItem>()
+            {
+                new ApplyDetailItem()
+                {
+                    UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo, head),
+                    Content = "首次提交审核",
+                    CreateTimeDesc = DateTimeHelper.GetDateDesc(moment.CreateTime, true),
+                }
+            };
+
+            var applyDetaiList = applyDetailDao.GetListByMomentId(moment.MomentId);
+            if (applyDetaiList.NotEmpty())
+            {
+                var resultDic = GetUserInfo(applyDetaiList, head);
+                foreach (var item in applyDetaiList)
+                {
+                    resultList.Add(new ApplyDetailItem()
+                    {
+                        CreateTimeDesc = DateTimeHelper.GetDateDesc(item.CreateTime, true),
+                        Content = item.Content,
+                        UserInfo = resultDic[item.UId]
+                    });
+                }
+
+            }
+            return resultList;
+        }
 
         public static List<ApplyDetailItem> GetApplyDetails(Guid applyId, RequestHead head)
         {
@@ -118,7 +147,7 @@ namespace Bingo.Biz.Impl.Builder
             return text.ToString();
         }
 
-        public static string GetServiceCountDesc(List<ApplyDetailEntity> applyList,long uId)
+        public static string GetServiceCountDesc(List<ApplyDetailEntity> applyList, long uId)
         {
             if (applyList.IsNullOrEmpty())
             {

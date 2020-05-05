@@ -24,7 +24,7 @@ namespace Bingo.Dao.BingoDb.Entity
         /// </summary>
         public long UId { get; set; }
 
-        public ApplyDetailTypeEnum ApplyDetailType { get; set; }
+        public ApplyDetailTypeEnum Type { get; set; }
 
         /// <summary>
         /// 申请内容
