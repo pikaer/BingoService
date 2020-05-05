@@ -65,6 +65,7 @@ namespace Bingo.Biz.Impl
                 return response;
             }
             response.Data = UserInfoBuilder.BuildUserInfo(userInfo, head,false);
+            response.Data.NickName = userInfo.NickName;
             return response;
         }
 
@@ -145,6 +146,7 @@ namespace Bingo.Biz.Impl
                 redisClient.Remove(userInfoKey);
                 userInfo=GetUserInfoByUid(request.Head.UId);
                 response.Data = UserInfoBuilder.BuildUserInfo(userInfo, request.Head,false);
+                response.Data.NickName = userInfo.NickName;
             }
             return response;
         }

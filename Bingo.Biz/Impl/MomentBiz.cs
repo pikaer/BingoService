@@ -57,19 +57,19 @@ namespace Bingo.Biz.Impl
                     }
                     else
                     {
+                        var momentState= MomentStateEnum.正常发布中;
                         if (action.Equals("pass"))
                         {
                             remark = "审核通过，发布成功";
                         }
-                        MomentStateEnum momentState;
                         if (action.Equals("black"))
                         {
                             remark = "拉黑此活动申请";
                             momentState = MomentStateEnum.被关小黑屋中;
                         }
-                        else
+                        if (action.Equals("refuse"))
                         {
-                            remark = "审核被拒,拒绝理由：" + remark;
+                            remark = "审核不通过：" + remark;
                             momentState = MomentStateEnum.审核被拒绝;
                         }
                         momentDao.UpdateState(momentId, momentState);
@@ -159,7 +159,7 @@ namespace Bingo.Biz.Impl
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent(moment,false),
                     ApplyList= ApplyBuilder.GetApplyList(momentId,false, head,moment.UId),
-                    CheckList= ApplyBuilder.GetCheckDetails(moment, userInfo, head),
+                    CheckList= ApplyBuilder.GetCheckDetails(moment, userInfo, head)
                 }
             };
         }

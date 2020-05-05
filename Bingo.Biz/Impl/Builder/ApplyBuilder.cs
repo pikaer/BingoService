@@ -109,7 +109,7 @@ namespace Bingo.Biz.Impl.Builder
             return resultList;
         }
 
-        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId, RequestHead head)
+        public static List<ApplyDetailItem> GetApplyDetails(Guid applyId, RequestHead head,bool serviceName)
         {
             var applyDetaiList = applyDetailDao.GetListByApplyId(applyId);
             if (applyDetaiList.IsNullOrEmpty())
@@ -117,7 +117,7 @@ namespace Bingo.Biz.Impl.Builder
                 return null;
             }
             var resultList = new List<ApplyDetailItem>();
-            var resultDic = GetUserInfo(applyDetaiList, head);
+            var resultDic = GetUserInfo(applyDetaiList, head, serviceName);
             foreach (var item in applyDetaiList)
             {
                 resultList.Add(new ApplyDetailItem()
@@ -177,12 +177,17 @@ namespace Bingo.Biz.Impl.Builder
         }
 
 
-        private static Dictionary<long, UserInfoType> GetUserInfo(List<ApplyDetailEntity> applyDetaiList, RequestHead head)
+        private static Dictionary<long, UserInfoType> GetUserInfo(List<ApplyDetailEntity> applyDetaiList, RequestHead head,bool serviceName=false)
         {
             var resultDic = new Dictionary<long, UserInfoType>();
             foreach (var item in applyDetaiList.GroupBy(a => a.UId))
             {
-                resultDic.Add(item.Key, UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key), head));
+                var userInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key), head);
+                if (serviceName&& head.UId!=userInfo.UId)
+                {
+                    userInfo.NickName = string.Format("{0}(客服)", userInfo.NickName);
+                }
+                resultDic.Add(item.Key, userInfo);
             }
             return resultDic;
         }

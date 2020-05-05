@@ -7,8 +7,6 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 {
     public class ApplyDetailDao : DbBase, IApplyDetailDao
     {
-        private readonly string SELECT_ApplyInfoEntity = "SELECT * FROM dbo.ApplyDetail ";
-
         protected override DbEnum GetDbEnum()
         {
             return DbEnum.BingoDb;
@@ -16,7 +14,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 
         public List<ApplyDetailEntity> GetListByApplyId(Guid applyId)
         {
-            var sql = SELECT_ApplyInfoEntity + @"SELECT * FROM dbo.ApplyDetail  Where ApplyId=@ApplyId order by CreateTime ";
+            var sql = @"SELECT * FROM dbo.ApplyDetail  Where ApplyId=@ApplyId order by CreateTime ";
             using var Db = GetDbConnection();
             return Db.Query<ApplyDetailEntity>(sql, new { ApplyId = applyId }).AsList();
         }
@@ -36,7 +34,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,UId
                                   ,Content
                                   ,MomentId
-                                  ,ApplyDetailType
+                                  ,Type
                                   ,CreateTime
                                   ,UpdateTime)
                             VALUES
@@ -45,7 +43,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@UId
                                   ,@Content
                                   ,@MomentId
-                                  ,@ApplyDetailType
+                                  ,@Type
                                   ,@CreateTime
                                   ,@UpdateTime)";
             using var Db = GetDbConnection();

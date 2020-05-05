@@ -105,7 +105,6 @@ namespace Bingo.Biz.Impl
                 {
                     remark = request.Data.Remark;
                 }
-                
             }
             InsertDetail(applyInfo.MomentId,request.Data.ApplyId, request.Head.UId, remark);
             return new Response(ErrCodeEnum.Success, "提交成功");
@@ -153,7 +152,7 @@ namespace Bingo.Biz.Impl
                 UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo, head),
                 BtnVisable= applyInfo.ApplyState== ApplyStateEnum.申请中,
                 ContentList = MomentContentBuilder.BuilderContent2Contact(moment, myUserInfo, applyInfo.ApplyState == ApplyStateEnum.申请通过),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head,true)
             };
             return response;
         }

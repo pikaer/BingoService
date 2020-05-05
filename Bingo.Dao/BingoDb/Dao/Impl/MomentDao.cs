@@ -157,14 +157,14 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
         public bool UpdateState(Guid momentId, MomentStateEnum momentState)
         {
             var sql = @"UPDATE dbo.Moment
-                        SET MomentState =@MomentState,
+                        SET State =@State,
                             UpdateTime = @UpdateTime
                         WHERE MomentId=@MomentId";
             using var Db = GetDbConnection();
             return Db.Execute(sql, new
             {
                 MomentId = momentId,
-                MomentState = momentState,
+                State = momentState,
                 UpdateTime = DateTime.Now
             }) > 0;
         }

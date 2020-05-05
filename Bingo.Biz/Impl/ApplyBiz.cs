@@ -43,7 +43,7 @@ namespace Bingo.Biz.Impl
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                 ContentList = MomentContentBuilder.BuilderContent(moment,applyInfo.ApplyState!=ApplyStateEnum.申请通过),
-                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head)
+                ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head,false)
             };
             return response;
         }
