@@ -94,7 +94,7 @@ namespace Bingo.Biz.Impl
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent(moment,true),
-                    ApplyList = ApplyBuilder.GetApplyList(momentId,true,head)
+                    ApplyList = ApplyBuilder.GetApplyList(momentId,true,head, moment.UId)
                 }
             };
         }
@@ -134,7 +134,7 @@ namespace Bingo.Biz.Impl
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent(moment, true),
-                    ApplyList = ApplyBuilder.GetApplyList(momentId, true, head)
+                    ApplyList = ApplyBuilder.GetApplyList(momentId, true, head, moment.UId)
                 }
             };
         }

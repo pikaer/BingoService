@@ -11,6 +11,9 @@ namespace Bingo.Dao.BingoDb.Entity
         ServiceUser = 1,
 
         [Description("模拟用户")]
-        SimulationUser = 2
+        SimulationUser = 2,
+
+        [Description("超级管理员")]
+        Admin =3
     }
 }

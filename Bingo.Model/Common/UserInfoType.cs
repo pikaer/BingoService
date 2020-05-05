@@ -30,6 +30,11 @@ namespace Bingo.Model.Common
         public GenderEnum Gender { get; set; }
 
         /// <summary>
+        /// 用户类别
+        /// </summary>
+        public UserTypeEnum UserType { get; set; }
+
+        /// <summary>
         /// 纬度，范围为 -90~90，负数表示南纬
         /// </summary>
         public double Latitude { get; set; }

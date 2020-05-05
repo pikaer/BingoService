@@ -1,26 +1,14 @@
-﻿using System;
+﻿using Bingo.Dao.BingoDb.Entity;
+using System;
 
-namespace Bingo.Dao.BingoDb.Entity
+namespace Bingo.Model.Contract
 {
-    /// <summary>
-    /// 用户发布的动态库
-    /// </summary>
-    public class MomentEntity : EntityBase
+    public class UpdateMomentType
     {
         /// <summary>
         /// 动态Id
         /// </summary>
         public Guid MomentId { get; set; }
-
-        /// <summary>
-        /// 用户Id
-        /// </summary>
-        public long UId { get; set; }
-
-        /// <summary>
-        /// 主人是否已删除
-        /// </summary>
-        public bool IsDelete { get; set; }
 
         /// <summary>
         /// 是否线下活动，默认false
@@ -37,17 +25,10 @@ namespace Bingo.Dao.BingoDb.Entity
         /// </summary>
         public string HidingNickName { get; set; }
 
-        public MomentStateEnum State{ get; set; }
-
         /// <summary>
         /// 限定人数
         /// </summary>
         public int NeedCount { get; set; }
-
-        /// <summary>
-        /// 已经申请人数
-        /// </summary>
-        public int ApplyCount { get; set; }
 
         /// <summary>
         /// 活动截止时间

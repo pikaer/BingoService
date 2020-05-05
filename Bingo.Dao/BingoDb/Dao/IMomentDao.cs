@@ -12,13 +12,20 @@ namespace Bingo.Dao.BingoDb.Dao
 
         List<MomentEntity> GetMomentListByUid(long uid);
 
+        List<MomentEntity> GetMomentListByState(MomentStateEnum state);
+
         int Insert(MomentEntity entity);
 
         bool UpdateStopTime(Guid momentId);
 
         bool UpdateApplyCount(Guid momentId);
 
+        bool UpdateMoment(MomentEntity entity);
+
+        bool UpdateState(Guid momentId,MomentStateEnum momentState);
+
         bool Delete(Guid momentId);
 
+        int PendingCount();
     }
 }

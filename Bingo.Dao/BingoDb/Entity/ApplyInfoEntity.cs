@@ -33,5 +33,10 @@ namespace Bingo.Dao.BingoDb.Entity
         /// 申请来源
         /// </summary>
         public string Source { get; set; }
+
+        /// <summary>
+        /// 是否已删除
+        /// </summary>
+        public bool IsDelete { get; set; }
     }
 }

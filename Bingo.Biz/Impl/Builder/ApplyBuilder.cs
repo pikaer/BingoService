@@ -34,7 +34,7 @@ namespace Bingo.Biz.Impl.Builder
             }
             if (isValid)
             {
-                applyList = applyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过).ToList();
+                applyList = applyList.Where(a => a.ApplyState == ApplyStateEnum.申请通过||a.UId==head.UId||a.MomentUId==head.UId).ToList();
             }
             var resultList = new List<ApplyItem>();
             for (var index = 0; index < applyList.Count; index++)
@@ -48,12 +48,19 @@ namespace Bingo.Biz.Impl.Builder
                 var result = new ApplyItem()
                 {
                     ApplyId = apply.ApplyId,
-                    StateDesc = StateDescMap(apply.ApplyState),
                     TextColor = TextColorMap(apply.ApplyState),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                     ShowBorder = index != applyList.Count - 1,
                     CreateTimeDesc = DateTimeHelper.GetDateDesc(apply.CreateTime, true),
                 };
+                if (apply.UId == head.UId)
+                {
+                    result.StateDesc = StateDescMapV1(apply.ApplyState);
+                }
+                else
+                {
+                    result.StateDesc = StateDescMap(apply.ApplyState);
+                }
                 if (!isValid)
                 {
                     var applyDetaiList = applyDetailDao.GetListByApplyId(apply.ApplyId);
@@ -109,6 +116,17 @@ namespace Bingo.Biz.Impl.Builder
             text.AppendFormat("待处理:{0}人", askCount);
 
             return text.ToString();
+        }
+
+        public static string GetServiceCountDesc(List<ApplyDetailEntity> applyList,long uId)
+        {
+            if (applyList.IsNullOrEmpty())
+            {
+                return "初次审核";
+            }
+
+            var userList = applyList.Where(a => a.UId == uId).ToList();
+            return string.Format("第{0}次提交审核", userList.Count);
         }
 
         public static string GetApplyCountColor(List<ApplyInfoEntity> applyList)
@@ -199,6 +217,24 @@ namespace Bingo.Biz.Impl.Builder
             }
         }
 
+        public static string StateDescMapV1(ApplyStateEnum applyState)
+        {
+            switch (applyState)
+            {
+                case ApplyStateEnum.申请中:
+                    return "待通过";
+                case ApplyStateEnum.被拒绝:
+                    return "被拒绝";
+                case ApplyStateEnum.申请已撤销:
+                    return "已撤销申请";
+                case ApplyStateEnum.申请通过:
+                    return "已通过";
+                case ApplyStateEnum.永久拉黑:
+                    return "被拉黑";
+                default:
+                    return "";
+            }
+        }
 
         public static string BtnActionMap(ApplyStateEnum applyState)
         {

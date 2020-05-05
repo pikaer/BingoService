@@ -8,14 +8,12 @@ using Bingo.Model.Contract;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bingo.Biz.Impl
 {
     public class ApplyBiz : IApplyBiz
     {
         private readonly IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
-        private readonly IApplyDetailDao applyDetailDao = SingletonProvider<ApplyDetailDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
 
         public ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId, RequestHead head)
@@ -84,22 +82,6 @@ namespace Bingo.Biz.Impl
                     UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent2Contact(moment, momentUserInfo,apply.ApplyState==ApplyStateEnum.申请通过)
                 };
-                var detailList = applyDetailDao.GetListByApplyId(apply.ApplyId);
-                if (detailList.NotEmpty())
-                {
-                    detailList = detailList.OrderByDescending(a => a.CreateTime).ToList();
-                    var itemUser= uerInfoBiz.GetUserInfoByUid(detailList[0].UId);
-                    if (itemUser != null)
-                    {
-                        string nickName = itemUser.UId == head.UId ? "我" : itemUser.NickName;
-                        if (nickName.Length > 7)
-                        {
-                            nickName = nickName.Substring(0, 6) + "...";
-                        }
-                        result.CreateTimeDesc = DateTimeHelper.GetDateDesc(detailList[0].CreateTime, true);
-                        result.Remark = string.Format("{0}：{1}",nickName,detailList[0].Content);
-                    }
-                }
                 response.Data.MomentList.Add(result);
             }
             return response;

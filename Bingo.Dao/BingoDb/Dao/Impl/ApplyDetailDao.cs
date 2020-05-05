@@ -7,7 +7,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 {
     public class ApplyDetailDao : DbBase, IApplyDetailDao
     {
-        private readonly string SELECT_ApplyInfoEntity = "SELECT ApplyDetailId,ApplyId,UId,Content,CreateTime,UpdateTime FROM dbo.ApplyDetail ";
+        private readonly string SELECT_ApplyInfoEntity = "SELECT ApplyDetailId,ApplyId,UId,Content,MomentId,ApplyDetailType,CreateTime,UpdateTime FROM dbo.ApplyDetail ";
 
         protected override DbEnum GetDbEnum()
         {
@@ -21,6 +21,13 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             return Db.Query<ApplyDetailEntity>(sql, new { ApplyId = applyId }).AsList();
         }
 
+        public List<ApplyDetailEntity> GetListByMomentId(Guid momentId)
+        {
+            var sql = @"SELECT top (20) * FROM dbo.ApplyDetail Where MomentId=@MomentId and ApplyDetailType=1 order by CreateTime desc ";
+            using var Db = GetDbConnection();
+            return Db.Query<ApplyDetailEntity>(sql, new { MomentId = momentId }).AsList();
+        }
+
         public bool Insert(ApplyDetailEntity entity)
         {
             var sql = @"INSERT INTO dbo.ApplyDetail
@@ -28,6 +35,8 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,ApplyId
                                   ,UId
                                   ,Content
+                                  ,MomentId
+                                  ,ApplyDetailType
                                   ,CreateTime
                                   ,UpdateTime)
                             VALUES
@@ -35,6 +44,8 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@ApplyId
                                   ,@UId
                                   ,@Content
+                                  ,@MomentId
+                                  ,@ApplyDetailType
                                   ,@CreateTime
                                   ,@UpdateTime)";
             using var Db = GetDbConnection();

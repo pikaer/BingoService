@@ -68,7 +68,6 @@ namespace Bingo.Api.Controllers
             }
         }
 
-
         [HttpPost]
         public JsonResult MyPublishMomentDetail(RequestContext<MyPublishMomentDetailRequest> request)
         {
@@ -115,7 +114,7 @@ namespace Bingo.Api.Controllers
                 {
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
                 }
-                return new JsonResult(momentBiz.MomentAction(request.Data.MomentId, request.Data.Action));
+                return new JsonResult(momentBiz.MomentAction(request.Data.MomentId, request.Data.Action, request.Data.Remark, head.UId));
             }
             catch (Exception ex)
             {
@@ -123,5 +122,58 @@ namespace Bingo.Api.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult UpdateMoment(RequestContext<UpdateMomentType> request)
+        {
+            RequestHead head = default;
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!CheckAuth(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                head = request.Head;
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentBiz.UpdateMoment(request.Data));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.UpdateMoment", ex);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult MomentUpdateDetail(RequestContext<MomentDetailRequest> request)
+        {
+            RequestHead head = default;
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!CheckAuth(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                head = request.Head;
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentBiz.MomentUpdateDetail(request.Data.MomentId));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.MomentUpdateDetail", ex);
+            }
+        }
     }
 }

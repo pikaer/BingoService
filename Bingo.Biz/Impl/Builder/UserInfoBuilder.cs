@@ -19,6 +19,7 @@ namespace Bingo.Biz.Impl.Builder
                 UId = userInfo.UId,
                 Gender = userInfo.Gender,
                 Latitude=userInfo.Latitude,
+                UserType=userInfo.UserType,
                 Longitude=userInfo.Longitude,
                 NickName=userInfo.NickName,
                 Portrait=userInfo.Portrait,

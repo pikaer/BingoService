@@ -10,6 +10,11 @@ namespace Bingo.Dao.BingoDb.Entity
         public Guid ApplyDetailId { get; set; }
 
         /// <summary>
+        /// 动态Id
+        /// </summary>
+        public Guid MomentId { get; set; }
+
+        /// <summary>
         /// 申请Id
         /// </summary>
         public Guid ApplyId { get; set; }
@@ -18,6 +23,8 @@ namespace Bingo.Dao.BingoDb.Entity
         /// 用户Id
         /// </summary>
         public long UId { get; set; }
+
+        public ApplyDetailTypeEnum ApplyDetailType { get; set; }
 
         /// <summary>
         /// 申请内容

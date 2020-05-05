@@ -64,7 +64,7 @@ namespace Bingo.Biz.Impl
             {
                 remark = request.Data.Remark;
             }
-            InsertDetail(dto.ApplyId, request.Head.UId, remark);
+            InsertDetail(moment.MomentId,dto.ApplyId, request.Head.UId, remark);
 
             return new Response(ErrCodeEnum.Success, "申请提交成功");
         }
@@ -107,17 +107,19 @@ namespace Bingo.Biz.Impl
                 }
                 
             }
-            InsertDetail(request.Data.ApplyId, request.Head.UId, remark);
+            InsertDetail(applyInfo.MomentId,request.Data.ApplyId, request.Head.UId, remark);
             return new Response(ErrCodeEnum.Success, "提交成功");
         }
 
-        private void InsertDetail(Guid applyId,long uId,string remark)
+        private void InsertDetail(Guid momentId, Guid applyId, long uId,string remark)
         {
             var detail = new ApplyDetailEntity()
             {
                 ApplyDetailId = Guid.NewGuid(),
                 ApplyId = applyId,
                 UId = uId,
+                MomentId=momentId,
+                ApplyDetailType=ApplyDetailTypeEnum.活动申请详情,
                 Content = remark,
                 CreateTime = DateTime.Now,
                 UpdateTime = DateTime.Now

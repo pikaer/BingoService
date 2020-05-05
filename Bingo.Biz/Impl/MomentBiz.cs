@@ -16,8 +16,9 @@ namespace Bingo.Biz.Impl
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
         private readonly static IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
+        private readonly IApplyDetailDao applyDetailDao = SingletonProvider<ApplyDetailDao>.Instance;
 
-        public Response MomentAction(Guid momentId,string action)
+        public Response MomentAction(Guid momentId,string action,string remark,long uId)
         {
             var moment = MomentBuilder.GetMoment(momentId);
             if (moment == null)
@@ -35,10 +36,49 @@ namespace Bingo.Biz.Impl
                     momentDao.Delete(momentId);
                     message = "删除成功";
                     break;
+                case "pass":
+                case "refuse":
+                    var userInfo = uerInfoBiz.GetUserInfoByUid(uId);
+                    if(userInfo==null|| userInfo.UserType == UserTypeEnum.Default || userInfo.UserType== UserTypeEnum.SimulationUser)
+                    {
+                        return new Response(ErrCodeEnum.Failure, "权限不足，请联系管理员添加权限");
+                    }
+                    else
+                    {
+                        MomentStateEnum momentState;
+                        if (action.Equals("pass"))
+                        {
+                            momentState = MomentStateEnum.正常发布中;
+                        }
+                        else
+                        {
+                            momentState = MomentStateEnum.审核被拒绝;
+                        }
+                        momentDao.UpdateState(momentId, momentState);
+                    }
+                    momentDao.Delete(momentId);
+                    InsertApplyDetail(momentId, remark, uId);
+                    message = "操作成功";
+                    break;
                 default:
                      break;
             }
             return new Response(ErrCodeEnum.Success, message);
+        }
+
+        private bool InsertApplyDetail(Guid momentId, string remark, long uId)
+        {
+            var detail = new ApplyDetailEntity()
+            {
+                ApplyDetailId = Guid.NewGuid(),
+                UId = uId,
+                MomentId = momentId,
+                ApplyDetailType = ApplyDetailTypeEnum.动态审核详情,
+                Content = remark,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now
+            };
+            return applyDetailDao.Insert(detail);
         }
 
         public ResponseContext<MyPublishListResponse> MyPublishList(RequestContext<MyPublishListRequest> request)
@@ -122,7 +162,7 @@ namespace Bingo.Biz.Impl
                 IsHide = request.Data.IsHide,
                 IsOffLine = request.Data.IsOffLine,
                 HidingNickName = request.Data.HidingNickName,
-                State = MomentStateEnum.正常发布中,
+                State = MomentStateEnum.审核中,
                 NeedCount = request.Data.NeedCount,
                 Place = request.Data.Place,
                 ExpectGender = request.Data.ExpectGender,
@@ -138,6 +178,65 @@ namespace Bingo.Biz.Impl
             }
             momentDao.Insert(moment);
             return response;
+        }
+
+        public ResponseContext<UpdateMomentType> MomentUpdateDetail(Guid momentId)
+        {
+            var moment = momentDao.GetMomentByMomentId(momentId);
+            if (moment == null)
+            {
+                return new ResponseContext<UpdateMomentType>(ErrCodeEnum.DataIsnotExist);
+            }
+            return new ResponseContext<UpdateMomentType>()
+            {
+                Data = new UpdateMomentType()
+                {
+                    MomentId = momentId,
+                    IsOffLine = moment.IsOffLine,
+                    IsHide = moment.IsHide,
+                    HidingNickName = moment.HidingNickName,
+                    NeedCount = moment.NeedCount,
+                    StopTime = moment.StopTime,
+                    Place = moment.Place,
+                    ExpectGender = moment.ExpectGender,
+                    ShareType = moment.ShareType,
+                    Latitude = moment.Latitude,
+                    Longitude = moment.Longitude,
+                    Title = moment.Title,
+                    Content = moment.Content
+                }
+            };
+        }
+
+        public Response UpdateMoment(UpdateMomentType moment)
+        {
+            var entity = new MomentEntity()
+            {
+                MomentId = moment.MomentId,
+                IsOffLine = moment.IsOffLine,
+                IsHide = moment.IsHide,
+                HidingNickName = moment.HidingNickName,
+                NeedCount = moment.NeedCount,
+                StopTime = moment.StopTime,
+                Place = moment.Place,
+                ExpectGender = moment.ExpectGender,
+                ShareType = moment.ShareType,
+                Latitude = moment.Latitude,
+                Longitude = moment.Longitude,
+                Title = moment.Title,
+                Content = moment.Content,
+                State=MomentStateEnum.审核中,
+                UpdateTime =DateTime.Now
+            };
+            bool sucess=momentDao.UpdateMoment(entity);
+            if (sucess)
+            {
+                return new Response();
+            }
+            else
+            {
+                return new Response(ErrCodeEnum.Failure,"修改失败");
+            }
         }
     }
 }

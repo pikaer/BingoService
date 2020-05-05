@@ -38,10 +38,6 @@ namespace Bingo.Model.Contract
         /// 状态文本采用字体颜色
         /// </summary>
         public string TextColor { get; set; }
-
-        public string Remark { get; set; }
-
-        public string CreateTimeDesc { get; set; }
     }
 
 }

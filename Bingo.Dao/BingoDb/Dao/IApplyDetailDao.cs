@@ -9,5 +9,7 @@ namespace Bingo.Dao.BingoDb.Dao
         bool Insert(ApplyDetailEntity entity);
 
         List<ApplyDetailEntity> GetListByApplyId(Guid applyId);
+
+        List<ApplyDetailEntity> GetListByMomentId(Guid momentId);
     }
 }
