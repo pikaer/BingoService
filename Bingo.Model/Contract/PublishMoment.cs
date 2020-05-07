@@ -35,11 +35,6 @@ namespace Bingo.Model.Contract
         public string StopTime { get; set; }
 
         /// <summary>
-        /// 活动位置（针对线下活动）
-        /// </summary>
-        public string Place { get; set; }
-
-        /// <summary>
         /// 活动说明
         /// </summary>
         public string Content { get; set; }
@@ -48,6 +43,26 @@ namespace Bingo.Model.Contract
         /// 期待性别
         /// </summary>
         public GenderEnum ExpectGender { get; set; }
+
+        /// <summary>
+        /// 活动位置名（针对线下活动）
+        /// </summary>
+        public string Place { get; set; }
+
+        /// <summary>
+        /// 详细地址
+        /// </summary>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// 纬度，范围为 -90~90，负数表示南纬
+        /// </summary>
+        public double Latitude { get; set; }
+
+        /// <summary>
+        /// 经度，范围为 -180~180，负数表示西经
+        /// </summary>
+        public double Longitude { get; set; }
 
         public ShareTypeEnum ShareType { get; set; }
     }

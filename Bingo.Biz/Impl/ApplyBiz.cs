@@ -38,7 +38,10 @@ namespace Bingo.Biz.Impl
                 MomentId = moment.MomentId,
                 ShareTitle = moment.Content,
                 BtnText = btnText,
-                NextAction= ApplyBuilder.BtnActionMap(applyInfo.ApplyState),
+                Address = moment.Address,
+                Latitude = moment.Latitude,
+                Longitude = moment.Longitude,
+                NextAction = ApplyBuilder.BtnActionMap(applyInfo.ApplyState),
                 BtnVisable =!string.IsNullOrEmpty(btnText),
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
@@ -79,6 +82,9 @@ namespace Bingo.Biz.Impl
                     TextColor = ApplyBuilder.TextColorMap(apply.ApplyState),
                     ShareTitle = moment.Content,
                     MomentId = moment.MomentId,
+                    Address = moment.Address,
+                    Latitude = moment.Latitude,
+                    Longitude = moment.Longitude,
                     UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent2Contact(moment, momentUserInfo,apply.ApplyState==ApplyStateEnum.申请通过)
                 };

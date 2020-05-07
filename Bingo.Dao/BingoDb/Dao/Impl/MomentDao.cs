@@ -55,6 +55,9 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,ApplyCount
                                   ,StopTime
                                   ,Place
+                                  ,Address
+                                  ,Latitude
+                                  ,Longitude
                                   ,ExpectGender
                                   ,ShareType
                                   ,Title
@@ -73,6 +76,9 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@ApplyCount
                                   ,@StopTime
                                   ,@Place
+                                  ,@Address
+                                  ,@Latitude
+                                  ,@Longitude
                                   ,@ExpectGender
                                   ,@ShareType
                                   ,@Title

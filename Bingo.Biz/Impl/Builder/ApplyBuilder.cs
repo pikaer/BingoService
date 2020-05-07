@@ -183,7 +183,7 @@ namespace Bingo.Biz.Impl.Builder
             foreach (var item in applyDetaiList.GroupBy(a => a.UId))
             {
                 var userInfo = UserInfoBuilder.BuildUserInfo(uerInfoBiz.GetUserInfoByUid(item.Key), head);
-                if (serviceName&& head.UId!=userInfo.UId)
+                if (serviceName&& userInfo.UserType== UserTypeEnum.ServiceUser)
                 {
                     userInfo.NickName = string.Format("{0}(客服)", userInfo.NickName);
                 }

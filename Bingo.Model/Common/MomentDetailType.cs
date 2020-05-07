@@ -16,6 +16,21 @@ namespace Bingo.Model.Common
         public string ShareTitle { get; set; }
 
         /// <summary>
+        /// 详细地址
+        /// </summary>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// 纬度，范围为 -90~90，负数表示南纬
+        /// </summary>
+        public double Latitude { get; set; }
+
+        /// <summary>
+        /// 经度，范围为 -180~180，负数表示西经
+        /// </summary>
+        public double Longitude { get; set; }
+
+        /// <summary>
         /// 用户信息
         /// </summary>
         public UserInfoType UserInfo { get; set; }
