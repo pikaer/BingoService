@@ -1,6 +1,7 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Base;
 using Bingo.Model.Common;
+using Bingo.Utils;
 using Infrastructure;
 using System.Collections.Generic;
 
@@ -31,6 +32,16 @@ namespace Bingo.Biz.Impl.Builder
             if (head.UId== userInfo.UId)
             {
                 result.NickName = string.Format("{0}(我)", result.NickName);
+            }
+            if (userInfo.Gender == GenderEnum.Man)
+            {
+                result.GenderIcon = CommonConst.Man_GenderIcon;
+                result.GenderColor = CommonConst.Color_Man_GenderIcon;
+            }
+            if (userInfo.Gender == GenderEnum.Woman)
+            {
+                result.GenderIcon = CommonConst.WoMan_GenderIcon;
+                result.GenderColor = CommonConst.Color_WoMan_GenderIcon;
             }
             var distance = LocationHelper.GetDistanceDesc(userInfo.Latitude, userInfo.Longitude, head.Latitude, head.Longitude);
             if (!string.IsNullOrEmpty(distance)&& needDistance)
