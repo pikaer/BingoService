@@ -6,7 +6,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 {
     public class UserInfoDao : DbBase,IUserInfoDao 
     {
-        private readonly string SELECT_UserInfoEntity = "SELECT UId,OpenId,Platform,Gender,LiveState,Grade,UserType,NickName,BirthDate,Area,Province,City,Country,Mobile,WeChatNo,QQNo,Portrait,Signature,SchoolName,EntranceDate,IsDelete,IsRegister,Latitude,Longitude,LastLoginTime,CreateTime,UpdateTime FROM dbo.UserInfo ";
+        private readonly string SELECT_UserInfoEntity = "SELECT * FROM dbo.UserInfo ";
 
 
         protected override DbEnum GetDbEnum()

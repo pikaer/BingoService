@@ -7,7 +7,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
 {
     public class ApplyInfoDao : DbBase, IApplyInfoDao
     {
-        private readonly string SELECT_ApplyInfoEntity = "SELECT ApplyId,MomentId,MomentUId,UId,ApplyState,Source,CreateTime,UpdateTime FROM dbo.ApplyInfo ";
+        private readonly string SELECT_ApplyInfoEntity = "SELECT * FROM dbo.ApplyInfo ";
 
         protected override DbEnum GetDbEnum()
         {

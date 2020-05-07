@@ -227,6 +227,7 @@ namespace Bingo.Biz.Impl
                     Place = moment.Place,
                     ExpectGender = moment.ExpectGender,
                     ShareType = moment.ShareType,
+                    Address=moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
                     Title = moment.Title,
