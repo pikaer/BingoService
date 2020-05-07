@@ -150,6 +150,23 @@ namespace Bingo.Biz.Impl.Builder
             }
         }
 
+        public static string VerifyStateMap(MomentStateEnum state)
+        {
+            switch (state)
+            {
+                case MomentStateEnum.审核中:
+                case MomentStateEnum.被投诉审核中:
+                    return "活动审核中";
+                case MomentStateEnum.审核被拒绝:
+                    return "活动审核不通过";
+                case MomentStateEnum.正常发布中:
+                case MomentStateEnum.被关小黑屋中:
+                case MomentStateEnum.永久不支持上线:
+                default:
+                    return "已审核通过";
+            }
+        }
+
         public static bool IsOverTime(DateTime? stopTime)
         {
             return stopTime.HasValue && stopTime.Value < DateTime.Now;

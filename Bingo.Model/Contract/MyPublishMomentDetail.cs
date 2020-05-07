@@ -29,6 +29,8 @@ namespace Bingo.Model.Contract
         /// </summary>
         public string StateDesc { get; set; }
 
+        public string VerifyStateDesc { get; set; }
+
         /// <summary>
         /// 状态文本采用字体颜色
         /// </summary>

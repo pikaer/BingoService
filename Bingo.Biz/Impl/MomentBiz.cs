@@ -160,6 +160,7 @@ namespace Bingo.Biz.Impl
                     Longitude = moment.Longitude,
                     IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
+                    VerifyStateDesc= MomentContentBuilder.VerifyStateMap(moment.State),
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State,moment.StopTime, overCount),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
