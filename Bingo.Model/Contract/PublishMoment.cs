@@ -64,6 +64,21 @@ namespace Bingo.Model.Contract
         /// </summary>
         public double Longitude { get; set; }
 
+        /// <summary>
+        /// 手机号
+        /// </summary>
+        public string Mobile { get; set; }
+
+        /// <summary>
+        /// 微信号
+        /// </summary>
+        public string WeChatNo { get; set; }
+
+        /// <summary>
+        /// QQ号
+        /// </summary>
+        public string QQNo { get; set; }
+
         public ShareTypeEnum ShareType { get; set; }
     }
 

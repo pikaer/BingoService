@@ -12,6 +12,12 @@ namespace Bingo.Dao.BingoDb.Dao
 
         bool UpdateUserLocation(long uId, double latitude, double longitude);
 
+        bool UpdateMobile(long uId, string mobile);
+
+        bool UpdateWeChatNo(long uId, string weChatNo);
+
+        bool UpdateQQNo(long uId, string qqNo);
+
         bool Register(long uId, GenderEnum gender, string nickName, string avatarUrl,string country,string province,string city);
 
         bool UpdateUserInfo(UserInfoEntity userInfo);

@@ -113,5 +113,50 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             using var Db = GetDbConnection();
             return Db.Execute(sql, userInfo) > 0;
         }
+
+        public bool UpdateMobile(long uId, string mobile)
+        {
+            var sql = @"UPDATE dbo.UserInfo
+                        SET Mobile =@Mobile,
+                            UpdateTime = @UpdateTime
+                        WHERE Uid=@Uid";
+            using var Db = GetDbConnection();
+            return Db.Execute(sql, new
+            {
+                Uid = uId,
+                Mobile = mobile,
+                UpdateTime = DateTime.Now
+            }) > 0;
+        }
+
+        public bool UpdateWeChatNo(long uId, string weChatNo)
+        {
+            var sql = @"UPDATE dbo.UserInfo
+                        SET WeChatNo =@WeChatNo,
+                            UpdateTime = @UpdateTime
+                        WHERE Uid=@Uid";
+            using var Db = GetDbConnection();
+            return Db.Execute(sql, new
+            {
+                Uid = uId,
+                WeChatNo = weChatNo,
+                UpdateTime = DateTime.Now
+            }) > 0;
+        }
+
+        public bool UpdateQQNo(long uId, string qqNo)
+        {
+            var sql = @"UPDATE dbo.UserInfo
+                        SET QQNo =@QQNo,
+                            UpdateTime = @UpdateTime
+                        WHERE Uid=@Uid";
+            using var Db = GetDbConnection();
+            return Db.Execute(sql, new
+            {
+                Uid = uId,
+                QQNo = qqNo,
+                UpdateTime = DateTime.Now
+            }) > 0;
+        }
     }
 }

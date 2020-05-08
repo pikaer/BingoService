@@ -16,6 +16,21 @@ namespace Bingo.Model.Contract
         public bool IsOffLine { get; set; }
 
         /// <summary>
+        /// 手机号
+        /// </summary>
+        public string Mobile { get; set; }
+
+        /// <summary>
+        /// 微信号
+        /// </summary>
+        public string WeChatNo { get; set; }
+
+        /// <summary>
+        /// QQ号
+        /// </summary>
+        public string QQNo { get; set; }
+
+        /// <summary>
         /// 是否隐身
         /// </summary>
         public bool IsHide { get; set; }

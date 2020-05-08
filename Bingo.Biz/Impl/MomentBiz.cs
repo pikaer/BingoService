@@ -16,6 +16,7 @@ namespace Bingo.Biz.Impl
         private readonly IMomentDao momentDao = SingletonProvider<MomentDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
         private readonly static IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
+        private readonly static IUserInfoDao userInfoDao = SingletonProvider<UserInfoDao>.Instance;
         private readonly IApplyDetailDao applyDetailDao = SingletonProvider<ApplyDetailDao>.Instance;
 
         public Response MomentAction(Guid momentId,string action,string remark,long uId)
@@ -204,6 +205,18 @@ namespace Bingo.Biz.Impl
             {
                 moment.StopTime = DateTime.Parse(request.Data.StopTime);
             }
+            if (!string.IsNullOrEmpty(request.Data.Mobile))
+            {
+                userInfoDao.UpdateMobile(request.Head.UId, request.Data.Mobile);
+            }
+            if (!string.IsNullOrEmpty(request.Data.WeChatNo))
+            {
+                userInfoDao.UpdateMobile(request.Head.UId, request.Data.WeChatNo);
+            }
+            if (!string.IsNullOrEmpty(request.Data.QQNo))
+            {
+                userInfoDao.UpdateMobile(request.Head.UId, request.Data.QQNo);
+            }
             momentDao.Insert(moment);
             return response;
         }
@@ -215,6 +228,7 @@ namespace Bingo.Biz.Impl
             {
                 return new ResponseContext<UpdateMomentType>(ErrCodeEnum.DataIsnotExist);
             }
+            var userInfo = uerInfoBiz.GetUserInfoByUid(moment.UId);
             return new ResponseContext<UpdateMomentType>()
             {
                 Data = new UpdateMomentType()
@@ -222,6 +236,9 @@ namespace Bingo.Biz.Impl
                     MomentId = momentId,
                     IsOffLine = moment.IsOffLine,
                     IsHide = moment.IsHide,
+                    Mobile = userInfo.Mobile,
+                    WeChatNo = userInfo.WeChatNo,
+                    QQNo = userInfo.QQNo,
                     HidingNickName = moment.HidingNickName,
                     NeedCount = moment.NeedCount,
                     StopTime = moment.StopTime.Value.ToString(DateTimeHelper.yMdHm),
@@ -268,6 +285,18 @@ namespace Bingo.Biz.Impl
             if (sucess)
             {
                 InsertApplyDetail(moment.MomentId, "修改活动内容，重新审核中", uId);
+                if (!string.IsNullOrEmpty(moment.Mobile))
+                {
+                    userInfoDao.UpdateMobile(uId, moment.Mobile);
+                }
+                if (!string.IsNullOrEmpty(moment.WeChatNo))
+                {
+                    userInfoDao.UpdateMobile(uId, moment.WeChatNo);
+                }
+                if (!string.IsNullOrEmpty(moment.QQNo))
+                {
+                    userInfoDao.UpdateMobile(uId, moment.QQNo);
+                }
                 return new Response();
             }
             else
