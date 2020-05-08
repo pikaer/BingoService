@@ -5,6 +5,9 @@ namespace Infrastructure
 {
     public static class DateTimeHelper
     {
+        public static readonly string yMdHm = "yyyy-MM-dd HH:mm";//转换为24小时制,例: 2018-06-27 15:24
+        public static readonly string yMdhm = "yyyy-MM-dd hh:mm";//转换为12小时制,例: 2018-06-27 03:24
+
         /// <summary>
         /// 时间转义
         /// </summary>

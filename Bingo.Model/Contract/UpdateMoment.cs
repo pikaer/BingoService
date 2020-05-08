@@ -31,9 +31,9 @@ namespace Bingo.Model.Contract
         public int NeedCount { get; set; }
 
         /// <summary>
-        /// 活动截止时间
+        /// 2020-06-06 23:59
         /// </summary>
-        public DateTime? StopTime { get; set; }
+        public string StopTime { get; set; }
 
         /// <summary>
         /// 期待性别

@@ -42,7 +42,7 @@ namespace Bingo.Biz.Impl.Builder
             AddItem(resultList, index++, "发布时间", DateTimeHelper.GetDateDesc(moment.CreateTime, true));
             if (moment.StopTime.HasValue)
             {
-                string stopStr = moment.StopTime.Value.ToString("yyyy-MM-dd HH:mm");
+                string stopStr = moment.StopTime.Value.ToString(DateTimeHelper.yMdHm);
                 if (IsOverTime(moment.StopTime))
                 {
                     stopStr += "(已过期)";
