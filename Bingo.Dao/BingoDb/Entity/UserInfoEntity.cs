@@ -32,7 +32,7 @@ namespace Bingo.Dao.BingoDb.Entity
         /// <summary>
         /// 年级
         /// </summary>
-        public GradeEnum Grade;
+        public GradeEnum Grade { get; set; }
 
         /// <summary>
         /// 用户类别

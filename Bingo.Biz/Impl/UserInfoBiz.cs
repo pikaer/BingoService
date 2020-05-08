@@ -168,11 +168,11 @@ namespace Bingo.Biz.Impl
                 Gender = userInfo.Gender,
                 LiveState = userInfo.LiveState,
                 Grade = userInfo.Grade,
-                SchoolName = userInfo.SchoolName,
+                SchoolName = userInfo.SchoolName ?? "",
                 BirthDate = userInfo.BirthDate.HasValue?userInfo.BirthDate.Value.ToString("yyyy-MM-dd"):"1990-01-01",
-                Mobile = userInfo.Mobile,
-                WeChatNo = userInfo.WeChatNo,
-                QQNo = userInfo.QQNo
+                Mobile = userInfo.Mobile ?? "",
+                WeChatNo = userInfo.WeChatNo ?? "",
+                QQNo = userInfo.QQNo ?? ""
             }; 
             return response;
         }

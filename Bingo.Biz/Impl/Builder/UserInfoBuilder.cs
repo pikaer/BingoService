@@ -3,6 +3,7 @@ using Bingo.Model.Base;
 using Bingo.Model.Common;
 using Bingo.Utils;
 using Infrastructure;
+using System;
 using System.Collections.Generic;
 
 namespace Bingo.Biz.Impl.Builder
@@ -48,8 +49,11 @@ namespace Bingo.Biz.Impl.Builder
             {
                 AddTag(result.TagList, TagTypeEnum.LocationInfo, distance, index++);
             }
-            AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetAgeYear(), index++);
-            AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetConstellation(), index++);
+            if(userInfo.BirthDate.HasValue&& userInfo.BirthDate.Value> Convert.ToDateTime("1990-01-01"))
+            {
+                AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetAgeYear(), index++);
+                AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetConstellation(), index++);
+            }
             AddTag(result.TagList,TagTypeEnum.Default,userInfo.SchoolName,index++);
             AddTag(result.TagList, TagTypeEnum.Default, GetLocationInfo(userInfo), index++);
             return result;

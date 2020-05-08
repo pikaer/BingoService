@@ -22,7 +22,7 @@ namespace Bingo.Model.Contract
         /// <summary>
         /// 年级
         /// </summary>
-        public GradeEnum Grade;
+        public GradeEnum Grade { get; set; }
 
         /// <summary>
         /// 状态

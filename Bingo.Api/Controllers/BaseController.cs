@@ -51,7 +51,6 @@ namespace Bingo.Api.Controllers
             {
                 return false;
             }
-            header.TransactionId = Guid.NewGuid();
             return true;
         }
 
