@@ -151,6 +151,7 @@ namespace Bingo.Biz.Impl
                 Address = moment.Address,
                 Latitude = moment.Latitude,
                 Longitude = moment.Longitude,
+                IsOffLine = moment.IsOffLine,
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo, head),
                 BtnVisable= applyInfo.ApplyState== ApplyStateEnum.申请中,

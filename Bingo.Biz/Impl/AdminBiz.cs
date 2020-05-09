@@ -31,6 +31,8 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = moment.MomentId,
                     State = moment.State,
+                    Address = moment.Address,
+                    IsOffLine = moment.IsOffLine,
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, request.Head),
@@ -68,6 +70,7 @@ namespace Bingo.Biz.Impl
                     State = moment.State,
                     ShareTitle = moment.Content,
                     Address = moment.Address,
+                    IsOffLine = moment.IsOffLine,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
                     ApplyCountDesc = ApplyBuilder.GetServiceCountDesc(applyList,moment.UId),

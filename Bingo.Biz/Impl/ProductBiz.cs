@@ -49,6 +49,7 @@ namespace Bingo.Biz.Impl
                         Address=moment.Address,
                         Latitude = moment.Latitude,
                         Longitude = moment.Longitude,
+                        IsOffLine=moment.IsOffLine,
                         UserInfo = UserInfoBuilder.BuildUserInfo(userInfo,request.Head),
                         ContentList= MomentContentBuilder.BuilderContent(moment,true)
                     };
@@ -132,6 +133,7 @@ namespace Bingo.Biz.Impl
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
+                    IsOffLine = moment.IsOffLine,
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
@@ -175,6 +177,7 @@ namespace Bingo.Biz.Impl
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
+                    IsOffLine = moment.IsOffLine,
                     AskFlag = string.Equals(btnText, "申请参与"),
                     BtnVisable = !string.IsNullOrEmpty(btnText),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),

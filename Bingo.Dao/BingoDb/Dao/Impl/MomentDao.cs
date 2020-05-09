@@ -63,6 +63,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,ShareType
                                   ,Title
                                   ,Content
+                                  ,Location
                                   ,CreateTime
                                   ,UpdateTime)
                             VALUES
@@ -84,8 +85,11 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                                   ,@ShareType
                                   ,@Title
                                   ,@Content
+                                  ,geography :: STGeomFromText ('POINT(@LongitudeValue @LatitudeVaule)',4326)
                                   ,@CreateTime
                                   ,@UpdateTime)";
+            sql = sql.Replace("@LongitudeValue", entity.Longitude.ToString());
+            sql = sql.Replace("@LatitudeVaule", entity.Latitude.ToString());
             using var Db = GetDbConnection();
             return Db.Execute(sql, entity);
         }
@@ -126,7 +130,8 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             }
             else
             {
-                sql += " order by moment.CreateTime desc OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+                //根据用户距离排序
+                sql += " order by userinfo.Location.STDistance(@currentLocation) asc  moment.CreateTime desc OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             }
 
             using var Db = GetDbConnection();

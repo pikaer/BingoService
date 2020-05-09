@@ -126,6 +126,7 @@ namespace Bingo.Biz.Impl
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
+                    IsOffLine = moment.IsOffLine,
                     ApplyCountDesc =ApplyBuilder.GetApplyCountDesc(applyList),
                     ApplyCountColor= ApplyBuilder.GetApplyCountColor(applyList),
                     IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),

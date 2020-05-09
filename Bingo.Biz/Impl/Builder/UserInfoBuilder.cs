@@ -47,7 +47,12 @@ namespace Bingo.Biz.Impl.Builder
             var distance = LocationHelper.GetDistanceDesc(userInfo.Latitude, userInfo.Longitude, head.Latitude, head.Longitude);
             if (!string.IsNullOrEmpty(distance)&& needDistance)
             {
-                AddTag(result.TagList, TagTypeEnum.LocationInfo, distance, index++);
+                result.TagList.Add(new TagItem()
+                {
+                    Type = TagTypeEnum.LocationInfo,
+                    Content = distance,
+                    Index = index++
+                });
             }
             if(userInfo.BirthDate.HasValue&& userInfo.BirthDate.Value> Convert.ToDateTime("1990-01-01"))
             {
