@@ -58,14 +58,15 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             var sql = @"UPDATE dbo.UserInfo
                         SET Latitude =@Latitude,
                             Longitude = @Longitude,
-                            UpdateTime = @UpdateTime
+                            UpdateTime = @UpdateTime,
+                            Location = geography::STGeomFromText('POINT(@Longitude @Latitude)',4326)
                         WHERE Uid=@Uid";
+            sql=sql.Replace("@Longitude", longitude.ToString());
+            sql=sql.Replace("@Latitude", latitude.ToString());
             using var Db = GetDbConnection();
             return Db.Execute(sql, new
             {
                 Uid=uId,
-                Latitude= latitude,
-                Longitude= longitude,
                 UpdateTime=DateTime.Now
             })>0;
         }

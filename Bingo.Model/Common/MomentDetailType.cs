@@ -31,6 +31,11 @@ namespace Bingo.Model.Common
         public double Longitude { get; set; }
 
         /// <summary>
+        /// 是否线下活动，默认false
+        /// </summary>
+        public bool IsOffLine { get; set; }
+
+        /// <summary>
         /// 用户信息
         /// </summary>
         public UserInfoType UserInfo { get; set; }

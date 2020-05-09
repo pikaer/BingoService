@@ -5,7 +5,7 @@ namespace Bingo.Dao.BingoDb.Entity
     /// <summary>
     /// 状态
     /// </summary>
-    public enum LiveStateEnum
+    public enum SchoolStateEnum
     {
         [Description("未设置")]
         Default = 0,

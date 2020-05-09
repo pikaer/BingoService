@@ -2,6 +2,7 @@
 using System;
 using Dapper;
 using System.Collections.Generic;
+using Infrastructure;
 
 namespace Bingo.Dao.BingoDb.Dao.Impl
 {
@@ -89,11 +90,55 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             return Db.Execute(sql, entity);
         }
 
-        public List<MomentEntity> GetMomentListByParam()
+        public List<MomentEntity> GetMomentListByParam(
+            bool offLine, 
+            int pageIndex, 
+            GenderEnum gender, 
+            SchoolStateEnum schoolState, 
+            List<string> ageList,
+            double latitude,
+            double longitude)
         {
-            var sql = SELECT_MomentEntity+ " WHERE IsDelete=0 and State=0 and NeedCount>ApplyCount and StopTime>GETDATE() order by CreateTime desc";
+            var sql = "declare @currentLocation geography select @currentLocation = geography::STPointFromText('POINT (@Longitude @Latitude)', 4326) ";
+            sql = sql.Replace("@Longitude", longitude.ToString());
+            sql = sql.Replace("@Latitude", latitude.ToString());
+
+            sql += " SELECT moment.* FROM dbo.Moment  moment inner join UserInfo userinfo on userinfo.UId=moment.UId WHERE moment.IsDelete=0 and moment.State=0 and NeedCount>ApplyCount and moment.StopTime>GETDATE() And moment.IsOffLine=@IsOffLine ";
+            if(gender== GenderEnum.Man||gender== GenderEnum.Woman)
+            {
+                sql += " And userinfo.Gender=@Gender ";
+            }
+            if (schoolState != SchoolStateEnum.Default)
+            {
+                sql += " And userinfo.LiveState=@LiveState ";
+            }
+            if (ageList.NotEmpty())
+            {
+                foreach(var item in ageList)
+                {
+                    sql += item;
+                }
+            }
+            if (offLine)
+            {
+                //线下动态根据距离排序
+                sql += " order by moment.Location.STDistance(@currentLocation) asc , moment.CreateTime desc OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            }
+            else
+            {
+                sql += " order by moment.CreateTime desc OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            }
+
             using var Db = GetDbConnection();
-            return Db.Query<MomentEntity>(sql).AsList();
+            int pageSize = 20;
+            return Db.Query<MomentEntity>(sql,new 
+            {
+                IsOffLine= offLine,
+                Gender= gender,
+                LiveState= schoolState,
+                Skip = (pageIndex - 1) * pageSize,
+                Take = pageSize
+            }).AsList();
         }
 
         public bool UpdateStopTime(Guid momentId)

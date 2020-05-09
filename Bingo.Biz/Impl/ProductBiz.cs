@@ -30,7 +30,7 @@ namespace Bingo.Biz.Impl
                         MomentList=new List<MomentDetailType>()
                     }
                 };
-                List<MomentEntity> moments = momentDao.GetMomentListByParam();
+                List<MomentEntity> moments = momentDao.GetMomentListByParam(request.Data.OffLine,request.Data.PageIndex, request.Data.Gender, request.Data.SchoolState,GetAgeLimitList(request.Data.Age),request.Head.Latitude, request.Head.Longitude);
                 if (moments.IsNullOrEmpty())
                 {
                     return response;
@@ -63,6 +63,43 @@ namespace Bingo.Biz.Impl
             }
         }
 
+        private List<string>GetAgeLimitList(AgeFilter ageFilter)
+        {
+            var limitList = new List<string>();
+            if (ageFilter==null||ageFilter.All)
+            {
+                return limitList;
+            }
+            if (ageFilter.After05)
+            {
+                limitList.Add("And BirthDate>='2005-01-01' ");
+            }
+            if (ageFilter.After00)
+            {
+                limitList.Add("And BirthDate>='2000-01-01' And BirthDate<'2005-01-01' ");
+            }
+            if (ageFilter.After95)
+            {
+                limitList.Add("And BirthDate>='1995-01-01' And BirthDate<'2000-01-01' ");
+            }
+            if (ageFilter.After90)
+            {
+                limitList.Add("And BirthDate>='1990-01-01' And BirthDate<'1995-01-01' ");
+            }
+            if (ageFilter.After85)
+            {
+                limitList.Add("And BirthDate>='1985-01-01' And BirthDate<'1990-01-01' ");
+            }
+            if (ageFilter.After80)
+            {
+                limitList.Add("And BirthDate>='1980-01-01' And BirthDate<'1985-01-01' ");
+            }
+            if (ageFilter.Before80)
+            {
+                limitList.Add("And BirthDate<'1980-01-01' ");
+            }
+            return limitList;
+        }
         public ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId, RequestHead head)
         {
             var moment = momentDao.GetMomentByMomentId(momentId);

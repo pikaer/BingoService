@@ -8,7 +8,7 @@ namespace Bingo.Dao.BingoDb.Dao
     {
         MomentEntity GetMomentByMomentId(Guid momentId);
 
-        List<MomentEntity> GetMomentListByParam();
+        List<MomentEntity> GetMomentListByParam(bool offLine,int pageIndex, GenderEnum gender, SchoolStateEnum schoolState,List<string>ageList,double latitude,double longitude);
 
         List<MomentEntity> GetMomentListByUid(long uid);
 

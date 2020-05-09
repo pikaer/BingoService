@@ -54,8 +54,16 @@ namespace Bingo.Biz.Impl.Builder
                 AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetAgeYear(), index++);
                 AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetConstellation(), index++);
             }
-            AddTag(result.TagList,TagTypeEnum.Default,userInfo.SchoolName,index++);
-            AddTag(result.TagList, TagTypeEnum.Default, GetLocationInfo(userInfo), index++);
+            
+            if (userInfo.SchoolName.IsNullOrEmpty())
+            {
+                AddTag(result.TagList, TagTypeEnum.Default, GetLocationInfo(userInfo), index++);
+            }
+            else
+            {
+                AddTag(result.TagList, TagTypeEnum.Default, userInfo.SchoolName, index++);
+            }
+            
             return result;
         }
 
@@ -92,6 +100,21 @@ namespace Bingo.Biz.Impl.Builder
             {
                 return;
             }
+            if (tagList.Count > 1)
+            {
+                if (content.Length > 10)
+                {
+                    content = content.Substring(0, 9) + "...";
+                }
+            }
+            else
+            {
+                if (content.Length > 5)
+                {
+                    content = content.Substring(0, 4) + "...";
+                }
+            }
+            
             tagList.Add(new TagItem()
             {
                 Type = type,

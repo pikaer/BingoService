@@ -27,7 +27,7 @@ namespace Bingo.Dao.BingoDb.Entity
         /// <summary>
         /// 状态
         /// </summary>
-        public LiveStateEnum LiveState { get; set; }
+        public SchoolStateEnum LiveState { get; set; }
 
         /// <summary>
         /// 年级

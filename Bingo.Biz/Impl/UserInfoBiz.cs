@@ -143,8 +143,10 @@ namespace Bingo.Biz.Impl
             {
                 //刷新缓存
                 var userInfoKey = RedisKeyConst.UserInfoByOpenIdAndUIdCacheKey(userInfo.OpenId, userInfo.UId);
-                redisClient.Remove(userInfoKey);
-                userInfo=GetUserInfoByUid(request.Head.UId);
+                if (redisClient.Remove(userInfoKey))
+                {
+                    userInfo = GetUserInfoByUid(request.Head.UId);
+                }
                 response.Data = UserInfoBuilder.BuildUserInfo(userInfo, request.Head,false);
                 response.Data.NickName = userInfo.NickName;
             }
@@ -211,8 +213,10 @@ namespace Bingo.Biz.Impl
             {
                 //刷新缓存
                 var userInfoKey = RedisKeyConst.UserInfoByOpenIdAndUIdCacheKey(userInfo.OpenId, userInfo.UId);
-                redisClient.Remove(userInfoKey);
-                GetUserInfoByUid(request.Head.UId);
+                if (redisClient.Remove(userInfoKey))
+                {
+                    GetUserInfoByUid(request.Head.UId);
+                }
             }
             return response;
         }
@@ -229,8 +233,10 @@ namespace Bingo.Biz.Impl
                 {
                     //刷新缓存
                     var userInfoKey = RedisKeyConst.UserInfoByOpenIdAndUIdCacheKey(userInfo.OpenId, userInfo.UId);
-                    redisClient.Remove(userInfoKey);
-                    GetUserInfoByUid(uId);
+                    if (redisClient.Remove(userInfoKey))
+                    {
+                        GetUserInfoByUid(uId);
+                    }
                 }
             }
             return success;

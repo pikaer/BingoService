@@ -27,7 +27,7 @@ namespace Bingo.Model.Contract
         /// <summary>
         /// 状态
         /// </summary>
-        public LiveStateEnum LiveState { get; set; }
+        public SchoolStateEnum LiveState { get; set; }
 
         /// <summary>
         /// 学校名称
