@@ -10,6 +10,8 @@ namespace Bingo.Dao.BingoDb.Dao
 
         bool UpdateState(ApplyStateEnum applyState, Guid applyId);
 
+        int GetUnReadCount(long uId);
+
         ApplyInfoEntity GetByMomentIdAndUId(Guid momentId, long uId);
 
         ApplyInfoEntity GetByApplyId(Guid applyId);

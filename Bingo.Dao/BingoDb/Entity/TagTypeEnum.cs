@@ -11,6 +11,12 @@ namespace Bingo.Dao.BingoDb.Entity
         LocationInfo = 101,
 
         [Description("联系方式")]
-        Contact =200
+        Contact =200,
+
+        [Description("星座")]
+        Constellation = 300,
+
+        [Description("如：90后")]
+        AgeGrade = 400,
     }
 }

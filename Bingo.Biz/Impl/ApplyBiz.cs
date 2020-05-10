@@ -62,8 +62,7 @@ namespace Bingo.Biz.Impl
                 }
             };
             var applyList = applyInfoDao.GetListByUId(head.UId);
-            var myUserInfo = uerInfoBiz.GetUserInfoByUid(head.UId);
-            if (applyList.IsNullOrEmpty() || myUserInfo == null)
+            if (applyList.IsNullOrEmpty())
             {
                 return response;
             }

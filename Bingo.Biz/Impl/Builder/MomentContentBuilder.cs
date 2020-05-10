@@ -25,7 +25,10 @@ namespace Bingo.Biz.Impl.Builder
             }
             AddItem(resultList, index++, "性别要求", GenderMap(moment.ExpectGender));
             AddItem(resultList, index++, "人数限制",string.Format("{0}人",moment.NeedCount));
-            AddItem(resultList, index++, "地点", moment.Place);
+            if (moment.IsOffLine)
+            {
+                AddItem(resultList, index++, "地点", moment.Place);
+            }
             if (displayContact)
             {
                 AddItem(resultList, index++, "联系方式", "通过申请后可查看", TagTypeEnum.Contact);

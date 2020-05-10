@@ -15,11 +15,6 @@ namespace Bingo.Model.Common
         public bool IsRegister { get; set; }
 
         /// <summary>
-        /// 是否隐身
-        /// </summary>
-        public bool IsHide { get; set; }
-
-        /// <summary>
         /// 头像路径
         /// </summary>
         public string Portrait { get; set; }

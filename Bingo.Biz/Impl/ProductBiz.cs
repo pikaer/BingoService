@@ -73,31 +73,31 @@ namespace Bingo.Biz.Impl
             }
             if (ageFilter.After05)
             {
-                limitList.Add("And BirthDate>='2005-01-01' ");
+                limitList.Add(" BirthDate>='2005-01-01' ");
             }
             if (ageFilter.After00)
             {
-                limitList.Add("And BirthDate>='2000-01-01' And BirthDate<'2005-01-01' ");
+                limitList.Add(" BirthDate>='2000-01-01' And BirthDate<'2005-01-01' ");
             }
             if (ageFilter.After95)
             {
-                limitList.Add("And BirthDate>='1995-01-01' And BirthDate<'2000-01-01' ");
+                limitList.Add(" BirthDate>='1995-01-01' And BirthDate<'2000-01-01' ");
             }
             if (ageFilter.After90)
             {
-                limitList.Add("And BirthDate>='1990-01-01' And BirthDate<'1995-01-01' ");
+                limitList.Add(" BirthDate>='1990-01-01' And BirthDate<'1995-01-01' ");
             }
             if (ageFilter.After85)
             {
-                limitList.Add("And BirthDate>='1985-01-01' And BirthDate<'1990-01-01' ");
+                limitList.Add(" BirthDate>='1985-01-01' And BirthDate<'1990-01-01' ");
             }
             if (ageFilter.After80)
             {
-                limitList.Add("And BirthDate>='1980-01-01' And BirthDate<'1985-01-01' ");
+                limitList.Add(" BirthDate>='1980-01-01' And BirthDate<'1985-01-01' ");
             }
             if (ageFilter.Before80)
             {
-                limitList.Add("And BirthDate<'1980-01-01' ");
+                limitList.Add(" BirthDate<'1980-01-01' ");
             }
             return limitList;
         }

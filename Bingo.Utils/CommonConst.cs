@@ -27,7 +27,7 @@
         /// </summary>
         public static readonly string BingoSecret_QQ = "LovCWhPkf5ZPtrXO";
 
-        public static readonly string Color_Red = "#fa6e4f"; //红色
+        public static readonly string Color_Red = "red";//"#fa6e4f"; //红色
         public static readonly string Color_Green = "#2cbb60"; //绿色
         public static readonly string Color_Black = "#8e8e8e"; //黑色
         public static readonly string Color_Man_GenderIcon = "#85d0ed"; //男性Icon背景色

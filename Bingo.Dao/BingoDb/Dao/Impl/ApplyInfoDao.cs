@@ -21,6 +21,13 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             return Db.Query<ApplyInfoEntity>(sql,new { MomentId= momentId }).AsList();
         }
 
+        public int GetUnReadCount(long uId)
+        {
+            var sql = @"SELECT Count(*) FROM dbo.ApplyInfo apply inner join dbo.Moment moment on apply.MomentId=moment.MomentId Where moment.IsDelete=0 and MomentUId=@UId and ApplyState=0 ";
+            using var Db = GetDbConnection();
+            return Db.QueryFirstOrDefault<int>(sql, new { UId = uId });
+        }
+
         public bool Insert(ApplyInfoEntity entity)
         {
             var sql = @"INSERT INTO dbo.ApplyInfo

@@ -118,9 +118,22 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             }
             if (ageList.NotEmpty())
             {
-                foreach(var item in ageList)
+                if (ageList.Count == 1)
                 {
-                    sql += item;
+                    sql += " And ";
+                    sql += ageList[0];
+                }
+                else
+                {
+                    sql += " And ( ";
+                    foreach (var item in ageList)
+                    {
+                        sql += " ( ";
+                        sql += item;
+                        sql += " ) or ";
+                    }
+                    //解决最后一个or
+                    sql += " (1=1) ) ";
                 }
             }
             if (offLine)
@@ -131,7 +144,7 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
             else
             {
                 //根据用户距离排序
-                sql += " order by userinfo.Location.STDistance(@currentLocation) asc  moment.CreateTime desc OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+                sql += " order by userinfo.Location.STDistance(@currentLocation) asc , moment.CreateTime desc OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             }
 
             using var Db = GetDbConnection();
@@ -201,11 +214,14 @@ namespace Bingo.Dao.BingoDb.Dao.Impl
                             ShareType = @ShareType,
                             Latitude = @Latitude,
                             Longitude = @Longitude,
+                            Location=geography :: STGeomFromText ('POINT(@LongitudeValue @LatitudeVaule)',4326),
                             Title = @Title,
                             Content = @Content,
                             State = @State,
                             UpdateTime = @UpdateTime
                         WHERE MomentId=@MomentId";
+            sql = sql.Replace("@LongitudeValue", entity.Longitude.ToString());
+            sql = sql.Replace("@LatitudeVaule", entity.Latitude.ToString());
             using var Db = GetDbConnection();
             return Db.Execute(sql, entity) > 0;
         }

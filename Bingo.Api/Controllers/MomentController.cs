@@ -175,5 +175,32 @@ namespace Bingo.Api.Controllers
                 return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.MomentUpdateDetail", ex);
             }
         }
+
+        [HttpPost]
+        public JsonResult GetUnReadCount(RequestContext<object> request)
+        {
+            RequestHead head = default;
+            try
+            {
+                if (request == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.ParametersIsNotValid_Code);
+                }
+                if (!CheckAuth(request.Head))
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
+                }
+                head = request.Head;
+                if (request.Data == null)
+                {
+                    return ErrorJsonResult(ErrCodeEnum.InvalidRequestBody);
+                }
+                return new JsonResult(momentBiz.GetUnReadCount(request.Head));
+            }
+            catch (Exception ex)
+            {
+                return ErrorJsonResult(ErrCodeEnum.InnerError, head, "MomentController.GetUnReadCount", ex);
+            }
+        }
     }
 }

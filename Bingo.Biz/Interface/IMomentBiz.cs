@@ -17,5 +17,7 @@ namespace Bingo.Biz.Interface
         Response UpdateMoment(UpdateMomentType moment,long uId);
 
         ResponseContext<UpdateMomentType> MomentUpdateDetail(Guid momentId);
+
+        ResponseContext<UnReadCountResponse> GetUnReadCount(RequestHead head);
     }
 }

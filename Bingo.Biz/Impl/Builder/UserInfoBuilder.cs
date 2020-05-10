@@ -56,8 +56,8 @@ namespace Bingo.Biz.Impl.Builder
             }
             if(userInfo.BirthDate.HasValue&& userInfo.BirthDate.Value> Convert.ToDateTime("1990-01-01"))
             {
-                AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetAgeYear(), index++);
-                AddTag(result.TagList, TagTypeEnum.Default, userInfo.BirthDate.GetConstellation(), index++);
+                AddTag(result.TagList, TagTypeEnum.AgeGrade, userInfo.BirthDate.GetAgeYear(), index++);
+                AddTag(result.TagList, TagTypeEnum.Constellation, userInfo.BirthDate.GetConstellation(), index++);
             }
             
             if (userInfo.SchoolName.IsNullOrEmpty())

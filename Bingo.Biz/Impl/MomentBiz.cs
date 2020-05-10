@@ -8,6 +8,7 @@ using Bingo.Model.Contract;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bingo.Biz.Impl
 {
@@ -114,6 +115,10 @@ namespace Bingo.Biz.Impl
             {
                 return response;
             }
+            //有用户申请的动态
+            var applyMomentList = new List<MyPublishMomentDetailType>();
+            //正常动态
+            var commomMomentList = new List<MyPublishMomentDetailType>();
             foreach (var moment in momentList)
             {
                 bool overCount = ApplyBuilder.IsOverCount(moment);
@@ -136,7 +141,23 @@ namespace Bingo.Biz.Impl
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, request.Head),
                     ContentList = MomentContentBuilder.BuilderContent(moment,false)
                 };
-                response.Data.MomentList.Add(dto);
+                if(applyList.NotEmpty()&& applyList.Count(a=>a.ApplyState == ApplyStateEnum.申请中) > 0)
+                {
+                    applyMomentList.Add(dto);
+                }
+                else
+                {
+                    commomMomentList.Add(dto);
+                }
+            }
+            //有用户申请的保证置顶
+            if (applyMomentList.NotEmpty())
+            {
+                response.Data.MomentList.AddRange(applyMomentList);
+            }
+            if (commomMomentList.NotEmpty())
+            {
+                response.Data.MomentList.AddRange(commomMomentList);
             }
             return response;
         }
@@ -304,6 +325,27 @@ namespace Bingo.Biz.Impl
             {
                 return new Response(ErrCodeEnum.Failure,"修改失败");
             }
+        }
+
+        public ResponseContext<UnReadCountResponse> GetUnReadCount(RequestHead head)
+        {
+            int count = applyInfoDao.GetUnReadCount(head.UId);
+            string countStr = "";
+            if (0 < count&& count < 100)
+            {
+                countStr = count.ToString();
+            }
+            if (count >= 100)
+            {
+                countStr = "99+";
+            }
+            return new ResponseContext<UnReadCountResponse>()
+            {
+                Data = new UnReadCountResponse()
+                {
+                    UnReadCount = countStr
+                }
+            };
         }
     }
 }
