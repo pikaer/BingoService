@@ -301,6 +301,7 @@ namespace Bingo.Biz.Impl
                 Title = moment.Title,
                 Content = moment.Content,
                 State=MomentStateEnum.审核中,
+                CreateTime= momentInfo.CreateTime,
                 UpdateTime =DateTime.Now
             };
             bool sucess=momentDao.UpdateMoment(entity);
