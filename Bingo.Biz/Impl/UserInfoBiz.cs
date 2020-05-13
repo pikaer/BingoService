@@ -138,9 +138,16 @@ namespace Bingo.Biz.Impl
                 response.ResultMessage = "请求服务器失败，请重试！";
                 return response;
             }
+            userInfo.Gender = request.Data.Gender;
+            userInfo.NickName = request.Data.NickName;
+            userInfo.Portrait = request.Data.AvatarUrl;
+            userInfo.Country = request.Data.Country;
+            userInfo.Province = request.Data.Province;
+            userInfo.City = request.Data.City;
             bool success = userInfoDao.Register(request.Head.UId, request.Data.Gender, request.Data.NickName, request.Data.AvatarUrl, request.Data.Country, request.Data.Province, request.Data.City);
             if (success)
             {
+                userInfo.IsRegister = true;
                 //刷新缓存
                 var userInfoKey = RedisKeyConst.UserInfoByOpenIdAndUIdCacheKey(userInfo.OpenId, userInfo.UId);
                 if (redisClient.Remove(userInfoKey))

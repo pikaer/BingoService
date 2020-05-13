@@ -181,6 +181,7 @@ namespace Bingo.Biz.Impl
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
+                    IsOffLine=moment.IsOffLine,
                     IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                     ShareFlag = moment.State == MomentStateEnum.正常发布中,
                     VerifyStateDesc= MomentContentBuilder.VerifyStateMap(moment.State),

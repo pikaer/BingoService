@@ -3,9 +3,11 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bin
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Biz.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Dao.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Model.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Utils.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Infrastructure.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Dao.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Model.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Utils.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Infrastructure.pdb
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.csprojAssemblyReference.cache
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.AssemblyInfoInputs.cache
@@ -13,5 +15,3 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bin
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.csproj.CopyComplete
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\obj\Debug\netcoreapp3.0\Bingo.Biz.pdb
-D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Utils.dll
-D:\Code\DotNet\BingoFramework\BingoService\Bingo.Biz\bin\Debug\netcoreapp3.0\Bingo.Utils.pdb
