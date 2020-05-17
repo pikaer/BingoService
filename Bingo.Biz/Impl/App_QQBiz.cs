@@ -19,7 +19,7 @@ namespace Bingo.Biz.Impl
         {
             string myAppid = JsonSettingHelper.AppSettings["BingoAppId_QQ"];
             string mySecret = JsonSettingHelper.AppSettings["BingoSecret_QQ"];
-            string url = string.Format("https://api.q.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", myAppid, mySecret);
+            string url = string.Format("https://api.q.qq.com/api/getToken?grant_type=client_credential&appid={0}&secret={1}", myAppid, mySecret);
             var token = HttpHelper.HttpGet<AccessTokenDTO>(url);
             if (token == null || token.Errcode != 0)
             {
