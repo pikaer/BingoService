@@ -18,5 +18,15 @@ namespace Bingo.Dao.BingoDb.Entity
 
         [Description("如：90后")]
         AgeGrade = 400,
+
+        [Description("活动主题")]
+        Title = 500,
+
+        [Description("活动说明")]
+        Content = 600,
+
+
+        [Description("发布时间")]
+        PublishTime = 700,
     }
 }

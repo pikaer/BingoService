@@ -45,8 +45,8 @@ namespace Bingo.Biz.Impl
                     var dto = new MomentDetailType()
                     {
                         MomentId=moment.MomentId,
-                        ShareTitle = moment.Content,
-                        Address=moment.Address,
+                        ShareTitle = MomentContentBuilder.GetShareTitle(moment),
+                        Address =moment.Address,
                         Latitude = moment.Latitude,
                         Longitude = moment.Longitude,
                         IsOffLine=moment.IsOffLine,
@@ -129,7 +129,7 @@ namespace Bingo.Biz.Impl
                     ApplyFlag = isApply,
                     BtnText = btnText,
                     StateDesc=stateDesc,
-                    ShareTitle= moment.Content,
+                    ShareTitle = MomentContentBuilder.GetShareTitle(moment),
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
@@ -173,7 +173,7 @@ namespace Bingo.Biz.Impl
                     ApplyFlag = isApply,
                     BtnText = btnText,
                     StateDesc = stateDesc,
-                    ShareTitle = moment.Content,
+                    ShareTitle = MomentContentBuilder.GetShareTitle(moment),
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,

@@ -4,6 +4,7 @@ using Bingo.Utils;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Bingo.Biz.Impl.Builder
 {
@@ -42,7 +43,7 @@ namespace Bingo.Biz.Impl.Builder
         {
             var resultList = new List<ContentItem>();
             int index = 1;
-            AddItem(resultList, index++, "发布时间", DateTimeHelper.GetDateDesc(moment.CreateTime, true));
+            AddItem(resultList, index++, "发布时间", DateTimeHelper.GetDateDesc(moment.CreateTime, true), TagTypeEnum.PublishTime);
             if (moment.StopTime.HasValue)
             {
                 string stopStr = moment.StopTime.Value.ToString(DateTimeHelper.yMdHm);
@@ -70,11 +71,28 @@ namespace Bingo.Biz.Impl.Builder
                     AddItem(resultList, index++, "QQ号", userInfo.QQNo, TagTypeEnum.Contact);
                 }
             }
-            AddItem(resultList, index++, "活动主题", moment.Title);
-            AddItem(resultList, index++, "说明", moment.Content);
+            AddItem(resultList, index++, "活动主题", moment.Title, TagTypeEnum.Title);
+            AddItem(resultList, index++, "说明", moment.Content, TagTypeEnum.Content);
             return resultList;
         }
 
+        public static string GetShareTitle(MomentEntity moment)
+        {
+            if (moment == null)
+            {
+                return null;
+            }
+            var stringBuilder = new StringBuilder();
+            if (!string.IsNullOrEmpty(moment.Title))
+            {
+                stringBuilder.AppendFormat("{0}：",moment.Title);
+            }
+            if (!string.IsNullOrEmpty(moment.Content))
+            {
+                stringBuilder.Append(moment.Content);
+            }
+            return stringBuilder.ToString();
+        }
 
         private static void AddItem(List<ContentItem> resultList,int index,string title, string content, TagTypeEnum type= TagTypeEnum.Default,string icon=null)
         {

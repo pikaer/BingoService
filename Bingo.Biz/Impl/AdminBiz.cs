@@ -68,7 +68,7 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = moment.MomentId,
                     State = moment.State,
-                    ShareTitle = moment.Content,
+                    ShareTitle = MomentContentBuilder.GetShareTitle(moment),
                     Address = moment.Address,
                     IsOffLine = moment.IsOffLine,
                     Latitude = moment.Latitude,

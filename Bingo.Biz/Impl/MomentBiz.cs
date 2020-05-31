@@ -127,7 +127,7 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = moment.MomentId,
                     State = moment.State,
-                    ShareTitle = moment.Content,
+                    ShareTitle = MomentContentBuilder.GetShareTitle(moment),
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,
@@ -177,7 +177,7 @@ namespace Bingo.Biz.Impl
                 {
                     MomentId = momentId,
                     State = moment.State,
-                    ShareTitle = moment.Content,
+                    ShareTitle = MomentContentBuilder.GetShareTitle(moment),
                     Address = moment.Address,
                     Latitude = moment.Latitude,
                     Longitude = moment.Longitude,

@@ -147,7 +147,7 @@ namespace Bingo.Biz.Impl
                 ApplyStateDesc = ApplyStateMap(applyInfo.ApplyState),
                 IsOverTime = MomentContentBuilder.IsOverTime(moment.StopTime),
                 MomentId = moment.MomentId,
-                ShareTitle = moment.Content,
+                ShareTitle = MomentContentBuilder.GetShareTitle(moment),
                 Address = moment.Address,
                 Latitude = moment.Latitude,
                 Longitude = moment.Longitude,
