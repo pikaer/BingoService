@@ -34,8 +34,6 @@ namespace Bingo.Biz.Impl.Builder
             {
                 AddItem(resultList, index++, "联系方式", "通过申请后可查看", TagTypeEnum.Contact);
             }
-            AddItem(resultList, index++, "活动主题", moment.Title);
-            AddItem(resultList, index++, "说明", moment.Content);
             return resultList;
         }
 
@@ -71,8 +69,6 @@ namespace Bingo.Biz.Impl.Builder
                     AddItem(resultList, index++, "QQ号", userInfo.QQNo, TagTypeEnum.Contact);
                 }
             }
-            AddItem(resultList, index++, "活动主题", moment.Title, TagTypeEnum.Title);
-            AddItem(resultList, index++, "说明", moment.Content, TagTypeEnum.Content);
             return resultList;
         }
 

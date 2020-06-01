@@ -234,11 +234,11 @@ namespace Bingo.Biz.Impl
             }
             if (!string.IsNullOrEmpty(request.Data.WeChatNo))
             {
-                userInfoDao.UpdateMobile(request.Head.UId, request.Data.WeChatNo);
+                userInfoDao.UpdateWeChatNo(request.Head.UId, request.Data.WeChatNo);
             }
             if (!string.IsNullOrEmpty(request.Data.QQNo))
             {
-                userInfoDao.UpdateMobile(request.Head.UId, request.Data.QQNo);
+                userInfoDao.UpdateQQNo(request.Head.UId, request.Data.QQNo);
             }
             momentDao.Insert(moment);
             return response;

@@ -403,6 +403,9 @@
         }
       },
       "Bingo.Utils/1.0.0": {
+        "dependencies": {
+          "Bingo.Model": "1.0.0"
+        },
         "runtime": {
           "Bingo.Utils.dll": {}
         }

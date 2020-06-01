@@ -6,3 +6,10 @@ D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Release\netcoreapp3.0
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Release\netcoreapp3.0\Bingo.Utils.AssemblyInfo.cs
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Release\netcoreapp3.0\Bingo.Utils.dll
 D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Release\netcoreapp3.0\Bingo.Utils.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Release\netcoreapp3.0\Bingo.Dao.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Release\netcoreapp3.0\Bingo.Model.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Release\netcoreapp3.0\Infrastructure.dll
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Release\netcoreapp3.0\Bingo.Model.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Release\netcoreapp3.0\Bingo.Dao.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\bin\Release\netcoreapp3.0\Infrastructure.pdb
+D:\Code\DotNet\BingoFramework\BingoService\Bingo.Utils\obj\Release\netcoreapp3.0\Bingo.Utils.csproj.CopyComplete
