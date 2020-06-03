@@ -46,5 +46,25 @@ namespace Bingo.Biz.Impl
             var response = HttpHelper.HttpPost<MsgSecCheckRequestDTO, WeChatResponseDTO>(url, request, 5);
             return response != null && response.Errcode == 0;
         }
+
+        public bool Send_Activity_Join_Msg()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Send_Activity_Cancel_Msg()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Send_Moment_Publish_Msg()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Send_Moment_Join_Msg()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
