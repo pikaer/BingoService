@@ -74,7 +74,16 @@ namespace Bingo.Biz.Impl
                             remark = "审核不通过：" + remark;
                             momentState = MomentStateEnum.审核被拒绝;
                         }
+
+                        moment.State = momentState;
                         momentDao.UpdateState(momentId, momentState);
+
+                        var momentUser = uerInfoBiz.GetUserInfoByUid(moment.UId);
+                        if (momentUser != null)
+                        {
+                            //发送通知
+                            AppFactory.Factory(momentUser.Platform).Send_Moment_Publish_MsgAsync(moment, momentUser.OpenId, remark);
+                        }
                     }
                     InsertApplyDetail(momentId, remark, uId);
                     message = "操作成功";

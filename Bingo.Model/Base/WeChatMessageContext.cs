@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bingo.Model.Base
+﻿namespace Bingo.Model.Base
 {
+    /// <summary>
+    /// tosee https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class WeChatMessageContext<T>
     {
         /// <summary>

@@ -64,8 +64,15 @@ namespace Bingo.Biz.Impl
             {
                 remark = request.Data.Remark;
             }
+
             InsertDetail(moment.MomentId,dto.ApplyId, request.Head.UId, remark);
 
+            var momentUser = uerInfoBiz.GetUserInfoByUid(moment.UId);
+            if (momentUser != null)
+            {
+                //发送通知
+                AppFactory.Factory(momentUser.Platform).Send_Moment_Join_MsgAsync(moment, request.Head.UId, momentUser.OpenId);
+            }
             return new Response(ErrCodeEnum.Success, "申请提交成功");
         }
 
@@ -77,6 +84,8 @@ namespace Bingo.Biz.Impl
                 return new Response(ErrCodeEnum.DataIsnotExist, "申请不存在");
             }
             string remark =string.Empty;
+            bool sendMsg = false;
+            bool joinSuccess = true;
             if (string.Equals(request.Data.Action, "cancel"))
             {
                 applyInfoDao.UpdateState(ApplyStateEnum.申请已撤销, applyInfo.ApplyId);
@@ -92,11 +101,14 @@ namespace Bingo.Biz.Impl
                 applyInfoDao.UpdateState(ApplyStateEnum.申请通过, applyInfo.ApplyId);
                 momentDao.UpdateApplyCount(applyInfo.MomentId);
                 remark = "通过了活动申请";
+                sendMsg = true;
             }
             if (string.Equals(request.Data.Action, "black"))
             {
                 applyInfoDao.UpdateState(ApplyStateEnum.永久拉黑, applyInfo.ApplyId);
                 remark = "拉黑了活动申请";
+                sendMsg = true;
+                joinSuccess = false;
             }
             if (string.Equals(request.Data.Action, "refuse"))
             {
@@ -105,8 +117,18 @@ namespace Bingo.Biz.Impl
                 {
                     remark = request.Data.Remark;
                 }
+                sendMsg = true;
+                joinSuccess = false;
             }
             InsertDetail(applyInfo.MomentId,request.Data.ApplyId, request.Head.UId, remark);
+
+            UserInfoEntity userInfo = uerInfoBiz.GetUserInfoByUid(applyInfo.UId);
+            MomentEntity momentInfo = momentDao.GetMomentByMomentId(applyInfo.MomentId);
+            if(sendMsg&& userInfo!=null&& momentInfo != null)
+            {
+                //发送通知
+                AppFactory.Factory(userInfo.Platform).Send_Activity_Join_MsgAsync(momentInfo, userInfo.UId, joinSuccess, remark);
+            }
             return new Response(ErrCodeEnum.Success, "提交成功");
         }
 
