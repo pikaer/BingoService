@@ -1,4 +1,5 @@
 ﻿using Bingo.Dao.BingoDb.Entity;
+using System;
 using System.Collections.Generic;
 
 namespace Bingo.Biz.Interface
@@ -19,7 +20,7 @@ namespace Bingo.Biz.Interface
         /// <param name="targetUserId">目标用户</param>
         /// <param name="joinSuccess">是否参与成功</param>
         /// <param name="joinMsg">消息提示</param>
-        void Send_Activity_Join_MsgAsync(MomentEntity moment, long targetUserId, bool joinSuccess, string joinMsg);
+        void Send_Activity_Join_MsgAsync(MomentEntity moment, long targetUserId, bool joinSuccess, string joinMsg, Guid applyId);
 
         /// <summary>
         /// 活动取消通知
@@ -41,6 +42,6 @@ namespace Bingo.Biz.Interface
         /// </summary>
         /// <param name="moment">动态详情</param>
         /// <param name="targetUserId">目标用户</param>
-        void Send_Moment_Join_MsgAsync(MomentEntity moment, long targetUserId, string momentUserOpenId);
+        void Send_Moment_Join_MsgAsync(MomentEntity moment, long targetUserId, string momentUserOpenId, Guid applyId);
     }
 }

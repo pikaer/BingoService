@@ -71,7 +71,7 @@ namespace Bingo.Biz.Impl
             if (momentUser != null)
             {
                 //发送通知
-                AppFactory.Factory(momentUser.Platform).Send_Moment_Join_MsgAsync(moment, request.Head.UId, momentUser.OpenId);
+                AppFactory.Factory(momentUser.Platform).Send_Moment_Join_MsgAsync(moment, request.Head.UId, momentUser.OpenId, dto.ApplyId);
             }
             return new Response(ErrCodeEnum.Success, "申请提交成功");
         }
@@ -127,7 +127,7 @@ namespace Bingo.Biz.Impl
             if(sendMsg&& userInfo!=null&& momentInfo != null)
             {
                 //发送通知
-                AppFactory.Factory(userInfo.Platform).Send_Activity_Join_MsgAsync(momentInfo, userInfo.UId, joinSuccess, remark);
+                AppFactory.Factory(userInfo.Platform).Send_Activity_Join_MsgAsync(momentInfo, userInfo.UId, joinSuccess, remark, request.Data.ApplyId);
             }
             return new Response(ErrCodeEnum.Success, "提交成功");
         }

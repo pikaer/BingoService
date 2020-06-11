@@ -60,7 +60,7 @@ namespace Bingo.Biz.Impl
             return response != null && response.Errcode == 0;
         }
 
-        public void Send_Activity_Join_MsgAsync(MomentEntity moment, long targetUserId, bool joinSuccess,string joinMsg)
+        public void Send_Activity_Join_MsgAsync(MomentEntity moment, long targetUserId, bool joinSuccess,string joinMsg, Guid applyId)
         {
             var targetUserInfo = uerInfoBiz.GetUserInfoByUid(targetUserId);
             var token = GetAccessToken();
@@ -77,7 +77,7 @@ namespace Bingo.Biz.Impl
                 touser = targetUserInfo.OpenId,
                 access_token = token,
                 template_id = CommonConst.Activity_Join_TmplId_WeChat,
-                page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
+                page = string.Format(CommonConst.BingoMyApplyDetailPageUrl, applyId.ToString()),
                 data = new ActivityJoinMsgDTO()
                 {
                     thing2 = new Value(title.CutText(20)),
@@ -153,7 +153,7 @@ namespace Bingo.Biz.Impl
                         touser = targetUser,
                         access_token= token,
                         template_id = CommonConst.Moment_Publish_TmplId_WeChat,
-                        page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
+                        page = string.Format(CommonConst.BingoMyPublishDetailPageUrl, moment.MomentId.ToString()),
                         data = new MomentPublishMsgDTO()
                         {
                             thing2 = new Value(title.CutText(20)),
@@ -175,7 +175,7 @@ namespace Bingo.Biz.Impl
             }
         }
 
-        public void Send_Moment_Join_MsgAsync(MomentEntity moment, long targetUserId,string momentUserOpenId)
+        public void Send_Moment_Join_MsgAsync(MomentEntity moment, long targetUserId,string momentUserOpenId,Guid applyId)
         {
             var targetUserInfo = uerInfoBiz.GetUserInfoByUid(targetUserId);
             if (targetUserInfo == null|| moment==null)
@@ -188,7 +188,7 @@ namespace Bingo.Biz.Impl
                 touser = momentUserOpenId,
                 access_token = token,
                 template_id = CommonConst.Moment_Join_TmplId_WeChat,
-                page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
+                page = string.Format(CommonConst.BingoRequestDetailPageUrl, applyId.ToString()),
                 data = new MomentJoinMsgDTO()
                 {
                     thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content).CutText(20)),
