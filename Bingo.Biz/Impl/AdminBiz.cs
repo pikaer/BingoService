@@ -33,6 +33,7 @@ namespace Bingo.Biz.Impl
                     State = moment.State,
                     Address = moment.Address,
                     IsOffLine = moment.IsOffLine,
+                    ShareTitle = MomentContentBuilder.GetShareTitle(moment),
                     StateDesc = MomentContentBuilder.MomentStateMap(moment.State, moment.StopTime, overCount),
                     TextColor = MomentContentBuilder.TextColorMap(moment.State, moment.StopTime, overCount),
                     UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, request.Head),

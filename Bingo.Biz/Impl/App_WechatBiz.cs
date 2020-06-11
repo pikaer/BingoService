@@ -80,8 +80,8 @@ namespace Bingo.Biz.Impl
                 page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
                 data = new ActivityJoinMsgDTO()
                 {
-                    thing2 = new Value(title),
-                    thing3 = new Value(place),
+                    thing2 = new Value(title.CutText(20)),
+                    thing3 = new Value(place.CutText(20)),
                     phrase1 = new Value(state),
                     thing9 = new Value(joinMsg)
                 }
@@ -123,7 +123,7 @@ namespace Bingo.Biz.Impl
                     page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
                     data = new ActivityCancelMsgDTO()
                     {
-                        thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content)),
+                        thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content).CutText(20)),
                         date2 = new Value(moment.CreateTime.ToString("yyyy年MM月dd日 HH:mm")),
                         name3 = new Value(momentUserInfo.NickName),
                         thing4 = new Value("活动取消，点击查看详情")
@@ -156,10 +156,10 @@ namespace Bingo.Biz.Impl
                         page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
                         data = new MomentPublishMsgDTO()
                         {
-                            thing2 = new Value(title),
-                            thing7 = new Value(place),
+                            thing2 = new Value(title.CutText(20)),
+                            thing7 = new Value(place.CutText(20)),
                             phrase5 = new Value(state),
-                            thing8 = new Value(remark),
+                            thing8 = new Value(remark.CutText(20)),
                             date4 = new Value(DateTime.Now.ToString("yyyy年MM月dd日 HH:mm"))
                         }
                     };
@@ -191,8 +191,8 @@ namespace Bingo.Biz.Impl
                 page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
                 data = new MomentJoinMsgDTO()
                 {
-                    thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content)),
-                    thing2 = new Value(targetUserInfo.NickName),
+                    thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content).CutText(20)),
+                    thing2 = new Value(targetUserInfo.NickName.CutText(20)),
                     thing3 = new Value("申请参与该活动，请审批")
                 }
             };

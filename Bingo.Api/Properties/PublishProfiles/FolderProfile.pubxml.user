@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>ftp://www.pikaer.com/PublishPath/Bingo/Service/product/</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\Code\DotNet\publishpath\bingo\product_1</_PublishTargetUrl>
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA3UeWg+MdrUiq5UUiKrnXgQAAAAACAAAAAAAQZgAAAAEAACAAAACMAa7TIvUsOBbJqNChFJczLsXsNFJPgA4KDUNSRaKwGQAAAAAOgAAAAAIAACAAAAAfxKVyKUXxDR2geZmZT9se3gOJpQz5hk8BMFZRc1KY8SAAAACkGWDHgydYnfKcBUAGHsyMx98wDNUAYwl1Q6ZuBX7VWEAAAADsL/81+KWZfr7Hu4z5e9KSDh35YAbuNIM5sYRjno/WhjLsj4ADTkD91p2yKgzxmc/3TyoYy6kRufSZdBe0GnfM</EncryptedPassword>
   </PropertyGroup>
   <ItemGroup>
@@ -17,43 +17,43 @@
       <publishTime>05/01/2020 20:42:16</publishTime>
     </File>
     <File Include="Bingo.Api.deps.json">
-      <publishTime>06/02/2020 00:31:25</publishTime>
+      <publishTime>06/09/2020 18:30:45</publishTime>
     </File>
     <File Include="Bingo.Api.dll">
-      <publishTime>06/02/2020 00:31:24</publishTime>
+      <publishTime>06/09/2020 18:30:44</publishTime>
     </File>
     <File Include="Bingo.Api.exe">
-      <publishTime>06/02/2020 00:31:24</publishTime>
+      <publishTime>06/09/2020 18:30:44</publishTime>
     </File>
     <File Include="Bingo.Api.pdb">
-      <publishTime>06/02/2020 00:31:24</publishTime>
+      <publishTime>06/09/2020 18:30:44</publishTime>
     </File>
     <File Include="Bingo.Api.runtimeconfig.json">
       <publishTime>06/02/2020 00:24:25</publishTime>
     </File>
     <File Include="Bingo.Biz.dll">
-      <publishTime>06/02/2020 00:24:22</publishTime>
+      <publishTime>06/09/2020 18:23:52</publishTime>
     </File>
     <File Include="Bingo.Biz.pdb">
-      <publishTime>06/02/2020 00:24:22</publishTime>
+      <publishTime>06/09/2020 18:23:52</publishTime>
     </File>
     <File Include="Bingo.Dao.dll">
-      <publishTime>06/02/2020 00:24:19</publishTime>
+      <publishTime>06/09/2020 18:23:51</publishTime>
     </File>
     <File Include="Bingo.Dao.pdb">
-      <publishTime>06/02/2020 00:24:19</publishTime>
+      <publishTime>06/09/2020 18:23:51</publishTime>
     </File>
     <File Include="Bingo.Model.dll">
-      <publishTime>06/02/2020 00:24:20</publishTime>
+      <publishTime>06/09/2020 18:23:52</publishTime>
     </File>
     <File Include="Bingo.Model.pdb">
-      <publishTime>06/02/2020 00:24:20</publishTime>
+      <publishTime>06/09/2020 18:23:52</publishTime>
     </File>
     <File Include="Bingo.Utils.dll">
-      <publishTime>06/02/2020 00:24:20</publishTime>
+      <publishTime>06/09/2020 18:23:52</publishTime>
     </File>
     <File Include="Bingo.Utils.pdb">
-      <publishTime>06/02/2020 00:24:20</publishTime>
+      <publishTime>06/09/2020 18:23:52</publishTime>
     </File>
     <File Include="cs/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>08/14/2019 23:21:24</publishTime>
@@ -110,10 +110,10 @@
       <publishTime>08/14/2019 23:20:54</publishTime>
     </File>
     <File Include="Infrastructure.dll">
-      <publishTime>06/02/2020 00:24:18</publishTime>
+      <publishTime>06/09/2020 18:23:50</publishTime>
     </File>
     <File Include="Infrastructure.pdb">
-      <publishTime>06/02/2020 00:24:18</publishTime>
+      <publishTime>06/09/2020 18:23:50</publishTime>
     </File>
     <File Include="it/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>08/14/2019 23:21:24</publishTime>
@@ -410,7 +410,7 @@
       <publishTime>08/14/2019 23:20:54</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>06/02/2020 00:31:25</publishTime>
+      <publishTime>06/09/2020 18:30:45</publishTime>
     </File>
     <File Include="zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>08/14/2019 23:21:24</publishTime>

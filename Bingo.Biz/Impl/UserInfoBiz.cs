@@ -64,7 +64,7 @@ namespace Bingo.Biz.Impl
                 response.ResultMessage= ErrCodeEnum.UserNoExist.ToDescription();
                 return response;
             }
-            response.Data = UserInfoBuilder.BuildUserInfo(userInfo, head,false);
+            response.Data = UserInfoBuilder.BuildUserInfoV1(userInfo, head);
             response.Data.NickName = userInfo.NickName;
             return response;
         }
@@ -154,7 +154,7 @@ namespace Bingo.Biz.Impl
                 {
                     userInfo = GetUserInfoByUid(request.Head.UId);
                 }
-                response.Data = UserInfoBuilder.BuildUserInfo(userInfo, request.Head,false);
+                response.Data = UserInfoBuilder.BuildUserInfoV1(userInfo, request.Head);
                 response.Data.NickName = userInfo.NickName;
             }
             return response;

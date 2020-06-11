@@ -5,12 +5,13 @@ using Bingo.Utils;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bingo.Biz.Impl.Builder
 {
     public static class UserInfoBuilder
     {
-        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, RequestHead head,bool needDistance=true)
+        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, RequestHead head)
         {
             if (userInfo == null)
             {
@@ -29,7 +30,6 @@ namespace Bingo.Biz.Impl.Builder
                 IsRegister=userInfo.IsRegister,
                 TagList=new List<TagItem>()
             };
-            int index = 1;
             if (head.UId== userInfo.UId)
             {
                 result.NickName = string.Format("{0}(我)", result.NickName);
@@ -45,31 +45,89 @@ namespace Bingo.Biz.Impl.Builder
                 result.GenderColor = CommonConst.Color_WoMan_GenderIcon;
             }
             var distance = LocationHelper.GetDistanceDesc(userInfo.Latitude, userInfo.Longitude, head.Latitude, head.Longitude);
-            if (!string.IsNullOrEmpty(distance)&& needDistance)
+            if (!string.IsNullOrEmpty(distance))
             {
                 result.TagList.Add(new TagItem()
                 {
                     Type = TagTypeEnum.LocationInfo,
                     Content = distance,
-                    Index = index++
+                    Index = 1
                 });
             }
-            if(userInfo.BirthDate.HasValue&& userInfo.BirthDate.Value> Convert.ToDateTime("1990-01-01"))
+            if (!userInfo.SchoolName.IsNullOrEmpty())
             {
-                AddTag(result.TagList, TagTypeEnum.AgeGrade, userInfo.BirthDate.GetAgeYear(), index++);
-                AddTag(result.TagList, TagTypeEnum.Constellation, userInfo.BirthDate.GetConstellation(), index++);
+                AddTag(result.TagList, TagTypeEnum.Default, userInfo.SchoolName, 3);
             }
-            
-            if (userInfo.SchoolName.IsNullOrEmpty())
+
+            if (userInfo.BirthDate.HasValue&& userInfo.BirthDate.Value> Convert.ToDateTime("1990-01-01"))
             {
-                AddTag(result.TagList, TagTypeEnum.Default, GetLocationInfo(userInfo), index++);
+                AddTag(result.TagList, TagTypeEnum.AgeGrade, userInfo.BirthDate.GetAgeYear(), 2);
+                AddTag(result.TagList, TagTypeEnum.Constellation, userInfo.BirthDate.GetConstellation(), 4);
             }
-            else
+
+            AddTag(result.TagList, TagTypeEnum.Default, GetLocationInfo(userInfo), 5);
+
+            if (result.TagList.Count > 3)
             {
-                AddTag(result.TagList, TagTypeEnum.Default, userInfo.SchoolName, index++);
+                result.TagList = result.TagList.OrderBy(a=>a.Index).Take(3).ToList();
             }
-            
             return result;
+        }
+
+        public static UserInfoType BuildUserInfoV1(UserInfoEntity userInfo, RequestHead head)
+        {
+            if (userInfo == null)
+            {
+                return null;
+            }
+            var result = new UserInfoType
+            {
+                UId = userInfo.UId,
+                Gender = userInfo.Gender,
+                Latitude = userInfo.Latitude,
+                UserType = userInfo.UserType,
+                Longitude = userInfo.Longitude,
+                NickName = userInfo.NickName,
+                Portrait = userInfo.Portrait,
+                Signature = userInfo.Signature,
+                IsRegister = userInfo.IsRegister,
+                TagList = BuildAllTags(userInfo)
+            };
+            if (head.UId == userInfo.UId)
+            {
+                result.NickName = string.Format("{0}(我)", result.NickName);
+            }
+            if (userInfo.Gender == GenderEnum.Man)
+            {
+                result.GenderIcon = CommonConst.Man_GenderIcon;
+                result.GenderColor = CommonConst.Color_Man_GenderIcon;
+            }
+            if (userInfo.Gender == GenderEnum.Woman)
+            {
+                result.GenderIcon = CommonConst.WoMan_GenderIcon;
+                result.GenderColor = CommonConst.Color_WoMan_GenderIcon;
+            }
+           
+            return result;
+        }
+
+
+        private static List<TagItem> BuildAllTags(UserInfoEntity userInfo)
+        {
+            var tagList = new List<TagItem>();
+            if (userInfo.BirthDate.HasValue && userInfo.BirthDate.Value > Convert.ToDateTime("1990-01-01"))
+            {
+                AddTag(tagList, TagTypeEnum.AgeGrade, userInfo.BirthDate.GetAgeYear(), 1);
+                AddTag(tagList, TagTypeEnum.Constellation, userInfo.BirthDate.GetConstellation(), 2);
+            }
+
+            if (!userInfo.SchoolName.IsNullOrEmpty())
+            {
+                AddTag(tagList, TagTypeEnum.Default, userInfo.SchoolName, 3);
+            }
+
+            AddTag(tagList, TagTypeEnum.Default, GetLocationInfo(userInfo), 4);
+            return tagList;
         }
 
         private static string GetLocationInfo(UserInfoEntity userInfo)
@@ -93,7 +151,7 @@ namespace Bingo.Biz.Impl.Builder
             }
             if (text.Length > 8)
             {
-                return text.Substring(0, 7)+"...";
+                return text.CutText(10);
             }
             return text;
         }

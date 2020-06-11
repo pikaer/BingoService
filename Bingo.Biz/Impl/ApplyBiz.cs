@@ -8,6 +8,7 @@ using Bingo.Model.Contract;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bingo.Biz.Impl
 {
@@ -15,6 +16,7 @@ namespace Bingo.Biz.Impl
     {
         private readonly IApplyInfoDao applyInfoDao = SingletonProvider<ApplyInfoDao>.Instance;
         private readonly IUserInfoBiz uerInfoBiz = SingletonProvider<UserInfoBiz>.Instance;
+        private readonly static IApplyDetailDao applyDetailDao = SingletonProvider<ApplyDetailDao>.Instance;
 
         public ResponseContext<ApplyMomentDetailResponse> ApplyMomentDetail(Guid applyId, RequestHead head)
         {
@@ -89,6 +91,13 @@ namespace Bingo.Biz.Impl
                     UserInfo = UserInfoBuilder.BuildUserInfo(momentUserInfo, head),
                     ContentList = MomentContentBuilder.BuilderContent2Contact(moment, momentUserInfo,apply.ApplyState==ApplyStateEnum.申请通过)
                 };
+                var applyDetaiList = applyDetailDao.GetListByApplyId(apply.ApplyId);
+                if (applyDetaiList.NotEmpty())
+                {
+                    //最后一个对话信息
+                    var applyDetail= applyDetaiList.OrderByDescending(a => a.CreateTime).First();
+                    result.ApplyRemark = applyDetail.Content;
+                }
                 response.Data.MomentList.Add(result);
             }
             return response;

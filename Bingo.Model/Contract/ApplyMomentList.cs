@@ -34,6 +34,9 @@ namespace Bingo.Model.Contract
         /// </summary>
         public string ApplyStateDesc { get; set; }
 
+
+        public string ApplyRemark{ get; set; }
+
         /// <summary>
         /// 状态文本采用字体颜色
         /// </summary>
