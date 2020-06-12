@@ -12,12 +12,6 @@
         /// </summary>
         public static readonly string BingoSharePageUrl = "/pages/pageshare/pageshare?momentId={0}";
 
-        public static readonly string BingoMyApplyDetailPageUrl = "/pages/myapplydetail/myapplydetail?applyId={0}";
-
-        public static readonly string BingoMyPublishDetailPageUrl = "/pages/mypublishdetail/mypublishdetail?momentId={0}";
-
-        public static readonly string BingoRequestDetailPageUrl = "/pages/requestdetail/requestdetail?applyId={0}";
-
         /// <summary>
         /// 微信小程序消息推送地址
         /// </summary>

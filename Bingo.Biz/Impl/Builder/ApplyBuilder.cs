@@ -147,6 +147,23 @@ namespace Bingo.Biz.Impl.Builder
             return text.ToString();
         }
 
+        public static string GetApplyCountDescV1(List<ApplyInfoEntity> applyList)
+        {
+            if (applyList.IsNullOrEmpty())
+            {
+                return "已报名:0人 待通过:0人";
+            }
+
+            var text = new StringBuilder();
+            var passCount = applyList.Count(a => a.ApplyState == ApplyStateEnum.申请通过);
+            text.AppendFormat("已报名:{0}人 ", passCount);
+
+            var askCount = applyList.Count(a => a.ApplyState == ApplyStateEnum.申请中);
+            text.AppendFormat("待通过:{0}人", askCount);
+
+            return text.ToString();
+        }
+
         public static string GetServiceCountDesc(List<ApplyDetailEntity> applyList, long uId)
         {
             if (applyList.IsNullOrEmpty())

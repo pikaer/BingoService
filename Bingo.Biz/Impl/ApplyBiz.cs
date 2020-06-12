@@ -48,7 +48,7 @@ namespace Bingo.Biz.Impl
                 BtnVisable =!string.IsNullOrEmpty(btnText),
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
                 UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
-                ContentList = MomentContentBuilder.BuilderContent(moment,applyInfo.ApplyState!=ApplyStateEnum.申请通过),
+                ContentList = MomentContentBuilder.BuilderContent2Contact(moment, userInfo, applyInfo.ApplyState==ApplyStateEnum.申请通过),
                 ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head,false)
             };
             return response;

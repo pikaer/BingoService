@@ -99,6 +99,7 @@ namespace Bingo.Biz.Impl
             {
                 limitList.Add(" BirthDate<'1980-01-01' ");
             }
+
             return limitList;
         }
         public ResponseContext<MomentDetailResponse> MomentDetail(Guid momentId, RequestHead head)

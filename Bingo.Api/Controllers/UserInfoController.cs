@@ -56,7 +56,7 @@ namespace Bingo.Api.Controllers
                     return ErrorJsonResult(ErrCodeEnum.InvalidRequestHead);
                 }
                 head = request.Head;
-                return new JsonResult(userInfoBiz.GetUserInfo(request.Head));
+                return new JsonResult(userInfoBiz.GetUserInfo(request.Head,request.Data.UId));
             }
             catch (Exception ex)
             {

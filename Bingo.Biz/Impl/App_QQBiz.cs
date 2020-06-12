@@ -50,7 +50,7 @@ namespace Bingo.Biz.Impl
             return response != null && response.Errcode == 0;
         }
 
-        public void Send_Activity_Join_MsgAsync(MomentEntity moment, long targetUserId, bool joinSuccess, string joinMsg, Guid applyId)
+        public void Send_Activity_Join_MsgAsync(MomentEntity moment, long targetUserId, bool joinSuccess, string joinMsg)
         {
             throw new System.NotImplementedException();
         }
@@ -65,7 +65,7 @@ namespace Bingo.Biz.Impl
             throw new System.NotImplementedException();
         }
 
-        public void Send_Moment_Join_MsgAsync(MomentEntity moment, long targetUserId, string momentUserOpenId,Guid applyId)
+        public void Send_Moment_Join_MsgAsync(MomentEntity moment, long targetUserId, string momentUserOpenId)
         {
             throw new System.NotImplementedException();
         }

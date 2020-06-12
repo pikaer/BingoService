@@ -13,7 +13,7 @@ namespace Bingo.Biz.Interface
 
         ResponseContext<LoginResponse> GetLoginInfoByCode(string code, PlatformEnum platform);
 
-        ResponseContext<UserInfoType> GetUserInfo(RequestHead head);
+        ResponseContext<UserInfoType> GetUserInfo(RequestHead head,long uId);
 
         bool UpdateUserLocation(long uId, double latitude, double longitude);
 

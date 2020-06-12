@@ -54,10 +54,14 @@ namespace Bingo.Biz.Impl
             return response;
         }
 
-        public ResponseContext<UserInfoType> GetUserInfo(RequestHead head)
+        public ResponseContext<UserInfoType> GetUserInfo(RequestHead head, long uId)
         {
+            if (uId <= 0)
+            {
+                uId = head.UId;
+            }
             var response = new ResponseContext<UserInfoType>();
-            var userInfo = GetUserInfoByUid(head.UId);
+            var userInfo = GetUserInfoByUid(uId);
             if (userInfo == null)
             {
                 response.ResultCode = ErrCodeEnum.UserNoExist;
