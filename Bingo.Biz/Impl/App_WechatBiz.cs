@@ -62,75 +62,95 @@ namespace Bingo.Biz.Impl
 
         public void Send_Activity_Join_MsgAsync(MomentEntity moment, long targetUserId, bool joinSuccess,string joinMsg)
         {
-            var targetUserInfo = uerInfoBiz.GetUserInfoByUid(targetUserId);
-            var token = GetAccessToken();
-            if (targetUserInfo == null || moment == null|| string.IsNullOrEmpty(token))
+            try
             {
-                return;
-            }
-            
-            string title = string.Format("{0}：{1}", moment.Title, moment.Content);
-            string place = moment.IsOffLine ? moment.Place : "线上活动";
-            string state = joinSuccess?"加入成功":"加入失败";
-            var message = new WeChatMessageContext<ActivityJoinMsgDTO>()
-            {
-                touser = targetUserInfo.OpenId,
-                access_token = token,
-                template_id = CommonConst.Activity_Join_TmplId_WeChat,
-                page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
-                data = new ActivityJoinMsgDTO()
+                Task.Factory.StartNew(() =>
                 {
-                    thing2 = new Value(title.CutText(20)),
-                    thing3 = new Value(place.CutText(20)),
-                    phrase1 = new Value(state),
-                    thing9 = new Value(joinMsg)
-                }
-            };
+                    var targetUserInfo = uerInfoBiz.GetUserInfoByUid(targetUserId);
+                    var token = GetAccessToken();
+                    if (targetUserInfo == null || moment == null || string.IsNullOrEmpty(token))
+                    {
+                        return;
+                    }
 
-            
-            string url = string.Format(CommonConst.Message_Send_Url_WeChat, token);
+                    string title = string.Format("{0}：{1}", moment.Title, moment.Content);
+                    string place = moment.IsOffLine ? moment.Place : "线上活动";
+                    string state = joinSuccess ? "加入成功" : "加入失败";
+                    var message = new MessageContext<ActivityJoinMsgDTO>()
+                    {
+                        touser = targetUserInfo.OpenId,
+                        access_token = token,
+                        template_id = CommonConst.Activity_Join_TmplId_WeChat,
+                        page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
+                        data = new ActivityJoinMsgDTO()
+                        {
+                            thing2 = new Value(title.CutText(20)),
+                            thing3 = new Value(place.CutText(20)),
+                            phrase1 = new Value(state),
+                            thing9 = new Value(joinMsg)
+                        }
+                    };
 
-            HttpHelper.HttpPost<WeChatMessageContext<ActivityJoinMsgDTO>, WeChatResponseDTO>(url, message, 5);
+
+                    string url = string.Format(CommonConst.Message_Send_Url_WeChat, token);
+
+                    HttpHelper.HttpPost<MessageContext<ActivityJoinMsgDTO>, WeChatResponseDTO>(url, message, 5);
+                });
+            }
+            catch (Exception ex)
+            {
+                log.Error("Send_Activity_Join_MsgAsync", ex);
+            }
         }
 
         public void Send_Activity_Cancel_MsgAsync(MomentEntity moment,List<long>userIds)
         {
-            if(userIds.IsNullOrEmpty()|| moment == null)
+            try
             {
-                return;
-            }
-            var token = GetAccessToken();
-            if (string.IsNullOrEmpty(token))
-            {
-                return;
-            }
-
-            string url = string.Format(CommonConst.Message_Send_Url_WeChat, token);
-
-            foreach (long uid in userIds)
-            {
-                var targetUserInfo = uerInfoBiz.GetUserInfoByUid(uid);
-                var momentUserInfo= uerInfoBiz.GetUserInfoByUid(moment.UId);
-                if (targetUserInfo == null|| momentUserInfo==null)
+                Task.Factory.StartNew(() =>
                 {
-                    continue;
-                }
-                var message = new WeChatMessageContext<ActivityCancelMsgDTO>()
-                {
-                    touser = targetUserInfo.OpenId,
-                    access_token = token,
-                    template_id = CommonConst.Activity_Cancel_TmplId_WeChat,
-                    page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
-                    data = new ActivityCancelMsgDTO()
+                    if (userIds.IsNullOrEmpty() || moment == null)
                     {
-                        thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content).CutText(20)),
-                        date2 = new Value(moment.CreateTime.ToString("yyyy年MM月dd日 HH:mm")),
-                        name3 = new Value(momentUserInfo.NickName),
-                        thing4 = new Value("活动取消，点击查看详情")
+                        return;
                     }
-                };
-                HttpHelper.HttpPost<WeChatMessageContext<ActivityCancelMsgDTO>, WeChatResponseDTO>(url, message, 5);
+                    var token = GetAccessToken();
+                    if (string.IsNullOrEmpty(token))
+                    {
+                        return;
+                    }
+
+                    string url = string.Format(CommonConst.Message_Send_Url_WeChat, token);
+
+                    foreach (long uid in userIds)
+                    {
+                        var targetUserInfo = uerInfoBiz.GetUserInfoByUid(uid);
+                        var momentUserInfo = uerInfoBiz.GetUserInfoByUid(moment.UId);
+                        if (targetUserInfo == null || momentUserInfo == null)
+                        {
+                            continue;
+                        }
+                        var message = new MessageContext<ActivityCancelMsgDTO>()
+                        {
+                            touser = targetUserInfo.OpenId,
+                            access_token = token,
+                            template_id = CommonConst.Activity_Cancel_TmplId_WeChat,
+                            page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
+                            data = new ActivityCancelMsgDTO()
+                            {
+                                thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content).CutText(20)),
+                                date2 = new Value(moment.CreateTime.ToString("yyyy年MM月dd日 HH:mm")),
+                                name3 = new Value(momentUserInfo.NickName),
+                                thing4 = new Value("活动取消，点击查看详情")
+                            }
+                        };
+                        HttpHelper.HttpPost<MessageContext<ActivityCancelMsgDTO>, WeChatResponseDTO>(url, message, 5);
+                    }
+                });
             }
+            catch(Exception ex)
+            {
+                log.Error("Send_Activity_Cancel_MsgAsync", ex);
+            }            
         }
 
         public void Send_Moment_Publish_MsgAsync(MomentEntity moment, string targetUser, string remark)
@@ -148,7 +168,7 @@ namespace Bingo.Biz.Impl
                     string title = string.Format("{0}：{1}", moment.Title, moment.Content);
                     string place = moment.IsOffLine ? moment.Place : "线上活动";
                     string state = moment.State == MomentStateEnum.正常发布中 ? "审核通过" : "审核不通过";
-                    var message = new WeChatMessageContext<MomentPublishMsgDTO>()
+                    var message = new MessageContext<MomentPublishMsgDTO>()
                     {
                         touser = targetUser,
                         access_token= token,
@@ -166,7 +186,7 @@ namespace Bingo.Biz.Impl
 
                     string url = string.Format(CommonConst.Message_Send_Url_WeChat, token);
 
-                    HttpHelper.HttpPost<WeChatMessageContext<MomentPublishMsgDTO>, WeChatResponseDTO>(url, message, 5);
+                    HttpHelper.HttpPost<MessageContext<MomentPublishMsgDTO>, WeChatResponseDTO>(url, message, 5);
                 });
             }
             catch(Exception ex)
@@ -177,34 +197,40 @@ namespace Bingo.Biz.Impl
 
         public void Send_Moment_Join_MsgAsync(MomentEntity moment, long targetUserId,string momentUserOpenId)
         {
-            var targetUserInfo = uerInfoBiz.GetUserInfoByUid(targetUserId);
-            if (targetUserInfo == null|| moment==null)
+            try
             {
-                return;
-            }
-            var token = GetAccessToken();
-            var message = new WeChatMessageContext<MomentJoinMsgDTO>()
-            {
-                touser = momentUserOpenId,
-                access_token = token,
-                template_id = CommonConst.Moment_Join_TmplId_WeChat,
-                page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
-                data = new MomentJoinMsgDTO()
+                var targetUserInfo = uerInfoBiz.GetUserInfoByUid(targetUserId);
+                if (targetUserInfo == null || moment == null)
                 {
-                    thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content).CutText(20)),
-                    thing2 = new Value(targetUserInfo.NickName.CutText(20)),
-                    thing3 = new Value("申请参与该活动，请审批")
+                    return;
                 }
-            };
+                var token = GetAccessToken();
+                if (string.IsNullOrEmpty(token))
+                {
+                    return;
+                }
 
-            if (string.IsNullOrEmpty(token))
-            {
-                return;
+                var message = new MessageContext<MomentJoinMsgDTO>()
+                {
+                    touser = momentUserOpenId,
+                    access_token = token,
+                    template_id = CommonConst.Moment_Join_TmplId_WeChat,
+                    page = string.Format(CommonConst.BingoSharePageUrl, moment.MomentId.ToString()),
+                    data = new MomentJoinMsgDTO()
+                    {
+                        thing1 = new Value(string.Format("{0}：{1}", moment.Title, moment.Content).CutText(20)),
+                        thing2 = new Value(targetUserInfo.NickName.CutText(20)),
+                        thing3 = new Value("申请参与该活动，请审批")
+                    }
+                };
+                string url = string.Format(CommonConst.Message_Send_Url_WeChat, token);
+
+                HttpHelper.HttpPost<MessageContext<MomentJoinMsgDTO>, WeChatResponseDTO>(url, message, 5);
             }
-
-            string url = string.Format(CommonConst.Message_Send_Url_WeChat, token);
-
-            HttpHelper.HttpPost<WeChatMessageContext<MomentJoinMsgDTO>, WeChatResponseDTO>(url, message, 5);
+            catch(Exception ex)
+            {
+                log.Error("Send_Moment_Join_MsgAsync", ex);
+            }
         }
     }
 }

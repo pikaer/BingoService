@@ -20,7 +20,7 @@
         /// <summary>
         /// QQ小程序消息推送地址
         /// </summary>
-        public static readonly string Message_Send_Url_QQ = "https://api.q.qq.com/api/json/subscribe/SendSubscriptionMessage?access_token=={0}";
+        public static readonly string Message_Send_Url_QQ = "https://api.q.qq.com/api/json/subscribe/SendSubscriptionMessage?access_token={0}";
 
         /// <summary>
         /// 微信小程序Id
@@ -65,7 +65,7 @@
         /// <summary>
         /// 活动报名通知
         /// </summary>
-        public static readonly string Activity_Join_TmplId_QQ = "";
+        public static readonly string Activity_Join_TmplId_QQ = "1d08b4bee05c82a29fe00457437b49f8";
 
         /// <summary>
         /// 活动取消通知
@@ -75,12 +75,12 @@
         /// <summary>
         /// 新动态发布提醒
         /// </summary>
-        public static readonly string Moment_Publish_TmplId_QQ = "";
+        public static readonly string Moment_Publish_TmplId_QQ = "90b43c42ca467356b46921dda2ef7e21";
 
         /// <summary>
         /// 报名审核通知
         /// </summary>
-        public static readonly string Moment_Join_TmplId_QQ = "";
+        public static readonly string Moment_Join_TmplId_QQ = "28b2bb6591ae3f9dedb61e4d0e44f2ac";
 
         /// <summary>
         /// "#fa6e4f"; //红色
