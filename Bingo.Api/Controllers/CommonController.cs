@@ -1,9 +1,13 @@
 ﻿using Bingo.Biz;
+using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Base;
 using Bingo.Model.Contract;
+using Bingo.Utils;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Bingo.Api.Controllers
 {
@@ -46,6 +50,59 @@ namespace Bingo.Api.Controllers
             {
                 return ErrorJsonResult(ErrCodeEnum.InnerError, head, "CommonController.MsgSecCheck", ex);
             }
+        }
+
+        /// <summary>
+        ///  微信小程序模板校验签名
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public string VerifySignature(string signature, string timestamp, string nonce, string echostr)
+        {
+            bool success = CheckSignature(signature, timestamp, nonce);
+            return success ? echostr : "校验失败";
+        }
+
+        /// <summary>
+        /// 验证微信签名
+        /// </summary>
+        private bool CheckSignature(string signature, string timestamp, string nonce)
+        {
+            try
+            {
+                var token = CommonConst.BingoToken;
+
+                string[] arrTmp = { token, timestamp, nonce };
+
+                Array.Sort(arrTmp);
+
+                string tmpStr = string.Join("", arrTmp);
+
+                var sha1 = new SHA1CryptoServiceProvider();
+                var data = sha1.ComputeHash(Encoding.UTF8.GetBytes(tmpStr));
+
+                var sb = new StringBuilder();
+                foreach (var t in data)
+                {
+                    sb.Append(t.ToString("X2"));
+                }
+
+                sha1.Dispose();
+
+                return sb.ToString().ToLower().Equals(signature);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        [HttpGet]
+        public JsonResult Test()
+        {
+            AppFactory.Factory(PlatformEnum.QQ_MiniApp).MsgSecCheck("特3456书yuuo莞6543李zxcz蒜7782法fgnv级");
+            return new JsonResult("SUSSESS");
         }
     }
 }

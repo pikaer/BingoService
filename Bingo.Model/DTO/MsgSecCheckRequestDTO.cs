@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bingo.Model.DTO
+﻿namespace Bingo.Model.DTO
 {
     public class MsgSecCheckRequestDTO
     {

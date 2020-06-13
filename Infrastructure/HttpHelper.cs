@@ -31,6 +31,7 @@ namespace Infrastructure
             {
                 string postDataStr = postData.SerializeToString();
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
+                
                 client.Timeout = new TimeSpan(0, 0, timeOut);
                 if (headers != null)
                 {
@@ -44,6 +45,10 @@ namespace Infrastructure
                     if (contentType != null)
                     {
                         httpContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+                    }
+                    else
+                    {
+                        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     }
 
                     HttpResponseMessage response = client.PostAsync(url, httpContent).Result;

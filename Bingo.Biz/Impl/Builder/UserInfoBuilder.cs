@@ -11,7 +11,7 @@ namespace Bingo.Biz.Impl.Builder
 {
     public static class UserInfoBuilder
     {
-        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, RequestHead head)
+        public static UserInfoType BuildUserInfo(UserInfoEntity userInfo, RequestHead head,int count=3)
         {
             if (userInfo == null)
             {
@@ -67,9 +67,9 @@ namespace Bingo.Biz.Impl.Builder
 
             AddTag(result.TagList, TagTypeEnum.Default, GetLocationInfo(userInfo), 5);
 
-            if (result.TagList.Count > 3)
+            if (result.TagList.Count > count)
             {
-                result.TagList = result.TagList.OrderBy(a=>a.Index).Take(3).ToList();
+                result.TagList = result.TagList.OrderBy(a=>a.Index).Take(count).ToList();
             }
             return result;
         }
@@ -163,21 +163,12 @@ namespace Bingo.Biz.Impl.Builder
             {
                 return;
             }
-            if (tagList.Count > 1)
+
+            if (content.Length > 5)
             {
-                if (content.Length > 10)
-                {
-                    content = content.Substring(0, 9) + "...";
-                }
+                content = content.Substring(0, 4) + "...";
             }
-            else
-            {
-                if (content.Length > 5)
-                {
-                    content = content.Substring(0, 4) + "...";
-                }
-            }
-            
+
             tagList.Add(new TagItem()
             {
                 Type = type,

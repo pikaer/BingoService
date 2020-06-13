@@ -175,9 +175,8 @@ namespace Bingo.Biz.Impl
                 Longitude = moment.Longitude,
                 IsOffLine = moment.IsOffLine,
                 TextColor = ApplyBuilder.TextColorMap(applyInfo.ApplyState),
-                UserInfo = UserInfoBuilder.BuildUserInfo(myUserInfo, head),
+                UserInfo = UserInfoBuilder.BuildUserInfo(userInfo, head),
                 BtnVisable= applyInfo.ApplyState== ApplyStateEnum.申请中,
-                ContentList = MomentContentBuilder.BuilderContent2Contact(moment, myUserInfo, applyInfo.ApplyState == ApplyStateEnum.申请通过),
                 ApplyList = ApplyBuilder.GetApplyDetails(applyInfo.ApplyId, head,true)
             };
             return response;

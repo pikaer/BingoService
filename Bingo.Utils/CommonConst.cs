@@ -18,6 +18,11 @@
         public static readonly string Message_Send_Url_WeChat = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token={0}";
 
         /// <summary>
+        /// QQ小程序消息推送地址
+        /// </summary>
+        public static readonly string Message_Send_Url_QQ = "https://api.q.qq.com/api/json/subscribe/SendSubscriptionMessage?access_token=={0}";
+
+        /// <summary>
         /// 微信小程序Id
         /// </summary>
         public static readonly string BingoAppId_WeChat = "wxa905da2fe69fbc47";
