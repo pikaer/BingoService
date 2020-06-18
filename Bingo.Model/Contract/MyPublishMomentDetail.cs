@@ -46,6 +46,8 @@ namespace Bingo.Model.Contract
         /// </summary>
         public bool IsOverTime { get; set; }
 
+        public string UnReadCount { get; set; }
+
         public List<ApplyItem> ApplyList { get; set; }
 
         public List<ApplyDetailItem> CheckList { get; set; }

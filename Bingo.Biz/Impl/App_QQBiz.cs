@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Bingo.Biz.Interface;
+﻿using Bingo.Biz.Interface;
 using Bingo.Dao.BingoDb.Entity;
 using Bingo.Model.Base;
 using Bingo.Model.DTO;
 using Bingo.Utils;
 using Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Bingo.Biz.Impl
 {

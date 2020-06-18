@@ -147,6 +147,24 @@ namespace Bingo.Biz.Impl.Builder
             return text.ToString();
         }
 
+        public static string GetUnReadCount(List<ApplyInfoEntity> applyList)
+        {
+            if (applyList.IsNullOrEmpty())
+            {
+                return "";
+            }
+            var askCount = applyList.Count(a => a.ApplyState == ApplyStateEnum.申请中);
+            if (askCount > 99)
+            {
+                return "99+";
+            }
+            if (askCount > 0)
+            {
+                return askCount.ToString();
+            }
+            return "";
+        }
+
         public static string GetApplyCountDescV1(List<ApplyInfoEntity> applyList)
         {
             if (applyList.IsNullOrEmpty())
