@@ -20,6 +20,8 @@ namespace Bingo.Biz.Impl.Builder
             var result = new UserInfoType
             {
                 UId = userInfo.UId,
+                Platform=userInfo.Platform,
+                OpenId=userInfo.OpenId,
                 Gender = userInfo.Gender,
                 Latitude=userInfo.Latitude,
                 UserType=userInfo.UserType,
@@ -83,6 +85,8 @@ namespace Bingo.Biz.Impl.Builder
             var result = new UserInfoType
             {
                 UId = userInfo.UId,
+                Platform = userInfo.Platform,
+                OpenId = userInfo.OpenId,
                 Gender = userInfo.Gender,
                 Latitude = userInfo.Latitude,
                 UserType = userInfo.UserType,

@@ -7,7 +7,17 @@ namespace Bingo.Model.Common
     {
         public long UId { get; set; }
 
+        /// <summary>
+        /// 小程序端-用户唯一标示
+        /// </summary>
+        public string OpenId { get; set; }
+
         public string NickName { get; set; }
+
+        /// <summary>
+        /// 用户注册渠道
+        /// </summary>
+        public PlatformEnum Platform { get; set; }
 
         /// <summary>
         /// 是否已经注册账户
